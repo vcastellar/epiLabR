@@ -1,6 +1,6 @@
 Package: SIR
 Type: Package
-Title: Simulation for Deterministic Epidemic Models
+Title: SIR: Educational Framework for Epidemiological Modelling
 Version: 0.3.0
 Author: Vicente Castellar [aut, cre]
 Maintainer: Vicente Castellar <vic.castellar@gmail.com>
