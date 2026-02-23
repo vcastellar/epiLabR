@@ -3,12 +3,13 @@
 \docType{data}
 \name{SIR_VITAL_MODEL}
 \alias{SIR_VITAL_MODEL}
+\alias{SIR_V_MODEL}
 \title{SIR epidemic model with vital dynamics and constant population}
 \format{
 An object of class \code{"epi_model"}.
 }
 \usage{
-SIR_VITAL_MODEL
+SIR_V_MODEL
 }
 \description{
 An \code{epi_model} object representing a deterministic \strong{SIR}
