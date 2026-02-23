@@ -2,36 +2,33 @@
 % Please edit documentation in R/constructor.R
 \name{print.epi_model}
 \alias{print.epi_model}
-\title{Print an epidemic model object}
+\title{Print method for epi_model objects}
 \usage{
 \method{print}{epi_model}(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{"epi_model"}.}
 
-\item{...}{Further arguments (ignored).}
+\item{...}{Additional arguments passed to or from other methods
+(currently unused).}
 }
 \value{
-Invisibly returns the input object \code{x}.
+The input object \code{x}, invisibly.
 }
 \description{
-Provides a concise, human-readable summary of an \code{epi_model} object.
-The printed output includes the model name, state variables, parameters,
-the declared model derived variables, and the underlying system of differential
-equations.
-
-This method is automatically called when an object of class
-\code{"epi_model"} is printed at the console.
+Custom \code{print()} method for objects of class \code{"epi_model"}.
+Displays a structured summary of the epidemiological model, including:
+\itemize{
+\item Model name
+\item State variables
+\item Parameter names
+\item Derived variables (if defined)
+\item Initial conditions (\code{inits})
+\item Default parameter values (\code{defaults})
+\item Parameter bounds (if defined)
+\item Right-hand side equations (\code{rhs})
 }
-\details{
-Model derived variables are shown when available.
-These may include incidence, recoveries, or any other observable
-returned by the model's right-hand side (\code{rhs}) function.
 
-Parameter bounds are shown when available. The model equations are printed
-by deparsing the \code{rhs} function for inspection.
-}
-\examples{
-SIR_MODEL
-
+If initial conditions or default values are not defined, this is
+stated explicitly in the output.
 }

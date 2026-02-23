@@ -18,7 +18,7 @@ param_sliders_ui <- function(model) {
     val <- model$defaults[[p]] %||% 1
 
     lower <- model$lower[[p]] %||% (val / 10)
-    upper <- 3 * model$upper[[p]] %||% (val * 3)
+    upper <- upper <- (model$upper[[p]] %||% val) * 3
 
     shiny::sliderInput(
       inputId = paste0("par_", p),

@@ -118,35 +118,32 @@ epi_model <- function(name,
 }
 
 
-#' Print an epidemic model object
+#' Print method for epi_model objects
 #'
-#' @name print.epi_model
 #' @description
-#' Provides a concise, human-readable summary of an \code{epi_model} object.
-#' The printed output includes the model name, state variables, parameters,
-#' the declared model derived variables, and the underlying system of differential
-#' equations.
+#' Custom `print()` method for objects of class `"epi_model"`.
+#' Displays a structured summary of the epidemiological model, including:
+#' \itemize{
+#'   \item Model name
+#'   \item State variables
+#'   \item Parameter names
+#'   \item Derived variables (if defined)
+#'   \item Initial conditions (`inits`)
+#'   \item Default parameter values (`defaults`)
+#'   \item Parameter bounds (if defined)
+#'   \item Right-hand side equations (`rhs`)
+#' }
 #'
-#' This method is automatically called when an object of class
-#' \code{"epi_model"} is printed at the console.
+#' If initial conditions or default values are not defined, this is
+#' stated explicitly in the output.
 #'
-#' @details
-#' Model derived variables are shown when available.
-#' These may include incidence, recoveries, or any other observable
-#' returned by the model's right-hand side (\code{rhs}) function.
+#' @param x An object of class `"epi_model"`.
+#' @param ... Additional arguments passed to or from other methods
+#'   (currently unused).
 #'
-#' Parameter bounds are shown when available. The model equations are printed
-#' by deparsing the \code{rhs} function for inspection.
+#' @return The input object `x`, invisibly.
 #'
-#' @param x An object of class \code{"epi_model"}.
-#' @param ... Further arguments (ignored).
-#'
-#' @return
-#' Invisibly returns the input object \code{x}.
-#'
-#' @examples
-#' SIR_MODEL
-#'
+#' @method print epi_model
 #' @export
 print.epi_model <- function(x, ...) {
 
@@ -160,9 +157,28 @@ print.epi_model <- function(x, ...) {
 
   ## --- derived variables -----------------------------------------------------
   derived_names <- x$derived
-
   if (!is.null(derived_names) && length(derived_names) > 0) {
     cat("  Derived:  ", paste(derived_names, collapse = ", "), "\n", sep = "")
+  }
+
+  ## --- initial conditions & defaults ----------------------------------------
+  has_inits    <- !is.null(x$inits)    && length(x$inits) > 0
+  has_defaults <- !is.null(x$defaults) && length(x$defaults) > 0
+
+  # Inits
+  if (has_inits) {
+    cat("  Inits:\n")
+    print(x$inits)
+  } else {
+    cat("  Inits:    (none defined)\n")
+  }
+
+  # Defaults
+  if (has_defaults) {
+    cat("  Defaults:\n")
+    print(x$defaults)
+  } else {
+    cat("  Defaults: (none defined)\n")
   }
 
   ## --- parameter bounds ------------------------------------------------------
