@@ -205,8 +205,8 @@ peak_prevalence <- function(prevalence, time = NULL) {
 #'
 #' @param incidence Numeric vector giving the incidence curve.
 #' @param time Optional numeric vector of time points. Must have the
-#' same length as \code{incidence}. If \code{NULL}, unit time steps
-#' are assumed.
+#' same length as \code{incidence}, contain no missing values, and be
+#' strictly increasing. If \code{NULL}, unit time steps are assumed.
 #'
 #' @return
 #' A numeric scalar giving the cumulative attack rate.
@@ -218,14 +218,17 @@ peak_prevalence <- function(prevalence, time = NULL) {
 #' @export
 attack_rate <- function(incidence, time = NULL) {
 
-  stopifnot(is.numeric(incidence))
+  stopifnot(is.numeric(incidence),
+            length(incidence) > 0)
 
   if (is.null(time)) {
     return(sum(incidence, na.rm = TRUE))
   }
 
   stopifnot(is.numeric(time),
-            length(time) == length(incidence))
+            length(time) == length(incidence),
+            all(!is.na(time)),
+            all(diff(time) > 0))
 
   dt <- diff(time)
 
