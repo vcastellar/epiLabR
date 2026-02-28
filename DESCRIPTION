@@ -3,10 +3,8 @@ Type: Package
 Title: Educational Framework for Epidemiological Modelling
 Version: 0.3.0
 Author: Vicente Castellar [aut, cre]
-Maintainer: Vicente Castellar <vic.castellar@gmail.com>
 Authors@R:
-    person(given = "Vicente",
-           family = "Castellar",
+    person("Vicente", "Castellar",
            role = c("aut", "cre"),
            email = "vic.castellar@gmail.com")
 Description: Simulation and exploration of deterministic compartmental epidemiological 
