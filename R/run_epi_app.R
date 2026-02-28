@@ -129,6 +129,10 @@ run_epi_app <- function(models = NULL) {
 
     all_models <- c(builtin, models)
   }
+  
+  if (!requireNamespace("shiny", quietly = TRUE)) {
+    stop("Package 'shiny' is required to run the app. Please install it.")
+  }
 
   shiny::shinyApp(
     ui = app_ui(all_models),
