@@ -3,7 +3,7 @@
 #'
 #' @description
 #' Internal function defining the system of differential equations
-#' for \code{SIR_VITAL_MODEL}.
+#' for \code{SIR_V_MODEL}.
 #'
 #' @param time Time variable (required by ODE solver).
 #' @param state Named numeric vector of state variables.
@@ -47,7 +47,7 @@ sir_vital_rhs <- function(time, state, parms) {
 #-------------------------------------------------------------------------------
 #' SIR epidemic model with vital dynamics and constant population
 #'
-#' @name SIR_VITAL_MODEL
+#' @name SIR_V_MODEL
 #' @description
 #' An \code{epi_model} object representing a deterministic **SIR**
 #' (Susceptible–Infectious–Recovered) epidemic model with demographic turnover
@@ -108,7 +108,7 @@ sir_vital_rhs <- function(time, state, parms) {
 #' @examples
 #' ## Simulate a SIR epidemic with constant population size
 #' sim <- simulate_epi(
-#'   model = SIR_VITAL_MODEL,
+#'   model = SIR_V_MODEL,
 #'   times = 0:300,
 #'   parms = c(
 #'     beta  = 0.4,

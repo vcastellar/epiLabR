@@ -18,6 +18,6 @@ A list containing derivatives and declared derived variables.
 }
 \description{
 Internal function defining the system of differential equations
-for \code{SIR_VITAL_MODEL}.
+for \code{SIR_V_MODEL}.
 }
 \keyword{internal}

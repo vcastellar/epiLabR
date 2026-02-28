@@ -157,4 +157,3 @@ list_models()
 - Adapt initial conditions for different population contexts.
 - Add waning immunity (for example, a SIRVS-like extension).
 - Use `run_epi_app()` for interactive scenario exploration.
-2
