@@ -24,10 +24,6 @@ Depends:
 Imports:
     deSolve
 Suggests:
-    ggplot2,
-    devtools,
-    roxygen2,
-    testthat,
     knitr,
     rmarkdown,
     shiny
