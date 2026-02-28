@@ -4,30 +4,43 @@
 \alias{initial_growth_rate}
 \title{Initial exponential growth rate}
 \usage{
-initial_growth_rate(incidence, time, n = 7)
+initial_growth_rate(incidence, time = NULL, n = 7)
 }
 \arguments{
-\item{incidence}{Numeric vector of incidence values.}
+\item{incidence}{Numeric vector of incidence values.
+Values must be strictly positive over the estimation window.}
 
-\item{time}{Numeric vector of time points.}
+\item{time}{Optional numeric vector of time points. Must have the
+same length as \code{incidence}. If \code{NULL}, a regular time
+sequence is assumed.}
 
-\item{n}{Integer. Number of initial time points used for estimation.}
+\item{n}{Integer. Number of initial time points used for estimation.
+Must be at least 2. Default is 7.}
 }
 \value{
-A numeric scalar giving the estimated growth rate.
+A numeric scalar giving the estimated exponential growth rate.
 }
 \description{
 Estimates the early exponential growth rate by fitting a log-linear model
 to the initial segment of an incidence curve.
 }
 \details{
-Assuming exponential growth:
+During the early phase of an epidemic, incidence is often approximated by:
 \deqn{
-\lambda(t) \approx C e^{r t}.
+\lambda(t) \approx C e^{r t},
 }
+where \eqn{r} is the exponential growth rate.
 
 Taking logarithms:
 \deqn{
-\log \lambda(t) = \log C + r t.
+\log \lambda(t) = \log C + r t,
 }
+so that \eqn{r} can be estimated as the slope of a linear regression
+of \eqn{\log(\lambda(t))} on \eqn{t}.
+
+The growth rate is estimated using the first \code{n} time points,
+which are assumed to belong to the exponential growth phase.
+
+If \code{time} is not provided, it is assumed to be a regular
+sequence \code{1:length(incidence)}.
 }

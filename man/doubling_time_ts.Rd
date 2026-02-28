@@ -4,28 +4,49 @@
 \alias{doubling_time_ts}
 \title{Time-varying doubling time}
 \usage{
-doubling_time_ts(incidence, time, window = 1, offset = 0.5)
+doubling_time_ts(incidence, time = NULL, window = 1, offset = 0.5)
 }
 \arguments{
 \item{incidence}{Numeric vector of incidence values.}
 
-\item{time}{Numeric vector of time points.}
+\item{time}{Optional numeric vector of time points. Must have the
+same length as \code{incidence}. If \code{NULL}, a regular time
+sequence is assumed.}
 
-\item{window}{Integer. Moving average window.}
+\item{window}{Integer. Size of the centered moving average
+window. Default is 1 (no smoothing).}
 
-\item{offset}{Numeric. Small constant to avoid log(0).}
+\item{offset}{Numeric. Small positive constant added to avoid
+\code{log(0)}. Default is 0.5.}
 }
 \value{
-A data.frame with columns \code{time} and \code{doubling_time}.
+A data.frame with:
+\describe{
+\item{time}{Time points corresponding to the estimated doubling times.}
+\item{doubling_time}{Time required for incidence to double
+under exponential growth.}
+}
 }
 \description{
 Computes the time-varying doubling time from an incidence curve.
 }
 \details{
-Given growth rate \eqn{r(t)}, the doubling time is:
+The doubling time is derived from the instantaneous growth rate:
 \deqn{
-T_d(t) = \frac{\log 2}{r(t)}.
+T_d(t) = \frac{\log 2}{r(t)},
 }
+where \eqn{r(t)} is computed using
+\code{\link{instantaneous_growth_rate}}.
 
-When \eqn{r(t) \le 0}, doubling time is set to \code{Inf}.
+If \eqn{r(t) > 0}, the doubling time represents the time required
+for incidence to double under exponential growth.
+
+If \eqn{r(t) \le 0}, doubling time is set to \code{Inf},
+indicating that incidence is not increasing.
+
+If \code{window > 1}, smoothing is applied before computing
+growth rates (see \code{\link{instantaneous_growth_rate}}).
+
+If \code{time} is not provided, it is assumed to be a regular
+sequence \code{1:length(incidence)}.
 }

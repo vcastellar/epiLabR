@@ -4,29 +4,52 @@
 \alias{instantaneous_growth_rate}
 \title{Instantaneous growth rate}
 \usage{
-instantaneous_growth_rate(incidence, time, window = 1, offset = 0.5)
+instantaneous_growth_rate(incidence, time = NULL, window = 1, offset = 0.5)
 }
 \arguments{
 \item{incidence}{Numeric vector of incidence values.}
 
-\item{time}{Numeric vector of time points.}
+\item{time}{Optional numeric vector of time points. Must have the
+same length as \code{incidence}. If \code{NULL}, a regular time
+sequence is assumed.}
 
-\item{window}{Integer. Size of moving average window.}
+\item{window}{Integer. Size of the centered moving average
+window. Default is 1 (no smoothing).}
 
-\item{offset}{Numeric. Small constant added to avoid \code{log(0)}.}
+\item{offset}{Numeric. Small positive constant added to avoid
+\code{log(0)}. Default is 0.5.}
 }
 \value{
-A data.frame with columns \code{time} and \code{r}.
+A data.frame with:
+\describe{
+\item{time}{Time points corresponding to the estimated growth rates
+(the last point of each time interval).}
+\item{r}{Instantaneous growth rate values.}
+}
 }
 \description{
 Computes the time-varying exponential growth rate from an incidence curve.
 }
 \details{
-The growth rate is approximated by:
+The instantaneous growth rate is approximated in discrete time by:
 \deqn{
-r(t_i) \approx \frac{\log \lambda(t_{i+1}) - \log \lambda(t_i)}
-{t_{i+1} - t_i}.
+r(t_i) \approx \frac{\log(\lambda(t_{i+1}) + c) -
+\log(\lambda(t_i) + c)}
+{t_{i+1} - t_i},
 }
+where \eqn{\lambda(t_i)} is the incidence at time \eqn{t_i}
+and \eqn{c} is a small offset added to avoid numerical issues
+when incidence is zero.
 
-Optional smoothing via moving average can be applied.
+If \code{window > 1}, a centered moving average of size
+\code{window} is applied to the incidence curve before computing
+growth rates. This smoothing reduces short-term fluctuations
+but shortens the effective time series due to edge effects.
+
+If \code{time} is not provided, it is assumed to be a regular
+sequence \code{1:length(incidence)}.
+
+Positive values of \code{r} indicate epidemic growth,
+negative values indicate decline, and \code{r = 0}
+corresponds to constant incidence.
 }

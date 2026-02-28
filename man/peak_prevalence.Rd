@@ -4,23 +4,38 @@
 \alias{peak_prevalence}
 \title{Peak prevalence}
 \usage{
-peak_prevalence(prevalence)
+peak_prevalence(prevalence, time = NULL)
 }
 \arguments{
 \item{prevalence}{Numeric vector representing prevalence over time.}
+
+\item{time}{Optional numeric vector of time points. Must have the
+same length as \code{prevalence}. If \code{NULL}, a regular time
+sequence is assumed.}
 }
 \value{
-A numeric scalar giving the peak prevalence.
+A list with:
+\describe{
+\item{peak}{Maximum prevalence value.}
+\item{time}{Time at which the peak occurs.}
+}
 }
 \description{
-Computes the maximum value of a prevalence curve.
+Computes the maximum value of a prevalence curve and
+the time at which it occurs.
 }
 \details{
-Let \eqn{I(t)} denote the prevalence over time.
-The peak prevalence is defined as
+Let \eqn{I(t)} denote prevalence over time.
+The peak prevalence is defined as:
 \deqn{
 I_{\max} = \max_t I(t).
 }
+
+The function returns both the maximum value and the
+corresponding time point.
+
+If \code{time} is not provided, it is assumed to be a regular
+sequence \code{1:length(prevalence)}.
 }
 \examples{
 I <- c(1, 5, 8, 4, 2)

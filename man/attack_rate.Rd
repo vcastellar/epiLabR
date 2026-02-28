@@ -4,28 +4,36 @@
 \alias{attack_rate}
 \title{Attack rate}
 \usage{
-attack_rate(incidence)
+attack_rate(incidence, time = NULL)
 }
 \arguments{
 \item{incidence}{Numeric vector giving the incidence curve.}
+
+\item{time}{Optional numeric vector of time points. Must have the
+same length as \code{incidence}. If \code{NULL}, unit time steps
+are assumed.}
 }
 \value{
-A numeric scalar giving the attack rate.
+A numeric scalar giving the cumulative attack rate.
 }
 \description{
-Computes the cumulative number of events as the sum of an incidence curve.
+Computes the cumulative number of events from an incidence curve.
 }
 \details{
 Let \eqn{\lambda(t)} denote the incidence function.
-The attack rate is defined as
+The attack rate is defined as:
 \deqn{
 AR = \int_0^T \lambda(t)\, dt.
 }
 
 In discrete time, this is approximated by:
 \deqn{
-AR \approx \sum_t \lambda(t).
+AR \approx \sum_i \lambda(t_i)\,\Delta t_i,
 }
+where \eqn{\Delta t_i = t_{i+1} - t_i}.
+
+If \code{time} is not provided, a regular time step of 1 is assumed,
+and the attack rate reduces to the simple sum of the incidence values.
 }
 \examples{
 inc <- c(1, 2, 3, 4)

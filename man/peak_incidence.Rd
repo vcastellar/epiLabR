@@ -4,30 +4,41 @@
 \alias{peak_incidence}
 \title{Peak incidence}
 \usage{
-peak_incidence(incidence, time)
+peak_incidence(incidence, time = NULL)
 }
 \arguments{
 \item{incidence}{Numeric vector giving the incidence curve.}
 
-\item{time}{Numeric vector of the same length giving time points.}
+\item{time}{Optional numeric vector of the same length giving time
+points. If \code{NULL}, a regular time sequence is assumed.}
 }
 \value{
-A named list with elements \code{time} and \code{value}.
+A list with:
+\describe{
+\item{peak}{Maximum incidence value.}
+\item{time}{Time at which the peak occurs.}
+}
 }
 \description{
-Computes the maximum value of an incidence curve and the time at which
-it occurs.
+Computes the maximum value of an incidence curve and
+the time at which it occurs.
 }
 \details{
 Let \eqn{\lambda(t)} denote the incidence function.
-The peak incidence is defined as
+The peak incidence is defined as:
 \deqn{
 \lambda_{\max} = \max_t \lambda(t),
 }
-and the time to peak incidence is
+and the corresponding time is:
 \deqn{
-t^* = \arg\max_t \lambda(t).
+t_{\max} = \arg\max_t \lambda(t).
 }
+
+If multiple time points attain the maximum value,
+the first occurrence is returned.
+
+If \code{time} is not provided, it is assumed to be a regular
+sequence \code{1:length(incidence)}.
 }
 \examples{
 inc  <- c(1, 3, 7, 5, 2)

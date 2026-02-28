@@ -4,18 +4,34 @@
 \alias{time_to_peak}
 \title{Time to peak incidence}
 \usage{
-time_to_peak(incidence, time)
+time_to_peak(incidence, time = NULL)
 }
 \arguments{
 \item{incidence}{Numeric vector giving the incidence curve.}
 
-\item{time}{Numeric vector of time points.}
+\item{time}{Optional numeric vector of time points. Must have the
+same length as \code{incidence}. If \code{NULL}, a regular time
+sequence is assumed.}
 }
 \value{
-A numeric scalar giving the time to peak incidence.
+A numeric scalar giving the time at which incidence
+reaches its maximum.
 }
 \description{
-Returns the time at which incidence reaches its maximum.
+Computes the time at which the incidence curve reaches its maximum.
+}
+\details{
+Let \eqn{\lambda(t)} denote the incidence over time.
+The time to peak is defined as:
+\deqn{
+t_{\max} = \arg\max_t \lambda(t).
+}
+
+If multiple time points attain the maximum value,
+the first occurrence is returned.
+
+If \code{time} is not provided, it is assumed to be a regular
+sequence \code{1:length(incidence)}.
 }
 \examples{
 inc  <- c(1, 4, 6, 3)

@@ -4,25 +4,42 @@
 \alias{initial_doubling_time}
 \title{Initial doubling time}
 \usage{
-initial_doubling_time(incidence, time, n = 7)
+initial_doubling_time(incidence, time = NULL, n = 7)
 }
 \arguments{
 \item{incidence}{Numeric vector of incidence values.}
 
-\item{time}{Numeric vector of time points.}
+\item{time}{Optional numeric vector of time points. Must have the
+same length as \code{incidence}. If \code{NULL}, a regular time
+sequence is assumed.}
 
-\item{n}{Integer. Number of initial time points.}
+\item{n}{Integer. Number of initial time points used to estimate
+the exponential growth rate. Default is 7.}
 }
 \value{
-A numeric scalar giving the doubling time.
+A numeric scalar giving the estimated initial doubling time.
 }
 \description{
-Computes the epidemic doubling time during the initial exponential phase.
+Estimates the epidemic doubling time during the initial
+exponential growth phase.
 }
 \details{
-If incidence grows exponentially with rate \eqn{r},
-the doubling time is:
+During the early phase of an epidemic, incidence is often
+approximated by exponential growth:
 \deqn{
-T_d = \frac{\log 2}{r}.
+\lambda(t) \approx \lambda_0 e^{r t}.
 }
+
+Under this assumption, the doubling time is:
+\deqn{
+T_d = \frac{\log 2}{r},
+}
+where \eqn{r} is the initial exponential growth rate,
+estimated using \code{\link{initial_growth_rate}} over the
+first \code{n} time points.
+
+If \eqn{r \le 0}, the doubling time is set to \code{Inf}.
+
+If \code{time} is not provided, it is assumed to be a regular
+sequence \code{1:length(incidence)}.
 }
