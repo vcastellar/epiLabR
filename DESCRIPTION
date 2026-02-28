@@ -1,6 +1,6 @@
 Package: epiLabR
 Type: Package
-Title: epiLabR: Educational Framework for Epidemiological Modelling
+Title: Educational Framework for Epidemiological Modelling
 Version: 0.3.0
 Author: Vicente Castellar [aut, cre]
 Maintainer: Vicente Castellar <vic.castellar@gmail.com>
