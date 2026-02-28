@@ -10,8 +10,8 @@ attack_rate(incidence, time = NULL)
 \item{incidence}{Numeric vector giving the incidence curve.}
 
 \item{time}{Optional numeric vector of time points. Must have the
-same length as \code{incidence}. If \code{NULL}, unit time steps
-are assumed.}
+same length as \code{incidence}, contain no missing values, and be
+strictly increasing. If \code{NULL}, unit time steps are assumed.}
 }
 \value{
 A numeric scalar giving the cumulative attack rate.

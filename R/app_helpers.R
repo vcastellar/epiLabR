@@ -41,17 +41,13 @@ init_sliders_ui <- function(model) {
 
   lapply(states, function(s) {
 
-    val <- if (has_init) {
-      init[[s]] %||% 0
-    } else if (s == "S") {
-      N
-    } else if (s == "I") {
-      10
-    } else {
-      0
-    }
+    val <- init[[s]] %||% 0
 
-    max_val <- max(100, 10 * max(1, val), 0.1 * N)
+    max_val <- if (s == "S") {
+      N
+    } else {
+      max(100, 5 * val)
+    }
 
     shiny::sliderInput(
       inputId = paste0("init_", s),
