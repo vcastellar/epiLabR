@@ -1,4 +1,4 @@
-^SIR\.Rproj$
+^epiLabR\.Rproj$
 ^\.Rproj\.user$
 ^\.git$
 ^\.github$
@@ -6,6 +6,6 @@
 ^\.Rhistory$
 ^\.Rd2pdf.*$
 ^\.\.[Rr]check$
-^SIR\.pdf$
+^epiLabR\.pdf$
 ^\.pdf$
 ^LICENSE\.md$

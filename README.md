@@ -1,6 +1,6 @@
-# SIR
+# epiLabR
 
-**SIR** is an R package for simulating and exploring deterministic
+**epiLabR** is an R package for simulating and exploring deterministic
 compartmental epidemiological models formulated as systems of ordinary
 differential equations (ODEs).
 
@@ -37,8 +37,8 @@ included for interactive exploration.
 Install the package from source:
 
 ```r
-devtools::install_local("path/to/SIR")
-library(SIR)
+devtools::install_local("path/to/epiLabR")
+library(epiLabR)
 
 sim <- simulate_epi(
   model = SIR_MODEL,
@@ -54,7 +54,7 @@ plot(sim, what = "incidence")
 You can also install from GitHub:
 
 ```r
-remotes::install_github("vcastellar/SIR")
+remotes::install_github("vcastellar/epiLabR")
 ```
 
 ## Defining a custom model
@@ -125,7 +125,7 @@ The package includes a Shiny app for interactive exploration of epidemic
 models.
 
 ```r
-library(SIR)
+library(epiLabR)
 run_epi_app()
 ```
 
@@ -141,7 +141,7 @@ dependency.
 
 ## Scope and philosophy
 
-SIR is designed as a simulation-oriented package:
+epiLabR is designed as a simulation-oriented package:
 
 - deterministic models
 - explicit compartmental structure

@@ -1,6 +1,6 @@
 bibentry(
   bibtype = "Manual",
-  title = "SIR: Educational Framework for Epidemiological Modelling",
+  title = "epiLabR: Educational Framework for Epidemiological Modelling",
   author = "Vicente Castellar",
   year = "2026",
   note = "R package version 0.3.0"

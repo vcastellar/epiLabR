@@ -1,6 +1,6 @@
-Package: SIR
+Package: epiLabR
 Type: Package
-Title: SIR: Educational Framework for Epidemiological Modelling
+Title: epiLabR: Educational Framework for Epidemiological Modelling
 Version: 0.3.0
 Author: Vicente Castellar [aut, cre]
 Maintainer: Vicente Castellar <vic.castellar@gmail.com>
@@ -36,8 +36,8 @@ Config/testthat/edition: 3
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-URL: https://github.com/vcastellar/SIR
-BugReports: https://github.com/vcastellar/SIR/issues
+URL: https://github.com/vcastellar/epiLabR
+BugReports: https://github.com/vcastellar/epiLabR/issues
 Collate: 
     'constructor.R'
     'MODEL_SEIR.R'

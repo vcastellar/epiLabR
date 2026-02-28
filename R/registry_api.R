@@ -78,7 +78,7 @@ register_epi_model <- function(model) {
 #'
 #' @examples
 #' \dontrun{
-#' library(SIR)
+#' library(epiLabR)
 #' list_models()
 #' }
 #'

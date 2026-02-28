@@ -24,7 +24,7 @@ The returned value is a character vector containing model names.
 }
 \examples{
 \dontrun{
-library(SIR)
+library(epiLabR)
 list_models()
 }
 

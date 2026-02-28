@@ -17,14 +17,14 @@ knitr::opts_chunk$set(
 ## Introduction
 
 This vignette converts the `demo/sir_demo.R` workflow into a reproducible,
-narrative document for the **SIR** package. In addition to the original demo
+narrative document for the **epiLabR** package. In addition to the original demo
 steps, it includes practical analysis extensions such as scenario comparison
 and epidemiological summary metrics.
 
 ## 1. Load the package
 
 ```{r}
-library(SIR)
+library(epiLabR)
 ```
 
 ## 2. Define the SIRV model
