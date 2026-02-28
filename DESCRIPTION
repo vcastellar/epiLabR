@@ -22,16 +22,15 @@ LazyData: false
 Depends:
     R (>= 4.1.0)
 Imports:
-    deSolve,
-    stats,
-    shiny
+    deSolve
 Suggests:
     ggplot2,
     devtools,
     roxygen2,
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    shiny
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
