@@ -1,0 +1,188 @@
+app_server <- function(input, output, session, models) {
+
+  ## ---------------------------------------------------------
+  ## Auxiliary reactive values
+  ## ---------------------------------------------------------
+  rv <- shiny::reactiveValues(
+    derived_selected = NULL
+  )
+
+  ## ---------------------------------------------------------
+  ## Selected model
+  ## ---------------------------------------------------------
+  model <- shiny::reactive({
+    shiny::req(input$model_name)
+    models[[input$model_name]]
+  })
+
+  ## ---------------------------------------------------------
+  ## Dynamic UI
+  ## ---------------------------------------------------------
+  output$params_ui <- shiny::renderUI({
+    shiny::tagList(param_sliders_ui(model()))
+  })
+
+  output$init_ui <- shiny::renderUI({
+    shiny::tagList(init_sliders_ui(model()))
+  })
+
+  output$states_select_ui <- shiny::renderUI({
+    shiny::checkboxGroupInput(
+      "states_to_plot",
+      NULL,
+      choices  = model()$states,
+      selected = model()$states,
+      inline   = TRUE
+    )
+  })
+
+  output$rhs_equations <- shiny::renderText({
+    rhs_text(model())
+  })
+
+  ## ---------------------------------------------------------
+  ## Parameters
+  ## ---------------------------------------------------------
+  parms <- shiny::reactive({
+    shiny::req(model())
+
+    vals <- vapply(
+      model()$par_names,
+      function(p) {
+        id <- paste0("par_", p)
+        shiny::req(!is.null(input[[id]]))
+        input[[id]]
+      },
+      numeric(1)
+    )
+
+    shiny::req(!any(is.na(vals)))
+    setNames(as.numeric(vals), model()$par_names)
+  })
+
+
+
+  ## ---------------------------------------------------------
+  ## Initial states
+  ## ---------------------------------------------------------
+  init <- shiny::reactive({
+    shiny::req(model())
+
+    vals <- vapply(
+      model()$states,
+      function(s) {
+        id <- paste0("init_", s)
+        shiny::req(!is.null(input[[id]]))
+        input[[id]]
+      },
+      numeric(1)
+    )
+
+    shiny::req(!any(is.na(vals)))
+    setNames(as.numeric(vals), model()$states)
+  })
+
+  ## ---------------------------------------------------------
+  ## Simulation
+  ## ---------------------------------------------------------
+  sim <- shiny::reactive({
+    shiny::req(parms(), init(), input$t_max)
+
+    simulate_epi(
+      model = model(),
+      times = 0:input$t_max,
+      parms = parms(),
+      init  = init()
+    )
+  })
+
+  ## ---------------------------------------------------------
+  ## Derived variable selection handling (sticky)
+  ## ---------------------------------------------------------
+  observeEvent(sim(), {
+    derived <- sim()$derived
+    if (is.null(derived) || ncol(derived) <= 1) return()
+
+    derived_names <- setdiff(names(derived), "time")
+
+    if (is.null(rv$derived_selected)) {
+      # first time
+      rv$derived_selected <- derived_names
+    } else {
+      # keep only those that still exist
+      rv$derived_selected <- intersect(rv$derived_selected, derived_names)
+    }
+  }, ignoreInit = TRUE)
+
+  observeEvent(input$derived_to_plot, {
+    rv$derived_selected <- input$derived_to_plot
+  }, ignoreInit = TRUE)
+
+  ## ---------------------------------------------------------
+  ## Derived variables selector
+  ## ---------------------------------------------------------
+  output$derived_select_ui <- shiny::renderUI({
+    shiny::req(sim())
+
+    derived <- sim()$derived
+    if (is.null(derived) || ncol(derived) <= 1) {
+      return(shiny::tags$em("No derived variables defined for this model"))
+    }
+
+    derived_names <- setdiff(names(derived), "time")
+
+    shiny::checkboxGroupInput(
+      "derived_to_plot",
+      NULL,
+      choices  = derived_names,
+      selected = rv$derived_selected,
+      inline   = TRUE
+    )
+  })
+
+  ## ---------------------------------------------------------
+  ## State plot
+  ## ---------------------------------------------------------
+  output$plot_states <- shiny::renderPlot({
+    shiny::req(sim(), input$states_to_plot)
+
+    states <- input$states_to_plot
+    if (length(states) == 0) {
+      plot.new()
+      text(0.5, 0.5, "No states selected")
+      return()
+    }
+
+    sim2 <- sim()
+    keep <- c("time", states)
+
+    sim2$states <- sim2$states[, keep, drop = FALSE]
+    sim2$model$states <- states
+
+    plot(sim2, what = "states")
+  })
+
+  ## ---------------------------------------------------------
+  ## Derived variables plot
+  ## ---------------------------------------------------------
+  output$plot_derived <- shiny::renderPlot({
+    shiny::req(sim(), input$derived_to_plot)
+
+    derived <- input$derived_to_plot
+    if (length(derived) == 0) {
+      plot.new()
+      text(0.5, 0.5, "No derived variables selected")
+      return()
+    }
+
+    sim2 <- sim()
+    keep <- c("time", derived)
+
+    derived_data <- sim2$derived
+
+    sim2$states <- derived_data[, keep, drop = FALSE]
+    sim2$model$states <- derived
+
+    plot(sim2, what = "states")
+  })
+}
