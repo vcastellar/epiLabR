@@ -13,7 +13,7 @@ Description: Simulation and exploration of deterministic compartmental epidemiol
     state trajectories over time, and explore model dynamics under different 
     parameter settings. Several classical models are included, such as SI, SIR, 
     SIR with vital dynamics, SIRS, SEIR, and SEIRS. A Shiny application is provided for 
-    interactive visualization and experimentation with epidemic scenarios.
+    interactive visualization and experimentation with epidemic scenarios
 License: GPL (>= 3)
 Encoding: UTF-8
 Depends: R (>= 4.1.0)
