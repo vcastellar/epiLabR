@@ -9,4 +9,8 @@
 \description{
 Return built-in epidemiological models
 }
+\value{
+A named list of built-in objects of class \code{"epi_model"}.
+List names are model identifiers and values are the corresponding model definitions.
+}
 \keyword{internal}

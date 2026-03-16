@@ -75,18 +75,18 @@
 #' ## ---------------------------------------------------------
 #' ## Option 1: Register the model (recommended)
 #' ## ---------------------------------------------------------
-#' \dontrun{
-#' register_epi_model(seird_model)
-#' run_epi_app()
+#' if (interactive()) {
+#'   register_epi_model(seird_model)
+#'   run_epi_app()
 #' }
 #'
 #' ## ---------------------------------------------------------
 #' ## Option 2: Provide model only for this session
 #' ## ---------------------------------------------------------
-#' \dontrun{
-#' run_epi_app(
-#'   models = list(SEIRD = seird_model)
-#' )
+#' if (interactive()) {
+#'   run_epi_app(
+#'     models = list(SEIRD = seird_model)
+#'   )
 #' }
 #'
 #' @seealso

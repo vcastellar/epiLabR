@@ -26,7 +26,7 @@ Built-in models can also be removed, but they will be restored
 the next time the package is reloaded.
 }
 \examples{
-\dontrun{
+\donttest{
 register_epi_model(SIR_MODEL)
 list_models()
 

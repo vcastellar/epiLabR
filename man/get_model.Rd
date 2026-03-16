@@ -24,7 +24,7 @@ If no model with the specified name exists in the registry,
 an error is raised.
 }
 \examples{
-\dontrun{
+\donttest{
 model <- get_model("SIR")
 print(model)
 }

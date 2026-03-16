@@ -27,7 +27,7 @@
 #' Invisibly returns \code{TRUE} on success.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m <- SIR_MODEL
 #' m$name <- "SIR_custom"
 #'
@@ -77,7 +77,7 @@ register_epi_model <- function(model) {
 #' A character vector with the names of registered models.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(epiLabR)
 #' list_models()
 #' }
@@ -111,7 +111,7 @@ list_models <- function() {
 #' An object of class \code{"epi_model"}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' model <- get_model("SIR")
 #' print(model)
 #' }
@@ -152,7 +152,7 @@ get_model <- function(name) {
 #' Invisibly returns \code{TRUE} on success.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' register_epi_model(SIR_MODEL)
 #' list_models()
 #'

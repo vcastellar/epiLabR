@@ -1,5 +1,7 @@
 #' Return built-in epidemiological models
 #'
+#' @return A named list of built-in objects of class \code{"epi_model"}.
+#' List names are model identifiers and values are the corresponding model definitions.
 #' @keywords internal
 #' @export
 .get_builtin_models <- function() {
