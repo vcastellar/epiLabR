@@ -23,7 +23,7 @@ The registry contains:
 The returned value is a character vector containing model names.
 }
 \examples{
-\dontrun{
+\donttest{
 library(epiLabR)
 list_models()
 }
