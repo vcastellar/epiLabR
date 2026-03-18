@@ -1,6 +1,7 @@
 #' Plot a simulated epidemic
 #'
 #' @name plot.sim_epi
+#' @method plot sim_epi
 #'
 #' @description
 #' Plot method for objects of class \code{"sim_epi"} as returned by
@@ -268,6 +269,7 @@ plot.sim_epi <- function(x,
 #' Summarize a simulated epidemic
 #'
 #' @name summary.sim_epi
+#' @method summary sim_epi
 #'
 #' @description
 #' Summary method for objects of class \code{"sim_epi"} as returned by
@@ -345,6 +347,7 @@ summary.sim_epi <- function(object, ...) {
 #' Print a simulated epidemic
 #'
 #' @name print.sim_epi
+#' @method print sim_epi
 #'
 #' @description
 #' Print method for objects of class \code{"sim_epi"} as returned by
