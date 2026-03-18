@@ -78,7 +78,9 @@
 #' ## Option 1: Register the model (recommended)
 #' ## ---------------------------------------------------------
 #' if (interactive()) {
-#'   register_epi_model(seird_model)
+#' if (!"SEIRD" %in% list_models()) {
+#'    register_epi_model(seird_model)
+#' }
 #'   run_epi_app()
 #' }
 #'
@@ -86,6 +88,9 @@
 #' ## Option 2: Provide model only for this session
 #' ## ---------------------------------------------------------
 #' if (interactive()) {
+#' #' if ("SEIRD" %in% list_models()) {
+#'    unregister_epi_model("SEIRD")
+#' }
 #'   run_epi_app(
 #'     models = list(SEIRD = seird_model)
 #'   )
