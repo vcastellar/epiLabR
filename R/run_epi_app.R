@@ -88,7 +88,7 @@
 #' ## Option 2: Provide model only for this session
 #' ## ---------------------------------------------------------
 #' if (interactive()) {
-#' #' if ("SEIRD" %in% list_models()) {
+#' if ("SEIRD" %in% list_models()) {
 #'    unregister_epi_model("SEIRD")
 #' }
 #'   run_epi_app(
