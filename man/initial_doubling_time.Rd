@@ -17,7 +17,10 @@ sequence is assumed.}
 the exponential growth rate. Default is 7.}
 }
 \value{
-A numeric scalar giving the estimated initial doubling time.
+A numeric scalar giving the estimated initial doubling time. The
+value is on the same time scale as \code{time}; \code{Inf} is returned when
+the estimated initial growth rate is non-positive, meaning the epidemic is
+not doubling.
 }
 \description{
 Estimates the epidemic doubling time during the initial

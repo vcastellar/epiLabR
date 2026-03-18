@@ -20,12 +20,11 @@ window. Default is 1 (no smoothing).}
 \code{log(0)}. Default is 0.5.}
 }
 \value{
-A data.frame with:
-\describe{
-\item{time}{Time points corresponding to the estimated doubling times.}
-\item{doubling_time}{Time required for incidence to double
-under exponential growth.}
-}
+A \code{data.frame} with one row per estimated interval and two
+columns: \code{time}, containing the time points associated with each
+estimate, and \code{doubling_time}, containing the implied doubling time on
+the same scale as \code{time}. Values of \code{Inf} indicate intervals in
+which incidence is not increasing.
 }
 \description{
 Computes the time-varying doubling time from an incidence curve.

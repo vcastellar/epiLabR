@@ -18,7 +18,9 @@ sequence is assumed.}
 Must be at least 2. Default is 7.}
 }
 \value{
-A numeric scalar giving the estimated exponential growth rate.
+A numeric scalar giving the estimated initial exponential growth
+rate \eqn{r}. Positive values indicate early epidemic growth, values near
+zero indicate little change, and negative values indicate decline.
 }
 \description{
 Estimates the early exponential growth rate by fitting a log-linear model

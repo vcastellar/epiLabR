@@ -10,7 +10,9 @@ register_epi_model(model)
 \item{model}{An object of class \code{"epi_model"}.}
 }
 \value{
-Invisibly returns \code{TRUE} on success.
+Invisibly returns \code{TRUE}. This logical scalar indicates that
+the supplied \code{epi_model} object was successfully added to the in-memory
+registry for the current R session.
 }
 \description{
 Registers an object of class \code{"epi_model"} in the internal

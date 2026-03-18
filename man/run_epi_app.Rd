@@ -13,8 +13,10 @@ registry and become available in the Shiny interface. If \code{NULL}
 (default), only registered models are used.}
 }
 \value{
-A \code{shiny.appobj}. This function is called for its side effects
-(launching the Shiny application).
+A \code{shiny.appobj} representing the constructed Shiny
+application. In typical interactive use the function is called for its side
+effect of launching the app, and the returned object contains the UI and
+server definitions used for that session.
 }
 \description{
 Launches the interactive Shiny application for simulating deterministic

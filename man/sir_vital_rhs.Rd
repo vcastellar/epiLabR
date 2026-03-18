@@ -14,7 +14,12 @@ sir_vital_rhs(time, state, parms)
 \item{parms}{Named numeric vector of model parameters.}
 }
 \value{
-A list containing derivatives and declared derived variables.
+A list in the format required by \code{deSolve::ode()}. The first
+element is a numeric vector of derivatives for the state variables, and the
+remaining named elements are the derived outputs \code{births},
+\code{infection}, \code{recovery}, \code{death_S}, \code{death_I}, and
+\code{death_R}, which describe the demographic and epidemiological flows at
+the current time point.
 }
 \description{
 Internal function defining the system of differential equations

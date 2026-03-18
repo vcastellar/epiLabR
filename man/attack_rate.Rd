@@ -14,7 +14,9 @@ same length as \code{incidence}, contain no missing values, and be
 strictly increasing. If \code{NULL}, unit time steps are assumed.}
 }
 \value{
-A numeric scalar giving the cumulative attack rate.
+A numeric scalar giving the cumulative attack rate over the input
+time horizon. It represents the total number of incident events, or the
+time-integrated incidence when irregular observation times are supplied.
 }
 \description{
 Computes the cumulative number of events from an incidence curve.

@@ -13,7 +13,10 @@
 (currently unused).}
 }
 \value{
-The input object \code{x}, invisibly.
+Invisibly returns the input object \code{x}, which remains an object
+of class \code{"epi_model"}. The return value is provided for method
+consistency; the main effect is printing a human-readable summary to the
+console.
 }
 \description{
 Custom \code{print()} method for objects of class \code{"epi_model"}.

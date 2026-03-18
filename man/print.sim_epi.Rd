@@ -14,7 +14,9 @@
 compatibility with the generic \code{\link{print}} function.}
 }
 \value{
-Invisibly returns the input object \code{x}.
+Invisibly returns the input object \code{x}, which remains of class
+\code{"sim_epi"}. The return value mainly supports method chaining; the
+primary effect is printing a concise simulation summary to the console.
 }
 \description{
 Print method for objects of class \code{"sim_epi"} as returned by

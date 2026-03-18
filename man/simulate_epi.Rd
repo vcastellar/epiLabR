@@ -43,17 +43,14 @@ deterministic ODE solution.}
 \code{\link[deSolve]{ode}}, such as \code{method}, \code{rtol}, or \code{atol}.}
 }
 \value{
-An object of class \code{"sim_epi"}, containing:
-\describe{
-\item{model}{The \code{epi_model} object used to generate the simulation.}
-\item{params}{A list of model parameter values used in the simulation.}
-\item{states}{A data frame with columns \code{time} and the model state
-variables, containing the simulated state trajectories.}
-\item{derived}{A data frame with columns \code{time} and the declared
-derived variables, or \code{NULL} if the model defines none.}
-\item{time_unit}{Character string giving the time unit associated with
-the simulation.}
-}
+An object of class \code{"sim_epi"}, implemented as a list with
+components \code{model}, \code{params}, \code{states}, \code{derived}, and
+\code{time_unit}. The \code{states} component is a \code{data.frame} of
+simulated compartment trajectories over time, while \code{derived} is either
+a \code{data.frame} of additional model outputs (for example incidence) or
+\code{NULL}. Together these components describe the simulated epidemic
+dynamics and provide the input used by the package's print, summary, plot,
+and metric functions.
 }
 \description{
 Simulates a deterministic compartmental epidemic model specified via an

@@ -20,12 +20,11 @@ window. Default is 1 (no smoothing).}
 \code{log(0)}. Default is 0.5.}
 }
 \value{
-A data.frame with:
-\describe{
-\item{time}{Time points corresponding to the estimated growth rates
-(the last point of each time interval).}
-\item{r}{Instantaneous growth rate values.}
-}
+A \code{data.frame} with one row per estimated interval and two
+columns: \code{time}, containing the time points associated with each growth
+rate estimate, and \code{r}, containing the corresponding instantaneous
+exponential growth rates. Positive \code{r} values indicate growth and
+negative values indicate decline.
 }
 \description{
 Computes the time-varying exponential growth rate from an incidence curve.

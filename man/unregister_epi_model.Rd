@@ -10,7 +10,9 @@ unregister_epi_model(name)
 \item{name}{Character scalar specifying the model name to remove.}
 }
 \value{
-Invisibly returns \code{TRUE} on success.
+Invisibly returns \code{TRUE}. This logical scalar indicates that
+the named model was successfully removed from the in-memory registry for the
+current R session.
 }
 \description{
 Removes a previously registered epidemiological model from the

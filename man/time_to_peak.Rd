@@ -14,8 +14,9 @@ same length as \code{incidence}. If \code{NULL}, a regular time
 sequence is assumed.}
 }
 \value{
-A numeric scalar giving the time at which incidence
-reaches its maximum.
+A numeric scalar giving the first time point at which the incidence
+curve reaches its maximum. This is the timing of peak incidence, not the
+peak incidence magnitude itself.
 }
 \description{
 Computes the time at which the incidence curve reaches its maximum.

@@ -14,7 +14,11 @@
 \code{\link{summary}}.}
 }
 \value{
-A named list with summary statistics describing the simulated epidemic.
+An object of class \code{"summary_sim_epi"}, implemented as a named
+list. The list always contains the \code{model} component, and may also
+include summary measures such as \code{peak_I}, \code{time_peak_I}, and
+\code{total_infections} when those quantities can be computed from the
+simulation output.
 }
 \description{
 Summary method for objects of class \code{"sim_epi"} as returned by

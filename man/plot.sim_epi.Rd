@@ -24,7 +24,9 @@ This argument is only used when \code{what = "states"}.}
 functions such as \code{\link{plot}} and \code{\link{matplot}}.}
 }
 \value{
-Invisibly returns the input object \code{x}.
+Invisibly returns the input object \code{x}, which remains of class
+\code{"sim_epi"}. The main effect is the side effect of drawing a plot of
+the selected state or derived trajectories.
 }
 \description{
 Plot method for objects of class \code{"sim_epi"} as returned by

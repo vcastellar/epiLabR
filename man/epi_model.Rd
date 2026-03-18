@@ -44,7 +44,11 @@ Names must match \code{par_names}.}
 variables. Names must match \code{states}.}
 }
 \value{
-An object of class \code{"epi_model"} containing the model definition.
+An object of class \code{"epi_model"}. The returned list stores the model
+definition in components named \code{name}, \code{rhs}, \code{par_names},
+\code{states}, \code{derived}, \code{lower}, \code{upper}, \code{defaults},
+and \code{init}, which are then used by downstream functions such as
+\code{simulate_epi()} to validate inputs and run simulations.
 }
 \description{
 Creates an \code{epi_model} object describing the structure of a deterministic

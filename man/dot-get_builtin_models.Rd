@@ -6,11 +6,13 @@
 \usage{
 .get_builtin_models()
 }
+\value{
+A named list whose elements are objects of class \code{"epi_model"}.
+Each list name is a built-in model identifier, and each value is the
+corresponding model definition returned for internal registry setup and
+discovery.
+}
 \description{
 Return built-in epidemiological models
-}
-\value{
-A named list of built-in objects of class \code{"epi_model"}.
-List names are model identifiers and values are the corresponding model definitions.
 }
 \keyword{internal}

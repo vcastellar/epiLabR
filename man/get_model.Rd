@@ -10,7 +10,9 @@ get_model(name)
 \item{name}{Character scalar specifying the model name.}
 }
 \value{
-An object of class \code{"epi_model"}.
+An object of class \code{"epi_model"}. The returned object is the
+full model definition stored under the requested name in the registry and
+can be passed directly to functions such as \code{simulate_epi()}.
 }
 \description{
 Retrieves a previously registered epidemiological model from the

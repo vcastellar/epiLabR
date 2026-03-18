@@ -13,11 +13,10 @@ peak_incidence(incidence, time = NULL)
 points. If \code{NULL}, a regular time sequence is assumed.}
 }
 \value{
-A list with:
-\describe{
-\item{peak}{Maximum incidence value.}
-\item{time}{Time at which the peak occurs.}
-}
+A named list with components \code{peak} and \code{time}.
+\code{peak} is a numeric scalar giving the maximum value attained by the
+incidence curve, and \code{time} is a numeric scalar giving the first time
+point at which that maximum occurs.
 }
 \description{
 Computes the maximum value of an incidence curve and

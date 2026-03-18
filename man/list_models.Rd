@@ -7,7 +7,10 @@
 list_models()
 }
 \value{
-A character vector with the names of registered models.
+A character vector containing the names of the models currently
+stored in the internal registry. Each element is a model identifier that can
+be passed to \code{get_model()} to retrieve the corresponding
+\code{epi_model} object.
 }
 \description{
 Returns the names of all epidemiological models currently stored
