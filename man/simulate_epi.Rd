@@ -129,7 +129,7 @@ integration method (typically \code{"lsoda"}).
 }
 \examples{
 ## ------------------------------------------------------------------
-## Example 1: SIR model
+## Example 1: SIR model (Susceptible-Infectious-Recovered)
 ## ------------------------------------------------------------------
 
 sim <- simulate_epi(

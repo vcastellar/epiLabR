@@ -24,7 +24,7 @@
 #'   variables of the model. Each state name must be unique.
 #'
 #' @param derived Optional character vector giving the names of derived
-#'   variables returned by the RHS and extracted by \code{simulate_epi()}.
+#'   variables returned by the right-hand side (RHS) function and extracted by \code{simulate_epi()}.
 #'
 #' @param lower Optional named numeric vector giving lower bounds for model
 #'   parameters. Names must match \code{par_names}.

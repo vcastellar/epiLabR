@@ -9,7 +9,8 @@
 #' either all model states, all model derived variables, or a single state/derived variable.
 #'
 #' Unlike earlier versions, this method does not assume a specific
-#' compartmental structure (e.g. SIR or SEIR). All available quantities that can
+#' compartmental structure (e.g. SIR, Susceptible-Infectious-Recovered, or
+#' SEIR, Susceptible-Exposed-Infectious-Recovered). All available quantities that can
 #' be plotted are taken directly from the states and derived variables declared in the
 #' underlying \code{\link{epi_model}} used to generate the simulation.
 #'
@@ -349,7 +350,8 @@ summary.sim_epi <- function(object, ...) {
 #' metrics derived from the simulation results.
 #'
 #' Unlike earlier versions, this method does not assume a specific compartmental
-#' structure (such as SIR or SEIR). Model-specific information is obtained directly
+#' structure (such as SIR, Susceptible-Infectious-Recovered, or SEIR,
+#' Susceptible-Exposed-Infectious-Recovered). Model-specific information is obtained directly
 #' from the \code{\link{epi_model}} object stored in \code{x$model}.
 #'
 #' @details
