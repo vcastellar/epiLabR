@@ -28,13 +28,14 @@ Built-in models can also be removed, but they will be restored
 the next time the package is reloaded.
 }
 \examples{
-\donttest{
-register_epi_model(SIR_MODEL)
+m <- SIR_MODEL
+m$name <- "SIR_temp"
+
+register_epi_model(m)
 list_models()
 
-unregister_epi_model("SIR")
+unregister_epi_model("SIR_temp")
 list_models()
-}
 
 }
 \seealso{

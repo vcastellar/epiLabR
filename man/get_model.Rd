@@ -26,10 +26,8 @@ If no model with the specified name exists in the registry,
 an error is raised.
 }
 \examples{
-\donttest{
 model <- get_model("SIR")
 print(model)
-}
 
 }
 \seealso{

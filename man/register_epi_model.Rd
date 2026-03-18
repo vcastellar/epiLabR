@@ -36,13 +36,11 @@ The registry is session-scoped and is reinitialized when the package
 is reloaded.
 }
 \examples{
-\donttest{
 m <- SIR_MODEL
 m$name <- "SIR_custom"
 
 register_epi_model(m)
 list_models()
-}
 
 }
 \seealso{

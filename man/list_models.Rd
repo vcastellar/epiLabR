@@ -26,10 +26,7 @@ The registry contains:
 The returned value is a character vector containing model names.
 }
 \examples{
-\donttest{
-library(epiLabR)
 list_models()
-}
 
 }
 \seealso{
