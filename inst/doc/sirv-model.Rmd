@@ -1,8 +1,8 @@
 ---
-title: "SIR model with vaccination (SIRV): from demo to vignette"
+title: "SIR model with vaccination (SIRV, Susceptible-Infectious-Recovered-Vaccinated): from demo to vignette"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{SIR model with vaccination (SIRV)}
+  %\VignetteIndexEntry{SIR model with vaccination (SIRV, Susceptible-Infectious-Recovered-Vaccinated)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -28,6 +28,8 @@ library(epiLabR)
 ```
 
 ## 2. Define the SIRV model
+
+Here SIRV stands for Susceptible-Infectious-Recovered-Vaccinated.
 
 We start from a model with four compartments:
 
@@ -155,5 +157,6 @@ list_models()
 ## 7. Next steps
 
 - Adapt initial conditions for different population contexts.
-- Add waning immunity (for example, a SIRVS-like extension).
+- Add waning immunity (for example, a SIRVS-like extension, for
+  Susceptible-Infectious-Recovered-Vaccinated-Susceptible dynamics).
 - Use `run_epi_app()` for interactive scenario exploration.

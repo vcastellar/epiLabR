@@ -33,7 +33,8 @@ interface for simulated epidemic trajectories by allowing the user to plot
 either all model states, all model derived variables, or a single state/derived variable.
 
 Unlike earlier versions, this method does not assume a specific
-compartmental structure (e.g. SIR or SEIR). All available quantities that can
+compartmental structure (e.g. SIR, Susceptible-Infectious-Recovered, or
+SEIR, Susceptible-Exposed-Infectious-Recovered). All available quantities that can
 be plotted are taken directly from the states and derived variables declared in the
 underlying \code{\link{epi_model}} used to generate the simulation.
 }

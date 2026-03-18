@@ -16,12 +16,12 @@ included for interactive exploration.
 - Deterministic simulation of epidemic models using ODEs
 - Flexible definition of custom compartmental models
 - Several classical models included:
-  - SI
-  - SIR
-  - SIR with vital dynamics
-  - SIRS
-  - SEIR
-  - SEIRS
+  - SI (Susceptible-Infectious)
+  - SIR (Susceptible-Infectious-Recovered)
+  - SIR-V (Susceptible-Infectious-Recovered with vital dynamics)
+  - SIRS (Susceptible-Infectious-Recovered-Susceptible)
+  - SEIR (Susceptible-Exposed-Infectious-Recovered)
+  - SEIRS (Susceptible-Exposed-Infectious-Recovered-Susceptible)
 - Numerical integration based on `deSolve`
 - Built-in post-simulation metrics (e.g., peak incidence, attack rate, growth rates)
 - In-session model registry (`register_epi_model()`, `list_models()`, `get_model()`)
@@ -178,6 +178,11 @@ For better numerical robustness:
 
 ## Integration methods: practical note (`lsoda`, `rk4`, ...)
 
+`lsoda` refers to the Livermore Solver for Ordinary Differential Equations with
+automatic method switching, and `rk4` refers to the classical fourth-order
+Runge-Kutta method.
+
+
 `simulate_epi()` forwards extra arguments to `deSolve::ode()`, so you can
 choose integration methods such as `method = "lsoda"` (default in most setups)
 or `method = "rk4"`.
@@ -188,7 +193,7 @@ Quick guidance:
   non-stiff and stiff strategies.
 - **`rk4`**: fixed-step explicit Runge-Kutta; often useful for teaching,
   reproducibility at fixed grids, or simple smooth systems.
-- **Other `deSolve` methods** (e.g., `ode45`, `bdf`): can be tested when
+- **Other `deSolve` methods** (e.g., `ode45`, `bdf`, the backward differentiation formula method): can be tested when
   stiffness, speed, or accuracy requirements differ.
 
 > Benchmark note: runtime and accuracy are model-dependent. In practice,

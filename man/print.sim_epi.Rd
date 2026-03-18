@@ -24,7 +24,8 @@ the simulation time horizon, the parameter values used, and selected outcome
 metrics derived from the simulation results.
 
 Unlike earlier versions, this method does not assume a specific compartmental
-structure (such as SIR or SEIR). Model-specific information is obtained directly
+structure (such as SIR, Susceptible-Infectious-Recovered, or SEIR,
+Susceptible-Exposed-Infectious-Recovered). Model-specific information is obtained directly
 from the \code{\link{epi_model}} object stored in \code{x$model}.
 }
 \details{

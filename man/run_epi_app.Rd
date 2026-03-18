@@ -47,6 +47,7 @@ including state variables and parameter definitions.
 \examples{
 ## ---------------------------------------------------------
 ## Define a custom SEIRD model
+## (SEIRD = Susceptible-Exposed-Infectious-Recovered-Deceased)
 ## ---------------------------------------------------------
 
 seird_rhs <- function(time, state, parms) {

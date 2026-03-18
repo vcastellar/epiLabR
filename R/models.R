@@ -22,7 +22,8 @@
 #' @keywords internal
 #' @examples
 #' ## ---------------------------------------------------------------
-#' ## Define and register a new epidemiological model (SIRD)
+#' ## Define and register a new epidemiological model
+#' ## (SIRD = Susceptible-Infectious-Recovered-Deceased)
 #' ## ---------------------------------------------------------------
 #'
 #' sird_rhs <- function(time, state, parms) {
