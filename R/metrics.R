@@ -41,12 +41,10 @@ get_derived <- function(sim, variable) {
 #' @param time Optional numeric vector of the same length giving time
 #' points. If \code{NULL}, a regular time sequence is assumed.
 #'
-#' @return
-#' A list with:
-#' \describe{
-#'   \item{peak}{Maximum incidence value.}
-#'   \item{time}{Time at which the peak occurs.}
-#' }
+#' @return A named list with components \code{peak} and \code{time}.
+#' \code{peak} is a numeric scalar giving the maximum value attained by the
+#' incidence curve, and \code{time} is a numeric scalar giving the first time
+#' point at which that maximum occurs.
 #'
 #' @examples
 #' inc  <- c(1, 3, 7, 5, 2)
@@ -98,9 +96,9 @@ peak_incidence <- function(incidence, time = NULL) {
 #' same length as \code{incidence}. If \code{NULL}, a regular time
 #' sequence is assumed.
 #'
-#' @return
-#' A numeric scalar giving the time at which incidence
-#' reaches its maximum.
+#' @return A numeric scalar giving the first time point at which the incidence
+#' curve reaches its maximum. This is the timing of peak incidence, not the
+#' peak incidence magnitude itself.
 #'
 #' @examples
 #' inc  <- c(1, 4, 6, 3)
@@ -150,12 +148,10 @@ time_to_peak <- function(incidence, time = NULL) {
 #' same length as \code{prevalence}. If \code{NULL}, a regular time
 #' sequence is assumed.
 #'
-#' @return
-#' A list with:
-#' \describe{
-#'   \item{peak}{Maximum prevalence value.}
-#'   \item{time}{Time at which the peak occurs.}
-#' }
+#' @return A named list with components \code{peak} and \code{time}.
+#' \code{peak} is a numeric scalar giving the maximum prevalence observed, and
+#' \code{time} is a numeric scalar giving the first time point at which that
+#' maximum occurs.
 #'
 #' @examples
 #' I <- c(1, 5, 8, 4, 2)
@@ -208,8 +204,9 @@ peak_prevalence <- function(prevalence, time = NULL) {
 #' same length as \code{incidence}, contain no missing values, and be
 #' strictly increasing. If \code{NULL}, unit time steps are assumed.
 #'
-#' @return
-#' A numeric scalar giving the cumulative attack rate.
+#' @return A numeric scalar giving the cumulative attack rate over the input
+#' time horizon. It represents the total number of incident events, or the
+#' time-integrated incidence when irregular observation times are supplied.
 #'
 #' @examples
 #' inc <- c(1, 2, 3, 4)
@@ -273,8 +270,9 @@ attack_rate <- function(incidence, time = NULL) {
 #' @param n Integer. Number of initial time points used for estimation.
 #' Must be at least 2. Default is 7.
 #'
-#' @return
-#' A numeric scalar giving the estimated exponential growth rate.
+#' @return A numeric scalar giving the estimated initial exponential growth
+#' rate \eqn{r}. Positive values indicate early epidemic growth, values near
+#' zero indicate little change, and negative values indicate decline.
 #'
 #' @export
 initial_growth_rate <- function(incidence,
@@ -337,8 +335,10 @@ initial_growth_rate <- function(incidence,
 #' @param n Integer. Number of initial time points used to estimate
 #' the exponential growth rate. Default is 7.
 #'
-#' @return
-#' A numeric scalar giving the estimated initial doubling time.
+#' @return A numeric scalar giving the estimated initial doubling time. The
+#' value is on the same time scale as \code{time}; \code{Inf} is returned when
+#' the estimated initial growth rate is non-positive, meaning the epidemic is
+#' not doubling.
 #'
 #' @export
 initial_doubling_time <- function(incidence,
@@ -408,13 +408,11 @@ initial_doubling_time <- function(incidence,
 #' @param offset Numeric. Small positive constant added to avoid
 #' \code{log(0)}. Default is 0.5.
 #'
-#' @return
-#' A data.frame with:
-#' \describe{
-#'   \item{time}{Time points corresponding to the estimated growth rates
-#'   (the last point of each time interval).}
-#'   \item{r}{Instantaneous growth rate values.}
-#' }
+#' @return A \code{data.frame} with one row per estimated interval and two
+#' columns: \code{time}, containing the time points associated with each growth
+#' rate estimate, and \code{r}, containing the corresponding instantaneous
+#' exponential growth rates. Positive \code{r} values indicate growth and
+#' negative values indicate decline.
 #'
 #' @export
 instantaneous_growth_rate <- function(incidence,
@@ -492,13 +490,11 @@ instantaneous_growth_rate <- function(incidence,
 #' @param offset Numeric. Small positive constant added to avoid
 #' \code{log(0)}. Default is 0.5.
 #'
-#' @return
-#' A data.frame with:
-#' \describe{
-#'   \item{time}{Time points corresponding to the estimated doubling times.}
-#'   \item{doubling_time}{Time required for incidence to double
-#'   under exponential growth.}
-#' }
+#' @return A \code{data.frame} with one row per estimated interval and two
+#' columns: \code{time}, containing the time points associated with each
+#' estimate, and \code{doubling_time}, containing the implied doubling time on
+#' the same scale as \code{time}. Values of \code{Inf} indicate intervals in
+#' which incidence is not increasing.
 #'
 #' @export
 doubling_time_ts <- function(incidence,

@@ -33,9 +33,10 @@
 #' User-defined models must be fully specified \code{epi_model} objects,
 #' including state variables and parameter definitions.
 #'
-#' @return
-#' A \code{shiny.appobj}. This function is called for its side effects
-#' (launching the Shiny application).
+#' @return A \code{shiny.appobj} representing the constructed Shiny
+#' application. In typical interactive use the function is called for its side
+#' effect of launching the app, and the returned object contains the UI and
+#' server definitions used for that session.
 #'
 #' @examples
 #' ## ---------------------------------------------------------
@@ -142,4 +143,3 @@ run_epi_app <- function(models = NULL) {
     }
   )
 }
-

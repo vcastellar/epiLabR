@@ -23,8 +23,9 @@
 #' The registry is session-scoped and is reinitialized when the package
 #' is reloaded.
 #'
-#' @return
-#' Invisibly returns \code{TRUE} on success.
+#' @return Invisibly returns \code{TRUE}. This logical scalar indicates that
+#' the supplied \code{epi_model} object was successfully added to the in-memory
+#' registry for the current R session.
 #'
 #' @examples
 #' \donttest{
@@ -73,8 +74,10 @@ register_epi_model <- function(model) {
 #'
 #' The returned value is a character vector containing model names.
 #'
-#' @return
-#' A character vector with the names of registered models.
+#' @return A character vector containing the names of the models currently
+#' stored in the internal registry. Each element is a model identifier that can
+#' be passed to \code{get_model()} to retrieve the corresponding
+#' \code{epi_model} object.
 #'
 #' @examples
 #' \donttest{
@@ -107,8 +110,9 @@ list_models <- function() {
 #' If no model with the specified name exists in the registry,
 #' an error is raised.
 #'
-#' @return
-#' An object of class \code{"epi_model"}.
+#' @return An object of class \code{"epi_model"}. The returned object is the
+#' full model definition stored under the requested name in the registry and
+#' can be passed directly to functions such as \code{simulate_epi()}.
 #'
 #' @examples
 #' \donttest{
@@ -148,8 +152,9 @@ get_model <- function(name) {
 #' Built-in models can also be removed, but they will be restored
 #' the next time the package is reloaded.
 #'
-#' @return
-#' Invisibly returns \code{TRUE} on success.
+#' @return Invisibly returns \code{TRUE}. This logical scalar indicates that
+#' the named model was successfully removed from the in-memory registry for the
+#' current R session.
 #'
 #' @examples
 #' \donttest{
@@ -176,7 +181,6 @@ unregister_epi_model <- function(name) {
 
   invisible(TRUE)
 }
-
 
 
 

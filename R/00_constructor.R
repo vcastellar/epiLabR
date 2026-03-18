@@ -39,7 +39,11 @@
 #'   variables. Names must match \code{states}.
 #'
 #' @return
-#' An object of class \code{"epi_model"} containing the model definition.
+#' An object of class \code{"epi_model"}. The returned list stores the model
+#' definition in components named \code{name}, \code{rhs}, \code{par_names},
+#' \code{states}, \code{derived}, \code{lower}, \code{upper}, \code{defaults},
+#' and \code{init}, which are then used by downstream functions such as
+#' \code{simulate_epi()} to validate inputs and run simulations.
 #'
 #' @seealso
 #' \code{\link{simulate_epi}}
@@ -141,7 +145,10 @@ epi_model <- function(name,
 #' @param ... Additional arguments passed to or from other methods
 #'   (currently unused).
 #'
-#' @return The input object `x`, invisibly.
+#' @return Invisibly returns the input object \code{x}, which remains an object
+#' of class \code{"epi_model"}. The return value is provided for method
+#' consistency; the main effect is printing a human-readable summary to the
+#' console.
 #'
 #' @method print epi_model
 #' @export
