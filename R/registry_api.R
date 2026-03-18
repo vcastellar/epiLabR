@@ -28,13 +28,11 @@
 #' registry for the current R session.
 #'
 #' @examples
-#' \donttest{
 #' m <- SIR_MODEL
 #' m$name <- "SIR_custom"
 #'
 #' register_epi_model(m)
 #' list_models()
-#' }
 #'
 #' @seealso
 #' \code{\link{list_models}},
@@ -80,10 +78,7 @@ register_epi_model <- function(model) {
 #' \code{epi_model} object.
 #'
 #' @examples
-#' \donttest{
-#' library(epiLabR)
 #' list_models()
-#' }
 #'
 #' @seealso
 #' \code{\link{register_epi_model}},
@@ -115,10 +110,8 @@ list_models <- function() {
 #' can be passed directly to functions such as \code{simulate_epi()}.
 #'
 #' @examples
-#' \donttest{
 #' model <- get_model("SIR")
 #' print(model)
-#' }
 #'
 #' @seealso
 #' \code{\link{register_epi_model}},
@@ -157,13 +150,14 @@ get_model <- function(name) {
 #' current R session.
 #'
 #' @examples
-#' \donttest{
-#' register_epi_model(SIR_MODEL)
+#' m <- SIR_MODEL
+#' m$name <- "SIR_temp"
+#'
+#' register_epi_model(m)
 #' list_models()
 #'
-#' unregister_epi_model("SIR")
+#' unregister_epi_model("SIR_temp")
 #' list_models()
-#' }
 #'
 #' @seealso
 #' \code{\link{register_epi_model}},

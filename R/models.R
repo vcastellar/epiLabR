@@ -65,6 +65,8 @@
 #'
 #' plot(sim)
 #' plot(sim, what = "derived")
-#' run_epi_app(list(SIRD = SIRD_MODEL))
+#' if (interactive()) {
+#'   run_epi_app(list(SIRD = SIRD_MODEL))
+#' }
 
 
