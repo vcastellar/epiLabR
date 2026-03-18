@@ -1,7 +1,9 @@
 #' Return built-in epidemiological models
 #'
-#' @return A named list of built-in objects of class \code{"epi_model"}.
-#' List names are model identifiers and values are the corresponding model definitions.
+#' @return A named list whose elements are objects of class \code{"epi_model"}.
+#' Each list name is a built-in model identifier, and each value is the
+#' corresponding model definition returned for internal registry setup and
+#' discovery.
 #' @keywords internal
 #' @export
 .get_builtin_models <- function() {
@@ -64,6 +66,5 @@
 #' plot(sim)
 #' plot(sim, what = "derived")
 #' run_epi_app(list(SIRD = SIRD_MODEL))
-
 
 

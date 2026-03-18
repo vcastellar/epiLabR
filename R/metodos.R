@@ -53,8 +53,9 @@
 #' @param ... Additional graphical parameters passed to base plotting
 #'   functions such as \code{\link{plot}} and \code{\link{matplot}}.
 #'
-#' @return
-#' Invisibly returns the input object \code{x}.
+#' @return Invisibly returns the input object \code{x}, which remains of class
+#' \code{"sim_epi"}. The main effect is the side effect of drawing a plot of
+#' the selected state or derived trajectories.
 #'
 #' @seealso
 #' \code{\link{simulate_epi}}, \code{\link{summary.sim_epi}},
@@ -293,8 +294,11 @@ plot.sim_epi <- function(x,
 #' @param ... Currently unused; included for compatibility with generic
 #'   \code{\link{summary}}.
 #'
-#' @return
-#' A named list with summary statistics describing the simulated epidemic.
+#' @return An object of class \code{"summary_sim_epi"}, implemented as a named
+#' list. The list always contains the \code{model} component, and may also
+#' include summary measures such as \code{peak_I}, \code{time_peak_I}, and
+#' \code{total_infections} when those quantities can be computed from the
+#' simulation output.
 #'
 #' @seealso
 #' \code{\link{simulate_epi}}, \code{\link{plot.sim_epi}}
@@ -378,8 +382,9 @@ summary.sim_epi <- function(object, ...) {
 #' @param ... Additional arguments ignored by this method; included for
 #'   compatibility with the generic \code{\link{print}} function.
 #'
-#' @return
-#' Invisibly returns the input object \code{x}.
+#' @return Invisibly returns the input object \code{x}, which remains of class
+#' \code{"sim_epi"}. The return value mainly supports method chaining; the
+#' primary effect is printing a concise simulation summary to the console.
 #'
 #' @seealso
 #' \code{\link{simulate_epi}}, \code{\link{summary.sim_epi}},

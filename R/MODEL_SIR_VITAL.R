@@ -9,8 +9,12 @@
 #' @param state Named numeric vector of state variables.
 #' @param parms Named numeric vector of model parameters.
 #'
-#' @return
-#' A list containing derivatives and declared derived variables.
+#' @return A list in the format required by \code{deSolve::ode()}. The first
+#' element is a numeric vector of derivatives for the state variables, and the
+#' remaining named elements are the derived outputs \code{births},
+#' \code{infection}, \code{recovery}, \code{death_S}, \code{death_I}, and
+#' \code{death_R}, which describe the demographic and epidemiological flows at
+#' the current time point.
 #'
 #' @keywords internal
 sir_vital_rhs <- function(time, state, parms) {
