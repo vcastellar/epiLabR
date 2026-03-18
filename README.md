@@ -51,6 +51,14 @@ plot(sim)
 plot(sim, what = "incidence")
 ```
 
+> ℹ️ `library(epiLabR, lib.loc = "path/to/epiLabR")` does **not** load a
+> source checkout. R expects installed package metadata such as
+> `Meta/package.rds`, so loading the repository directory directly can produce
+> warnings like `package 'epiLabR' has no 'package.rds' in Meta/` and missing
+> S3 method registrations. Use `devtools::install_local()`,
+> `remotes::install_local()`, or `pkgload::load_all()` from the repository
+> root instead.
+
 You can also install from GitHub:
 
 ```r
