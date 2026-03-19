@@ -109,6 +109,12 @@ sir_vital_rhs <- function(time, state, parms) {
 #' @format
 #' An object of class \code{"epi_model"}.
 #'
+#' @return An object of class \code{"epi_model"} representing the predefined
+#' deterministic SIR model with vital dynamics and constant population size.
+#' The returned object contains the model right-hand side, declared state and
+#' derived variables, and parameter names needed by utilities such as
+#' \code{\link{simulate_epi}}.
+#'
 #' @examples
 #' ## Simulate a SIR epidemic with constant population size
 #' sim <- simulate_epi(
