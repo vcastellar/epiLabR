@@ -7,7 +7,7 @@ Authors@R:
     person("Vicente", "Castellar",
            role = c("aut", "cre"),
            email = "vic.sebastia@gmail.com")
-Description: Description: Tools for simulation and analysis of deterministic compartmental epidemiological models defined by systems of ordinary differential equations (ODEs). The package allows users to define custom epidemic models, simulate state trajectories over time, and explore model behaviour under different parameter settings. It includes implementations of classical models such as SI, SIR, SIR with vital dynamics, SIRS, SEIR, and SEIRS. An optional 'shiny' application is provided for interactive visualisation and exploration of epidemic scenarios. The methodological framework is based on Kermack and McKendrick (1927) <doi:10.1098/rspa.1927.0118>.
+Description: Tools for simulation and analysis of deterministic compartmental epidemiological models defined by systems of ordinary differential equations (ODEs). The package allows users to define custom epidemic models, simulate state trajectories over time, and explore model behaviour under different parameter settings. It includes implementations of classical models such as SI, SIR, SIR with vital dynamics, SIRS, SEIR, and SEIRS. An optional 'shiny' application is provided for interactive visualisation and exploration of epidemic scenarios. The methodological framework is based on Kermack and McKendrick (1927) <doi:10.1098/rspa.1927.0118>.
 License: GPL (>= 3)
 Encoding: UTF-8
 Depends: R (>= 4.1.0)
