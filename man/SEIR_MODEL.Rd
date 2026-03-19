@@ -10,6 +10,14 @@ An object of class \code{"epi_model"}.
 \usage{
 SEIR_MODEL
 }
+\value{
+An object of class \code{"epi_model"} representing the predefined
+deterministic SEIR
+(Susceptible-Exposed-Infectious-Recovered) compartmental epidemic model.
+The returned object contains the model right-hand side, declared state and
+derived variables, parameter names, and default initial conditions needed by
+utilities such as \code{\link{simulate_epi}}.
+}
 \description{
 An \code{epi_model} object representing a deterministic \strong{SEIR}
 (Susceptible–Exposed–Infectious–Recovered) compartmental epidemic model

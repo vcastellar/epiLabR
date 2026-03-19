@@ -10,6 +10,13 @@ An object of class \code{"epi_model"}.
 \usage{
 SIR_V_MODEL
 }
+\value{
+An object of class \code{"epi_model"} representing the predefined
+deterministic SIR model with vital dynamics and constant population size.
+The returned object contains the model right-hand side, declared state and
+derived variables, and parameter names needed by utilities such as
+\code{\link{simulate_epi}}.
+}
 \description{
 An \code{epi_model} object representing a deterministic \strong{SIR}
 (Susceptible–Infectious–Recovered) epidemic model with demographic turnover
