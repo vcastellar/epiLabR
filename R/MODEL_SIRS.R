@@ -82,6 +82,13 @@ sirs_rhs <- function(time, state, parms) {
 #' @format
 #' An object of class \code{"epi_model"}.
 #'
+#' @return An object of class \code{"epi_model"} representing the predefined
+#' deterministic SIRS
+#' (Susceptible-Infectious-Recovered-Susceptible) compartmental epidemic model.
+#' The returned object contains the model right-hand side, declared state and
+#' derived variables, parameter names, and default initial conditions needed by
+#' utilities such as \code{\link{simulate_epi}}.
+#'
 #' @examples
 #' ## Simulate a SIRS epidemic
 #' sim <- simulate_epi(
@@ -114,4 +121,3 @@ SIRS_MODEL <- epi_model(
   states = c("S", "I", "R"),
   derived  = c("incidence")
 )
-

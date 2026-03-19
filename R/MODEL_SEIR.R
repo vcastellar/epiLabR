@@ -96,6 +96,13 @@ seir_rhs <- function(time, state, parms) {
 #' @format
 #' An object of class \code{"epi_model"}.
 #'
+#' @return An object of class \code{"epi_model"} representing the predefined
+#' deterministic SEIR
+#' (Susceptible-Exposed-Infectious-Recovered) compartmental epidemic model.
+#' The returned object contains the model right-hand side, declared state and
+#' derived variables, parameter names, and default initial conditions needed by
+#' utilities such as \code{\link{simulate_epi}}.
+#'
 #' @examples
 #' ## Simulate a SEIR epidemic
 #' sim <- simulate_epi(
