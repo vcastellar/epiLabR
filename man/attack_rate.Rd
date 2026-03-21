@@ -4,50 +4,52 @@
 \alias{attack_rate}
 \title{Attack rate}
 \usage{
-attack_rate(incidence, time = NULL)
+attack_rate(incidence, population_at_risk, scale = 1)
 }
 \arguments{
 \item{incidence}{Numeric vector giving the incidence curve.}
 
-\item{time}{Optional numeric vector of time points. Must have the
-same length as \code{incidence}, contain no missing values, and be
-strictly increasing. If \code{NULL}, unit time steps are assumed.}
+\item{population_at_risk}{Numeric scalar giving the number of persons at
+risk at the beginning of the observation period. Must be strictly positive.}
+
+\item{scale}{Numeric scalar used to rescale the resulting proportion. Use
+\code{scale = 100} to express the attack rate as a percentage. Default is 1.}
 }
 \value{
-A numeric scalar giving the cumulative attack rate over the input
-time horizon. It represents the total number of incident events, or the
-time-integrated incidence when irregular observation times are supplied.
+A numeric scalar giving the attack rate over the input time horizon,
+expressed as a proportion when \code{scale = 1} and on the corresponding
+rescaled basis otherwise.
 }
 \description{
-Computes the cumulative number of events from an incidence curve.
+Computes the attack rate as an incidence proportion (risk) in a population
+initially at risk.
 }
 \details{
-Let \eqn{\lambda(t)} denote the incidence function.
-The attack rate is defined as:
+In outbreak epidemiology, the attack rate is not a true rate; it is a
+proportion, equivalent to a cumulative incidence over a limited period. If
+\eqn{C} denotes the number of new cases during the outbreak and \eqn{N} the
+population at risk at the start of follow-up, then:
 \deqn{
-AR = \int_0^T \lambda(t)\, dt.
+AR = C / N.
 }
 
-In discrete time, this is approximated by:
-\deqn{
-AR \approx \sum_i \lambda(t_i)\,\Delta t_i,
-}
-where \eqn{\Delta t_i = t_{i+1} - t_i}.
-
-If \code{time} is not provided, a regular time step of 1 is assumed,
-and the attack rate reduces to the simple sum of the incidence values.
+This function therefore divides the cumulative number of incident events
+(computed as \code{sum(incidence)}) by the initial population at risk. Use
+\code{cumulative_cases()} when a cumulative count of events is desired
+instead of a proportion.
 }
 \examples{
 inc <- c(1, 2, 3, 4)
-attack_rate(inc)
+attack_rate(inc, population_at_risk = 100)
+attack_rate(inc, population_at_risk = 100, scale = 100)
 
 }
 \references{
 Centers for Disease Control and Prevention (CDC). \if{html}{\out{<i>}}Principles of
-Epidemiology in Public Health Practice\if{html}{\out{</i>}}, Lesson 3. Classic reference
-for attack rate as an outbreak frequency measure.
+Epidemiology in Public Health Practice\if{html}{\out{</i>}}, Lesson 3. Attack rate is treated
+as a synonym for incidence proportion in outbreak settings.
 
-Bouter LM, Zeegers MP, Li T. \if{html}{\out{<i>}}Textbook of Epidemiology\if{html}{\out{</i>}}. 2nd ed.
-Wiley Blackwell; 2021. General reference for cumulative incidence and
-related frequency measures.
+Centers for Disease Control and Prevention (CDC). Glossary of Epidemiology
+Terms. Attack rate is defined as the proportion of an at-risk population
+that develops disease over a limited period.
 }
