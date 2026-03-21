@@ -12,12 +12,12 @@ test_that("peak and time metrics return first max on ties", {
   expect_equal(prev$time, 10)
 })
 
-test_that("attack_rate handles irregular time grid", {
+test_that("cumulative counts and attack rate are distinguished", {
   inc <- c(0, 2, 2)
-  time <- c(0, 1, 3)
 
-  # trapezoidal area: ((0+2)/2)*1 + ((2+2)/2)*2 = 1 + 4 = 5
-  expect_equal(attack_rate(inc, time), 5)
+  expect_equal(cumulative_cases(inc), 4)
+  expect_equal(attack_rate(inc, population_at_risk = 10), 0.4)
+  expect_equal(attack_rate(inc, population_at_risk = 10, scale = 100), 40)
 })
 
 test_that("growth and doubling metrics handle edge values", {
