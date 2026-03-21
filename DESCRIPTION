@@ -7,7 +7,23 @@ Authors@R:
     person("Vicente", "Castellar",
            role = c("aut", "cre"),
            email = "vic.sebastia@gmail.com")
-Description: Tools for simulation and analysis of deterministic compartmental epidemiological models defined by systems of ordinary differential equations (ODEs). The package allows users to define custom epidemic models, simulate state trajectories over time, and explore model behaviour under different parameter settings. It includes implementations of classical models such as the susceptible-infectious (SI), susceptible-infectious-recovered (SIR), susceptible-infectious-recovered with vital dynamics, susceptible-infectious-recovered-susceptible (SIRS), susceptible-exposed-infectious-recovered (SEIR), and susceptible-exposed-infectious-recovered-susceptible (SEIRS) models. An optional 'shiny' application is provided for interactive visualisation and exploration of epidemic scenarios. The methodological framework is based on Kermack and McKendrick (1927) <doi:10.1098/rspa.1927.0118>, Hethcote (2000) <doi:10.1137/S0036144500371907>, Soetaert et al. (2010) <doi:10.18637/jss.v033.i09>, and Ma (2020) <doi:10.1016/j.idm.2019.12.009>.
+Description: Tools for simulation and analysis of deterministic
+    compartmental epidemiological models defined by systems of ordinary
+    differential equations (ODEs). The package allows users to define
+    custom epidemic models, simulate state trajectories over time, and
+    explore model behaviour under different parameter settings. It
+    includes implementations of classical models such as the
+    susceptible-infectious (SI), susceptible-infectious-recovered (SIR),
+    SIR with vital dynamics, susceptible-infectious-recovered-
+    susceptible (SIRS), susceptible-exposed-infectious-recovered (SEIR),
+    and susceptible-exposed-infectious-recovered-susceptible (SEIRS)
+    models. An optional 'shiny' application is provided for interactive
+    visualisation and exploration of epidemic scenarios. The
+    methodological framework is based on Kermack and McKendrick (1927)
+    <doi:10.1098/rspa.1927.0118>, Hethcote (2000)
+    <doi:10.1137/S0036144500371907>, Soetaert et al. (2010)
+    <doi:10.18637/jss.v033.i09>, and Ma (2020)
+    <doi:10.1016/j.idm.2019.12.009>.
 License: GPL (>= 3)
 Encoding: UTF-8
 Depends: R (>= 4.1.0)
