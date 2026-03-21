@@ -46,6 +46,16 @@ get_derived <- function(sim, variable) {
 #' incidence curve, and \code{time} is a numeric scalar giving the first time
 #' point at which that maximum occurs.
 #'
+#' @references
+#' Centers for Disease Control and Prevention (CDC). <i>Describing
+#' Epidemiologic Data</i>. In: <i>Field Epidemiology Manual</i>.
+#' Peak incidence and its timing are standard descriptive summaries of
+#' epidemic curves.
+#'
+#' Centers for Disease Control and Prevention (CDC). <i>Principles of
+#' Epidemiology in Public Health Practice</i>, Lesson 3. General reference
+#' for interpreting incidence curves in outbreak analysis.
+#'
 #' @examples
 #' inc  <- c(1, 3, 7, 5, 2)
 #' time <- 0:4
@@ -100,6 +110,15 @@ peak_incidence <- function(incidence, time = NULL) {
 #' curve reaches its maximum. This is the timing of peak incidence, not the
 #' peak incidence magnitude itself.
 #'
+#' @references
+#' Centers for Disease Control and Prevention (CDC). <i>Describing
+#' Epidemiologic Data</i>. In: <i>Field Epidemiology Manual</i>.
+#' The timing of the epidemic peak is a standard feature of epidemic curves.
+#'
+#' Centers for Disease Control and Prevention (CDC). <i>Principles of
+#' Epidemiology in Public Health Practice</i>, Lesson 3. General reference
+#' for interpreting temporal patterns in incidence.
+#'
 #' @examples
 #' inc  <- c(1, 4, 6, 3)
 #' time <- 0:3
@@ -152,6 +171,14 @@ time_to_peak <- function(incidence, time = NULL) {
 #' \code{peak} is a numeric scalar giving the maximum prevalence observed, and
 #' \code{time} is a numeric scalar giving the first time point at which that
 #' maximum occurs.
+#'
+#' @references
+#' Centers for Disease Control and Prevention (CDC). <i>Principles of
+#' Epidemiology in Public Health Practice</i>, Lesson 3. General reference
+#' for prevalence measures in descriptive epidemiology.
+#'
+#' Caswell-Jin JL, Lim JKH. <i>Prevalence</i>. StatPearls Publishing; 2023.
+#' NCBI Bookshelf. General definition of prevalence and related measures.
 #'
 #' @examples
 #' I <- c(1, 5, 8, 4, 2)
@@ -207,6 +234,15 @@ peak_prevalence <- function(prevalence, time = NULL) {
 #' @return A numeric scalar giving the cumulative attack rate over the input
 #' time horizon. It represents the total number of incident events, or the
 #' time-integrated incidence when irregular observation times are supplied.
+#'
+#' @references
+#' Centers for Disease Control and Prevention (CDC). <i>Principles of
+#' Epidemiology in Public Health Practice</i>, Lesson 3. Classic reference
+#' for attack rate as an outbreak frequency measure.
+#'
+#' Bouter LM, Zeegers MP, Li T. <i>Textbook of Epidemiology</i>. 2nd ed.
+#' Wiley Blackwell; 2021. General reference for cumulative incidence and
+#' related frequency measures.
 #'
 #' @examples
 #' inc <- c(1, 2, 3, 4)
@@ -274,6 +310,17 @@ attack_rate <- function(incidence, time = NULL) {
 #' rate \eqn{r}. Positive values indicate early epidemic growth, values near
 #' zero indicate little change, and negative values indicate decline.
 #'
+#' @references
+#' Wallinga J, Lipsitch M. How generation intervals shape the relationship
+#' between growth rates and reproductive numbers. <i>Proceedings of the Royal
+#' Society B</i>. 2007;274(1609):599-604.
+#'
+#' Hethcote HW. The mathematics of infectious diseases. <i>SIAM Review</i>.
+#' 2000;42(4):599-653.
+#'
+#' Ma J. Estimating epidemic exponential growth rate and basic reproduction
+#' number. <i>Infectious Disease Modelling</i>. 2020;5:129-141.
+#'
 #' @export
 initial_growth_rate <- function(incidence,
                                 time = NULL,
@@ -339,6 +386,18 @@ initial_growth_rate <- function(incidence,
 #' value is on the same time scale as \code{time}; \code{Inf} is returned when
 #' the estimated initial growth rate is non-positive, meaning the epidemic is
 #' not doubling.
+#'
+#' @references
+#' Wallinga J, Lipsitch M. How generation intervals shape the relationship
+#' between growth rates and reproductive numbers. <i>Proceedings of the Royal
+#' Society B</i>. 2007;274(1609):599-604.
+#'
+#' Muniz-Rodriguez K, Fung IC-H, Ferdosi SR, et al. Doubling time of the
+#' COVID-19 epidemic by province, China. <i>Emerging Infectious Diseases</i>.
+#' 2020;26(8):1912-1914.
+#'
+#' Saito S, Watashi K, Tsuchiya Y, et al. Doubling time of infectious
+#' diseases. <i>Journal of Theoretical Biology</i>. 2022;553:111238.
 #'
 #' @export
 initial_doubling_time <- function(incidence,
@@ -413,6 +472,15 @@ initial_doubling_time <- function(incidence,
 #' rate estimate, and \code{r}, containing the corresponding instantaneous
 #' exponential growth rates. Positive \code{r} values indicate growth and
 #' negative values indicate decline.
+#'
+#' @references
+#' Parag KV, Donnelly CA, Jha R, Thompson RN. Are epidemic growth rates more
+#' informative than reproduction numbers? <i>Journal of the Royal Statistical
+#' Society Series A</i>. 2022;185(S1):S264-S282.
+#'
+#' Wallinga J, Lipsitch M. How generation intervals shape the relationship
+#' between growth rates and reproductive numbers. <i>Proceedings of the Royal
+#' Society B</i>. 2007;274(1609):599-604.
 #'
 #' @export
 instantaneous_growth_rate <- function(incidence,
@@ -495,6 +563,18 @@ instantaneous_growth_rate <- function(incidence,
 #' estimate, and \code{doubling_time}, containing the implied doubling time on
 #' the same scale as \code{time}. Values of \code{Inf} indicate intervals in
 #' which incidence is not increasing.
+#'
+#' @references
+#' Parag KV, Donnelly CA, Jha R, Thompson RN. Are epidemic growth rates more
+#' informative than reproduction numbers? <i>Journal of the Royal Statistical
+#' Society Series A</i>. 2022;185(S1):S264-S282.
+#'
+#' Saito S, Watashi K, Tsuchiya Y, et al. Doubling time of infectious
+#' diseases. <i>Journal of Theoretical Biology</i>. 2022;553:111238.
+#'
+#' Muniz-Rodriguez K, Fung IC-H, Ferdosi SR, et al. Doubling time of the
+#' COVID-19 epidemic by province, China. <i>Emerging Infectious Diseases</i>.
+#' 2020;26(8):1912-1914.
 #'
 #' @export
 doubling_time_ts <- function(incidence,
