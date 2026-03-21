@@ -52,3 +52,12 @@ Positive values of \code{r} indicate epidemic growth,
 negative values indicate decline, and \code{r = 0}
 corresponds to constant incidence.
 }
+\references{
+Parag KV, Donnelly CA, Jha R, Thompson RN. Are epidemic growth rates more
+informative than reproduction numbers? \if{html}{\out{<i>}}Journal of the Royal Statistical
+Society Series A\if{html}{\out{</i>}}. 2022;185(S1):S264-S282.
+
+Wallinga J, Lipsitch M. How generation intervals shape the relationship
+between growth rates and reproductive numbers. \if{html}{\out{<i>}}Proceedings of the Royal
+Society B\if{html}{\out{</i>}}. 2007;274(1609):599-604.
+}

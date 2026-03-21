@@ -46,3 +46,14 @@ which are assumed to belong to the exponential growth phase.
 If \code{time} is not provided, it is assumed to be a regular
 sequence \code{1:length(incidence)}.
 }
+\references{
+Wallinga J, Lipsitch M. How generation intervals shape the relationship
+between growth rates and reproductive numbers. \if{html}{\out{<i>}}Proceedings of the Royal
+Society B\if{html}{\out{</i>}}. 2007;274(1609):599-604.
+
+Hethcote HW. The mathematics of infectious diseases. \if{html}{\out{<i>}}SIAM Review\if{html}{\out{</i>}}.
+2000;42(4):599-653.
+
+Ma J. Estimating epidemic exponential growth rate and basic reproduction
+number. \if{html}{\out{<i>}}Infectious Disease Modelling\if{html}{\out{</i>}}. 2020;5:129-141.
+}

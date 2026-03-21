@@ -49,3 +49,15 @@ growth rates (see \code{\link{instantaneous_growth_rate}}).
 If \code{time} is not provided, it is assumed to be a regular
 sequence \code{1:length(incidence)}.
 }
+\references{
+Parag KV, Donnelly CA, Jha R, Thompson RN. Are epidemic growth rates more
+informative than reproduction numbers? \if{html}{\out{<i>}}Journal of the Royal Statistical
+Society Series A\if{html}{\out{</i>}}. 2022;185(S1):S264-S282.
+
+Saito S, Watashi K, Tsuchiya Y, et al. Doubling time of infectious
+diseases. \if{html}{\out{<i>}}Journal of Theoretical Biology\if{html}{\out{</i>}}. 2022;553:111238.
+
+Muniz-Rodriguez K, Fung IC-H, Ferdosi SR, et al. Doubling time of the
+COVID-19 epidemic by province, China. \if{html}{\out{<i>}}Emerging Infectious Diseases\if{html}{\out{</i>}}.
+2020;26(8):1912-1914.
+}

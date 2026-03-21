@@ -41,3 +41,11 @@ I <- c(1, 5, 8, 4, 2)
 peak_prevalence(I)
 
 }
+\references{
+Centers for Disease Control and Prevention (CDC). \if{html}{\out{<i>}}Principles of
+Epidemiology in Public Health Practice\if{html}{\out{</i>}}, Lesson 3. General reference
+for prevalence measures in descriptive epidemiology.
+
+Caswell-Jin JL, Lim JKH. \if{html}{\out{<i>}}Prevalence\if{html}{\out{</i>}}. StatPearls Publishing; 2023.
+NCBI Bookshelf. General definition of prevalence and related measures.
+}

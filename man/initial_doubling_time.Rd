@@ -46,3 +46,15 @@ If \eqn{r \le 0}, the doubling time is set to \code{Inf}.
 If \code{time} is not provided, it is assumed to be a regular
 sequence \code{1:length(incidence)}.
 }
+\references{
+Wallinga J, Lipsitch M. How generation intervals shape the relationship
+between growth rates and reproductive numbers. \if{html}{\out{<i>}}Proceedings of the Royal
+Society B\if{html}{\out{</i>}}. 2007;274(1609):599-604.
+
+Muniz-Rodriguez K, Fung IC-H, Ferdosi SR, et al. Doubling time of the
+COVID-19 epidemic by province, China. \if{html}{\out{<i>}}Emerging Infectious Diseases\if{html}{\out{</i>}}.
+2020;26(8):1912-1914.
+
+Saito S, Watashi K, Tsuchiya Y, et al. Doubling time of infectious
+diseases. \if{html}{\out{<i>}}Journal of Theoretical Biology\if{html}{\out{</i>}}. 2022;553:111238.
+}

@@ -42,3 +42,12 @@ inc <- c(1, 2, 3, 4)
 attack_rate(inc)
 
 }
+\references{
+Centers for Disease Control and Prevention (CDC). \if{html}{\out{<i>}}Principles of
+Epidemiology in Public Health Practice\if{html}{\out{</i>}}, Lesson 3. Classic reference
+for attack rate as an outbreak frequency measure.
+
+Bouter LM, Zeegers MP, Li T. \if{html}{\out{<i>}}Textbook of Epidemiology\if{html}{\out{</i>}}. 2nd ed.
+Wiley Blackwell; 2021. General reference for cumulative incidence and
+related frequency measures.
+}

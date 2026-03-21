@@ -40,3 +40,12 @@ time <- 0:3
 time_to_peak(inc, time)
 
 }
+\references{
+Centers for Disease Control and Prevention (CDC). \if{html}{\out{<i>}}Describing
+Epidemiologic Data\if{html}{\out{</i>}}. In: \if{html}{\out{<i>}}Field Epidemiology Manual\if{html}{\out{</i>}}.
+The timing of the epidemic peak is a standard feature of epidemic curves.
+
+Centers for Disease Control and Prevention (CDC). \if{html}{\out{<i>}}Principles of
+Epidemiology in Public Health Practice\if{html}{\out{</i>}}, Lesson 3. General reference
+for interpreting temporal patterns in incidence.
+}
