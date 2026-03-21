@@ -124,7 +124,8 @@ t   <- sim$states$time
 
 peak_incidence(inc, t)
 time_to_peak(inc, t)
-attack_rate(inc)
+cumulative_cases(inc)
+attack_rate(inc, population_at_risk = 1e6)
 ```
 
 ## Shiny application
