@@ -1,5 +1,10 @@
 # epiLabR News
 
+## epiLabR (development)
+
+### Breaking changes
+- Removed built-in summary metric helpers from the package API to keep the package focused on deterministic ODE simulation workflows.
+
 ## epiLabR 0.3.0
 
 ### Documentation
