@@ -72,17 +72,17 @@ names(sims) <- paste0("nu=", nu_values)
 
 # Peak prevalence of infectious individuals (I) by scenario
 peak_prev <- sapply(sims, function(sim) {
-  peak_prevalence(sim$states$I)
+  max(sim$states$I)
 })
 peak_prev
 
 # Time to peak incidence by scenario
 peak_time <- sapply(sims, function(sim) {
-  time_to_peak(sim$derived$incidence, sim$derived$time)
+  idx <- which.max(sim$derived$incidence)
+  sim$derived$time[idx]
 })
 peak_time
 
 ## -----------------------------------------------------------------------------
 register_epi_model(SIRV_MODEL)
 list_models()
-

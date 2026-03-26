@@ -7,7 +7,7 @@ Authors@R:
     person("Vicente", "Castellar",
            role = c("aut", "cre"),
            email = "vic.sebastia@gmail.com")
-Description: Tools for simulation and analysis of deterministic compartmental
+Description: Tools for simulation of deterministic compartmental
     epidemiological models defined by systems of ordinary differential equations
     (ODEs). The package allows users to define custom epidemic models, simulate
     state trajectories over time, and explore model behaviour under different
