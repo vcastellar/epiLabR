@@ -1,3 +1,19 @@
+get_derived <- function(sim, variable) {
+  derived_data <- sim$derived
+  if (is.null(derived_data) || !"time" %in% names(derived_data)) {
+    stop("Simulation does not define derived variables.")
+  }
+  
+  if (!variable %in% names(derived_data)) {
+    stop("Simulation does not define derived variable: ", variable)
+  }
+  
+  derived_data[[variable]]
+}
+
+
+
+
 #' Plot a simulated epidemic
 #'
 #' @name plot.sim_epi
