@@ -84,10 +84,10 @@ sis_rhs <- function(time, state, parms) {
 #' @examples
 #' ## Simulate an SI epidemic
 #' sim <- simulate_epi(
-#'   model = SI_MODEL,
+#'   model = SIS_MODEL,
 #'   times = 0:100,
-#'   parms = c(beta = 0.4),
-#'   init = SI_MODEL$init
+#'   parms = c(beta = 0.4, gamma = 0.2),
+#'   init = SIS_MODEL$init
 #' )
 #'
 #' plot(sim)
