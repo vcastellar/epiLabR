@@ -1,26 +1,26 @@
 
 #-------------------------------------------------------------------------------
-# SI model
+# SIS model
 #-------------------------------------------------------------------------------
 #' @keywords internal
 #' @noRd
-si_rhs <- function(time, state, parms) {
+sis_rhs <- function(time, state, parms) {
   with(as.list(c(state, parms)), {
     N <- S + I
     lambda <- beta * S * I / N
-    dS <- -lambda
-    dI <-  lambda
+    dS <- -lambda + gamma * I
+    dI <-  lambda - gamma * I
     list(c(dS, dI), incidence = lambda)
   })
 }
 
 
-#' SI epidemic model
+#' SIS epidemic model
 #'
-#' @name SI_MODEL
+#' @name SIS_MODEL
 #' @description
-#' An \code{epi_model} object representing a deterministic **SI**
-#' (Susceptible–Infectious) compartmental epidemic model.
+#' An \code{epi_model} object representing a deterministic **SIS**
+#' (Susceptible–Infectious-Susceptible) compartmental epidemic model.
 #'
 #' The model describes the spread of an infection in a closed population where
 #' individuals move irreversibly from the susceptible compartment \code{S} to the
@@ -38,7 +38,7 @@ si_rhs <- function(time, state, parms) {
 #' \deqn{N = S(t) + I(t).}
 #'
 #' ## Model variables
-#' The SI model declares the following variables:
+#' The SIS model declares the following variables:
 #' \describe{
 #'   \item{\code{"S"}}{Susceptible population size.}
 #'   \item{\code{"I"}}{Infectious population size.}
@@ -103,11 +103,11 @@ si_rhs <- function(time, state, parms) {
 #' @export
 
 SI_MODEL <- epi_model(
-  name = "SI",
+  name = "SIS",
   rhs = si_rhs,
   par_names = c("beta"),
   states = c("S", "I"),
   derived = c("incidence"),
-  defaults = c(beta = 0.3),
+  defaults = c(beta = 0.3, gamma = 0.2),
   init = c(S = 999999, I = 1)
 )
