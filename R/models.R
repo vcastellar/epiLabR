@@ -9,7 +9,7 @@
 .get_builtin_models <- function() {
 
   list(
-    SI    = SI_MODEL,
+    SIS    = SIS_MODEL,
     SIR   = SIR_MODEL,
     SIRS  = SIRS_MODEL,
     SEIR  = SEIR_MODEL,
