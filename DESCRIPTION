@@ -18,6 +18,7 @@ Description: Tools for simulation of deterministic compartmental
     Kermack and McKendrick (1927) <doi:10.1098/rspa.1927.0118>,
     Hethcote (2000) <doi:10.1137/S0036144500371907>, 
     Soetaert et al. (2010) <doi:10.18637/jss.v033.i09>.
+    Castellar et al. (2024) <doi:10.3390/math12070941>.
 License: GPL (>= 3)
 Encoding: UTF-8
 Depends: R (>= 4.1.0)

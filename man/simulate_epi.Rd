@@ -157,9 +157,9 @@ plot(sim)
 ## ------------------------------------------------------------------
 
 sim <- simulate_epi(
-  model = SI_MODEL,
-  times = 30:100,
-  parms = c(beta = 0.25),
+  model = SIS_MODEL,
+  times = 0:100,
+  parms = c(beta = 0.25, gamma = 0.1),
   init  = c(S = 999, I = 1)
 )
 
