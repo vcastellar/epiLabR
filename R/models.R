@@ -29,7 +29,7 @@
 #'   states    = c("S", "I", "R", "D"),
 #'   derived   = c("incidence"),
 #'   par_names = c("beta", "gamma", "mu"),
-#'   defaults  = c(beta = 0.3, gamma = 0.1, mu = 0.01),
+#'   defaults  = c(beta = 0.25, gamma = 0.1, mu = 0.01),
 #'   init      = c(S = 1e6, I = 10, R = 0, D = 0)
 #' )
 #'
