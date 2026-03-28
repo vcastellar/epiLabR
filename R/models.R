@@ -1,25 +1,3 @@
-#' Return built-in epidemiological models
-#'
-#' @return A named list whose elements are objects of class \code{"epi_model"}.
-#' Each list name is a built-in model identifier, and each value is the
-#' corresponding model definition returned for internal registry setup and
-#' discovery.
-#' @keywords internal
-#' @export
-.get_builtin_models <- function() {
-
-  list(
-    SIS    = SIS_MODEL,
-    SIR   = SIR_MODEL,
-    SIRS  = SIRS_MODEL,
-    SEIR  = SEIR_MODEL,
-    SEIRS = SEIRS_MODEL,
-    SIR_VITAL = SIR_V_MODEL
-  )
-}
-
-
-
 #' example of new epi model
 #' @keywords internal
 #' @examples
@@ -68,5 +46,4 @@
 #' if (interactive()) {
 #'   run_epi_app(list(SIRD = SIRD_MODEL))
 #' }
-
 
