@@ -46,3 +46,16 @@ test_that("simulate_epi validates common error cases", {
     "Missing initial states: I"
   )
 })
+
+test_that("simulate_epi accepts SIS parameters beta and gamma", {
+  sim_sis <- simulate_epi(
+    model = SIS_MODEL,
+    times = 0:10,
+    parms = c(beta = 0.25, gamma = 0.10),
+    init = c(S = 999, I = 1)
+  )
+
+  expect_s3_class(sim_sis, "sim_epi")
+  expect_equal(sim_sis$params[["beta"]], 0.25)
+  expect_equal(sim_sis$params[["gamma"]], 0.10)
+})

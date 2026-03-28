@@ -12,7 +12,7 @@ SIS_MODEL
 }
 \value{
 An object of class \code{"epi_model"} representing the predefined
-deterministic SI (Susceptible-Infectious) compartmental epidemic model.
+deterministic SIS (Susceptible-Infectious-Susceptible) compartmental epidemic model.
 The returned object contains the model right-hand side, declared state and
 derived variables, parameter names, and default initial conditions needed by
 utilities such as \code{\link{simulate_epi}}.
@@ -22,8 +22,8 @@ An \code{epi_model} object representing a deterministic \strong{SIS}
 (Susceptible–Infectious-Susceptible) compartmental epidemic model.
 
 The model describes the spread of an infection in a closed population where
-individuals move irreversibly from the susceptible compartment \code{S} to the
-infectious compartment \code{I}. No recovery or removal process is included.
+individuals move from the susceptible compartment \code{S} to the infectious
+compartment \code{I}, and recover back to \code{S}.
 }
 \details{
 \subsection{State variables}{
@@ -54,9 +54,10 @@ and summary methods built around \code{epi_model} objects.
 
 \subsection{Parameters}{
 
-The SI model depends on a single parameter:
+The SIS model depends on two parameters:
 \describe{
 \item{beta}{Transmission rate (per day).}
+\item{gamma}{Recovery rate from \code{I} to \code{S} (per day).}
 }
 }
 
@@ -68,8 +69,8 @@ New infections occur at rate
 The system of ordinary differential equations is:
 \deqn{
 \begin{aligned}
-\frac{dS}{dt} &= -\lambda(t), \\
-\frac{dI}{dt} &= \lambda(t).
+\frac{dS}{dt} &= -\lambda(t) + \gamma I(t), \\
+\frac{dI}{dt} &= \lambda(t) - \gamma I(t).
 \end{aligned}
 }
 }
@@ -82,12 +83,12 @@ such as \code{\link{simulate_epi}}, \code{\link{plot.sim_epi}}, and
 }
 }
 \examples{
-## Simulate an SI epidemic
+## Simulate an SIS epidemic
 sim <- simulate_epi(
-  model = SI_MODEL,
+  model = SIS_MODEL,
   times = 0:100,
-  parms = c(beta = 0.4),
-  init = SI_MODEL$init
+  parms = c(beta = 0.4, gamma = 0.2),
+  init = SIS_MODEL$init
 )
 
 plot(sim)
