@@ -17,8 +17,7 @@ Description: Tools for simulation of deterministic compartmental
     exploration of epidemic scenarios. The methodological framework is based on 
     Kermack and McKendrick (1927) <doi:10.1098/rspa.1927.0118>,
     Hethcote (2000) <doi:10.1137/S0036144500371907>, 
-    Soetaert et al. (2010) <doi:10.18637/jss.v033.i09>, 
-    Ma (2020) <doi:10.1016/j.idm.2019.12.009>.
+    Soetaert et al. (2010) <doi:10.18637/jss.v033.i09>.
 License: GPL (>= 3)
 Encoding: UTF-8
 Depends: R (>= 4.1.0)

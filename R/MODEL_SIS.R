@@ -102,9 +102,9 @@ sis_rhs <- function(time, state, parms) {
 #'
 #' @export
 
-SI_MODEL <- epi_model(
+SIS_MODEL <- epi_model(
   name = "SIS",
-  rhs = si_rhs,
+  rhs = sis_rhs,
   par_names = c("beta"),
   states = c("S", "I"),
   derived = c("incidence"),

@@ -4,7 +4,7 @@
 
 .onLoad <- function(libname, pkgname) {
 
-  register_epi_model(SI_MODEL)
+  register_epi_model(SIS_MODEL)
   register_epi_model(SIR_MODEL)
   register_epi_model(SIRS_MODEL)
   register_epi_model(SEIR_MODEL)
