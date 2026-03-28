@@ -23,8 +23,8 @@ sis_rhs <- function(time, state, parms) {
 #' (Susceptible–Infectious-Susceptible) compartmental epidemic model.
 #'
 #' The model describes the spread of an infection in a closed population where
-#' individuals move irreversibly from the susceptible compartment \code{S} to the
-#' infectious compartment \code{I}. No recovery or removal process is included.
+#' individuals move from the susceptible compartment \code{S} to the infectious
+#' compartment \code{I}, and recover back to \code{S}.
 #'
 #' @details
 #' ## State variables
@@ -50,9 +50,10 @@ sis_rhs <- function(time, state, parms) {
 #' and summary methods built around \code{epi_model} objects.
 #'
 #' ## Parameters
-#' The SI model depends on a single parameter:
+#' The SIS model depends on two parameters:
 #' \describe{
 #'   \item{beta}{Transmission rate (per day).}
+#'   \item{gamma}{Recovery rate from \code{I} to \code{S} (per day).}
 #' }
 #'
 #' ## Model equations
@@ -62,8 +63,8 @@ sis_rhs <- function(time, state, parms) {
 #' The system of ordinary differential equations is:
 #' \deqn{
 #' \begin{aligned}
-#' \frac{dS}{dt} &= -\lambda(t), \\
-#' \frac{dI}{dt} &= \lambda(t).
+#' \frac{dS}{dt} &= -\lambda(t) + \gamma I(t), \\
+#' \frac{dI}{dt} &= \lambda(t) - \gamma I(t).
 #' \end{aligned}
 #' }
 #'
@@ -76,13 +77,14 @@ sis_rhs <- function(time, state, parms) {
 #' An object of class \code{"epi_model"}.
 #'
 #' @return An object of class \code{"epi_model"} representing the predefined
-#' deterministic SI (Susceptible-Infectious) compartmental epidemic model.
+#' deterministic SIS (Susceptible-Infectious-Susceptible) compartmental
+#' epidemic model.
 #' The returned object contains the model right-hand side, declared state and
 #' derived variables, parameter names, and default initial conditions needed by
 #' utilities such as \code{\link{simulate_epi}}.
 #'
 #' @examples
-#' ## Simulate an SI epidemic
+#' ## Simulate an SIS epidemic
 #' sim <- simulate_epi(
 #'   model = SIS_MODEL,
 #'   times = 0:100,
@@ -105,7 +107,7 @@ sis_rhs <- function(time, state, parms) {
 SIS_MODEL <- epi_model(
   name = "SIS",
   rhs = sis_rhs,
-  par_names = c("beta"),
+  par_names = c("beta", "gamma"),
   states = c("S", "I"),
   derived = c("incidence"),
   defaults = c(beta = 0.3, gamma = 0.2),
