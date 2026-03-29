@@ -40,14 +40,15 @@ sird_rhs <- function(time, state, parms) {
 #' where \eqn{\lambda(t) = \beta\, S(t)\, I(t)/N} and
 #' \eqn{N = S(t) + I(t) + R(t)}.
 #'
-#' @references
-#' Richard M. (2024). *SIR and variants notes*.
-#' \url{https://www.math.nagoya-u.ac.jp/~richard/teaching/s2024/SML_Vic_2.pdf}
-#'
 #' @format
 #' An object of class \code{"epi_model"}.
 #'
-#' @return An object of class \code{"epi_model"} for the predefined SIRD model.
+#' @return An object of class \code{"epi_model"} representing the predefined
+#' deterministic SIRD (Susceptible-Infectious-Recovered-Deceased) compartmental
+#' epidemic model.
+#' The returned object contains the model right-hand side, declared state and
+#' derived variables, parameter names, and default initial conditions needed by
+#' utilities such as \code{\link{simulate_epi}}.
 #'
 #' @examples
 #' sim <- simulate_epi(

@@ -11,7 +11,12 @@ An object of class \code{"epi_model"}.
 SIRD_MODEL
 }
 \value{
-An object of class \code{"epi_model"} for the predefined SIRD model.
+An object of class \code{"epi_model"} representing the predefined
+deterministic SIRD (Susceptible-Infectious-Recovered-Deceased) compartmental
+epidemic model.
+The returned object contains the model right-hand side, declared state and
+derived variables, parameter names, and default initial conditions needed by
+utilities such as \code{\link{simulate_epi}}.
 }
 \description{
 An \code{epi_model} object representing a deterministic \strong{SIRD}
@@ -41,10 +46,6 @@ sim <- simulate_epi(
 plot(sim)
 plot(sim, what = "incidence")
 
-}
-\references{
-Richard M. (2024). \emph{SIR and variants notes}.
-\url{https://www.math.nagoya-u.ac.jp/~richard/teaching/s2024/SML_Vic_2.pdf}
 }
 \seealso{
 \code{\link{simulate_epi}},
