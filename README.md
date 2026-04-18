@@ -126,7 +126,9 @@ models.
 
 ```r
 library(epiLabR)
-run_epi_app()
+if (interactive()) {
+  run_epi_app()
+}
 ```
 
 The app allows users to:
@@ -151,52 +153,3 @@ epiLabR is designed as a simulation-oriented package:
 It is intended for teaching, exploration, and rapid prototyping of
 epidemiological models, rather than for statistical inference or
 data-driven estimation.
-
-## Numerical limitations and stability considerations
-
-All simulations in **epiLabR** are numerical approximations of ODE systems.
-As with any ODE workflow, results depend on solver configuration and model
-scaling.
-
-- **No guaranteed positivity or conservation from the solver alone**: if a
-  model is poorly scaled or tolerances are too loose, state variables can
-  become slightly negative due to numerical error.
-- **Stiff systems require care**: fast/slow dynamics in the same model can
-  make explicit methods unstable unless very small time steps are used.
-- **Large populations and very small rates can be ill-conditioned**: mixing
-  very large and very small magnitudes may amplify rounding error.
-- **Output grid vs. internal steps**: `times` defines reporting points, not
-  necessarily the internal step size used by the integrator.
-
-For better numerical robustness:
-
-- start with default adaptive settings, then tighten `rtol`/`atol` when needed;
-- inspect trajectories for artifacts (negative compartments, oscillations,
-  non-physical spikes);
-- compare outcomes under at least two solver settings before drawing
-  conclusions.
-
-## Integration methods: practical note (`lsoda`, `rk4`, ...)
-
-`lsoda` refers to the Livermore Solver for Ordinary Differential Equations with
-automatic method switching, and `rk4` refers to the classical fourth-order
-Runge-Kutta method.
-
-
-`simulate_epi()` forwards extra arguments to `deSolve::ode()`, so you can
-choose integration methods such as `method = "lsoda"` (default in most setups)
-or `method = "rk4"`.
-
-Quick guidance:
-
-- **`lsoda`**: good default for most users; automatically switches between
-  non-stiff and stiff strategies.
-- **`rk4`**: fixed-step explicit Runge-Kutta; often useful for teaching,
-  reproducibility at fixed grids, or simple smooth systems.
-- **Other `deSolve` methods** (e.g., `ode45`, `bdf`, the backward differentiation formula method): can be tested when
-  stiffness, speed, or accuracy requirements differ.
-
-> Benchmark note: runtime and accuracy are model-dependent. In practice,
-> compare at least two candidate methods on your own model and check both
-> elapsed time and numerical behavior (e.g., positivity and smoothness), not
-> runtime alone.
