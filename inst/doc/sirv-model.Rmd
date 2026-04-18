@@ -62,7 +62,7 @@ sirv_rhs <- function(time, state, parms) {
 }
 
 SIRV_MODEL <- epi_model(
-  name      = "SIRV",
+  name      = "mySIRV",
   rhs       = sirv_rhs,
   par_names = c("beta", "gamma", "nu"),
   states    = c("S", "I", "R", "V"),
@@ -155,9 +155,5 @@ list_models()
 > Note: if a model with the same name already exists, you may need to remove
 > it first with `unregister_model("SIRV")`.
 
-## 7. Next steps
 
-- Adapt initial conditions for different population contexts.
-- Add waning immunity (for example, a SIRVS-like extension, for
-  Susceptible-Infectious-Recovered-Vaccinated-Susceptible dynamics).
-- Use `run_epi_app()` for interactive scenario exploration.
+Use `run_epi_app()` for interactive scenario exploration.
