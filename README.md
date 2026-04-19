@@ -16,7 +16,7 @@ included for interactive exploration.
 - Deterministic simulation of epidemic models using ODEs
 - Flexible definition of custom compartmental models
 - Several classical models included:
-  - SI (Susceptible-Infectious)
+  - SIS (Susceptible-Infectious-Susceptible)
   - SIR (Susceptible-Infectious-Recovered)
   - SIR-V (Susceptible-Infectious-Recovered with vital dynamics)
   - SIRS (Susceptible-Infectious-Recovered-Susceptible)
