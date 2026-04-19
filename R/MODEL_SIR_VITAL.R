@@ -73,23 +73,29 @@ sir_vital_rhs <- function(time, state, parms) {
 #' The total population size is conserved:
 #' \deqn{N = S(t) + I(t) + R(t).}
 #'
-#' ## Derived variables
-#' The following derived epidemiological variables are declared:
+#' ## Model variables
+#' The SIR model with vital dynamics declares the following variables:
 #' \describe{
-#'   \item{births}{Recruitment of new susceptible individuals exactly balancing
+#'   \item{\code{"S"}}{Susceptible population size.}
+#'   \item{\code{"I"}}{Infectious population size.}
+#'   \item{\code{"R"}}{Recovered population size.}
+#'   \item{\code{"births"}}{Recruitment of new susceptible individuals exactly balancing
 #'     natural deaths.}
-#'   \item{infection}{Incidence of new infections.}
-#'   \item{recovery}{Recovery of infectious individuals.}
-#'   \item{death_S}{Natural deaths among susceptibles.}
-#'   \item{death_I}{Natural deaths among infectious.}
-#'   \item{death_R}{Natural deaths among recovered.}
+#'   \item{\code{"infection"}}{Incidence of new infections.}
+#'   \item{\code{"recovery"}}{Recovery of infectious individuals.}
+#'   \item{\code{"death_S"}}{Natural deaths among susceptibles.}
+#'   \item{\code{"death_I"}}{Natural deaths among infectious.}
+#'   \item{\code{"death_R"}}{Natural deaths among recovered.}
 #' }
+#'
+#' All declared variables may be used as observables in generic utilities
+#' and summary methods built around \code{epi_model} objects.
 #'
 #' ## Parameters
 #' The model depends on the following parameters:
 #' \describe{
-#'   \item{beta}{Transmission rate.}
-#'   \item{gamma}{Recovery rate.}
+#'   \item{beta}{Transmission rate (per day).}
+#'   \item{gamma}{Recovery/removal rate (per day).}
 #'   \item{mu}{Natural mortality rate (per capita).}
 #' }
 #'
@@ -101,10 +107,15 @@ sir_vital_rhs <- function(time, state, parms) {
 #' \deqn{
 #' \begin{aligned}
 #' \frac{dS}{dt} &= \mu N - \lambda(t) - \mu S, \\
-#' \frac{dI}{dt} &= \lambda(t) - \gamma I - \mu I, \\
-#' \frac{dR}{dt} &= \gamma I - \mu R.
+#' \frac{dI}{dt} &= \lambda(t) - \gamma I(t) - \mu I(t), \\
+#' \frac{dR}{dt} &= \gamma I(t) - \mu R(t).
 #' \end{aligned}
 #' }
+#'
+#' ## Usage
+#' This predefined model object is intended to be used with generic utilities
+#' such as \code{\link{simulate_epi}}, \code{\link{plot.sim_epi}}, and
+#' \code{\link{summary.sim_epi}} that operate on \code{epi_model} objects.
 #'
 #' @format
 #' An object of class \code{"epi_model"}.
