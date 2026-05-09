@@ -15,7 +15,7 @@ Description: Tools for simulating deterministic compartmental epidemiological
     susceptible-infectious-recovered (SIR) models and related extensions.
     An optional 'shiny' application is provided for interactive visualization
     and exploration of epidemic scenarios. The methodological framework is
-    informed by Anderson and May (1991, <doi:10.1093/oso/9780198540403.001.0001>),
+    informed by Anderson and May (1991, ISBN:9780198540403),
     Hethcote (2000, <doi:10.1137/S0036144500371907>), and Keeling and Rohani
     (2008, <doi:10.1515/9781400841035>).
 License: GPL (>= 3)

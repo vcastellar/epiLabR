@@ -164,8 +164,7 @@ sir_vital_rhs <- function(time, state, parms) {
 #' @references
 #' Anderson, R. M. & May, R. M. (1991).
 #' *Infectious Diseases of Humans: Dynamics and Control*.
-#' Oxford University Press.
-#' \doi{10.1093/oso/9780198540403.001.0001}
+#' Oxford University Press. ISBN: 9780198540403.
 #'
 #' Hethcote, H. W. (2000).
 #' The mathematics of infectious diseases.
