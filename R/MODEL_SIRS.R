@@ -56,10 +56,25 @@ sirs_rhs <- function(time, state, parms) {
 #' ## Parameters
 #' The SIRS model depends on the following parameters:
 #' \describe{
-#'   \item{beta}{Transmission rate (per day).}
-#'   \item{gamma}{Recovery/removal rate (per day).}
-#'   \item{omega}{Rate of waning immunity from \code{R} back to \code{S} (per day).}
+#'   \item{beta}{Transmission rate (contacts per individual per day times
+#'     probability of transmission per contact).}
+#'   \item{gamma}{Recovery/removal rate (per day); \eqn{1/\gamma} is the mean
+#'     infectious period.}
+#'   \item{omega}{Rate of waning immunity from \code{R} back to \code{S}
+#'     (per day); \eqn{1/\omega} is the mean duration of immunity.}
 #' }
+#'
+#' ## Basic reproduction number
+#' The basic reproduction number is
+#' \deqn{R_0 = \frac{\beta}{\gamma}.}
+#' When \eqn{R_0 > 1} the SIRS model admits an **endemic equilibrium**
+#' \deqn{
+#' I^* = \frac{N(\gamma + \omega)(R_0 - 1)}{\beta(\gamma + \omega)/\gamma},
+#' \quad S^* = \frac{N}{R_0}.
+#' }
+#' Because recovered individuals eventually return to \code{S}, the disease
+#' can persist endemically even in a closed population, in contrast to the
+#' standard SIR model.
 #'
 #' ## Model equations
 #' New infections occur at rate
@@ -70,7 +85,7 @@ sirs_rhs <- function(time, state, parms) {
 #' \begin{aligned}
 #' \frac{dS}{dt} &= -\lambda(t) + \omega R(t), \\
 #' \frac{dI}{dt} &= \lambda(t) - \gamma I(t), \\
-#' \frac{dR}{dt} &= \gamma I(t) - \omega R(t). \\
+#' \frac{dR}{dt} &= \gamma I(t) - \omega R(t).
 #' \end{aligned}
 #' }
 #'
@@ -103,6 +118,22 @@ sirs_rhs <- function(time, state, parms) {
 #' ## Plot incidence
 #' plot(sim, what = "incidence")
 #'
+#'
+#' @references
+#' Hethcote, H. W. (2000).
+#' The mathematics of infectious diseases.
+#' *SIAM Review*, **42**(4), 599–653.
+#' \doi{10.1137/S0036144500371907}
+#'
+#' Liu, W. M., Hethcote, H. W. & Levin, S. A. (1987).
+#' Dynamical behavior of epidemiological models with nonlinear incidence rates.
+#' *Journal of Mathematical Biology*, **25**(4), 359–380.
+#' \doi{10.1007/BF00277162}
+#'
+#' Keeling, M. J. & Rohani, P. (2008).
+#' *Modeling Infectious Diseases in Humans and Animals*.
+#' Princeton University Press.
+#' \doi{10.1515/9781400841035}
 #'
 #' @seealso
 #' \code{\link{simulate_epi}},

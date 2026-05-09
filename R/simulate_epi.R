@@ -70,8 +70,9 @@
 #'   Must be strictly increasing and of length >= 2. The first value typically
 #'   corresponds to the initial time (e.g. \code{0}).
 #' @param time_unit Character string specifying the unit of time associated
-#'   with \code{times}. One of \code{"days"}, \code{"weeks"}, \code{"month"},
-#'   or \code{"year"}. This is used only for printing and plotting labels and
+#'   with \code{times}. One of \code{"days"}, \code{"weeks"}, \code{"months"},
+#'   or \code{"years"}. Partial matching is supported (e.g. \code{"day"} is
+#'   accepted). This argument is used only for printing and plotting labels and
 #'   does not affect the numerical simulation.
 #' @param parms Named numeric vector of model parameters. Names must match
 #'   \code{model$par_names}. Any missing parameters are taken from
@@ -152,7 +153,7 @@ simulate_epi <- function(model,
 
   time_unit <- match.arg(
     time_unit,
-    choices = c("days", "weeks", "month", "year")
+    choices = c("days", "weeks", "months", "years")
   )
 
   if (!is.null(seed)) set.seed(seed)
