@@ -59,8 +59,10 @@ seirs_rhs <- function(time, state, parms) {
 #'   \item{\code{"I"}}{Infectious population size.}
 #'   \item{\code{"R"}}{Recovered (temporarily immune) population size.}
 #'   \item{\code{"incidence"}}{Rate of progression from \code{E} to \code{I},
-#'     \eqn{\sigma E(t)}, representing the instantaneous incidence of new
-#'     infectious cases returned by the model's right-hand side.}
+#'     \eqn{\sigma E(t)}, representing the instantaneous rate at which
+#'     individuals become infectious. Note: this is the E→I flow, not the
+#'     force of infection \eqn{\lambda(t) = \beta S(t)I(t)/N} (S→E flow).
+#'     Both are epidemiologically meaningful but measure different transitions.}
 #' }
 #'
 #' All declared variables may be used as observables in generic utilities
@@ -69,20 +71,29 @@ seirs_rhs <- function(time, state, parms) {
 #' ## Parameters
 #' The SEIRS model depends on the following parameters:
 #' \describe{
-#'   \item{beta}{Transmission rate (per day).}
+#'   \item{beta}{Transmission rate (contacts per individual per day times
+#'     probability of transmission per contact).}
 #'   \item{sigma}{Rate of progression from exposed to infectious (per day);
-#'     \eqn{1/\sigma} is the mean latent period.}
-#'   \item{gamma}{Recovery/removal rate from infectious to recovered (per day);
+#'     \eqn{1/\sigma} is the mean latent (incubation) period.}
+#'   \item{gamma}{Recovery/removal rate (per day);
 #'     \eqn{1/\gamma} is the mean infectious period.}
 #'   \item{omega}{Rate of waning immunity from \code{R} back to \code{S} (per day);
-#'     \eqn{1/\omega} is the mean immunity duration.}
+#'     \eqn{1/\omega} is the mean duration of immunity.}
 #' }
 #'
+#' ## Basic reproduction number
+#' The basic reproduction number is
+#' \deqn{R_0 = \frac{\beta}{\gamma}.}
+#' As in the SIRS model, waning immunity (\eqn{\omega > 0}) allows the disease
+#' to persist endemically when \eqn{R_0 > 1}. The latent period (\eqn{1/\sigma})
+#' delays but does not shift the epidemic threshold.
+#'
 #' ## Model equations
-#' New infections occur at rate
+#' New exposures occur at force of infection
 #' \deqn{\lambda(t) = \beta \frac{S(t)\, I(t)}{N}.}
 #'
-#' Case incidence (entries into \code{I}) occurs at rate
+#' Progression from exposed to infectious (reported as \code{incidence}) occurs
+#' at rate
 #' \deqn{\text{incidence}(t) = \sigma E(t).}
 #'
 #' The system of ordinary differential equations is:
@@ -125,6 +136,22 @@ seirs_rhs <- function(time, state, parms) {
 #' plot(sim, what = "incidence")
 #'
 #'
+#' @references
+#' Hethcote, H. W. (2000).
+#' The mathematics of infectious diseases.
+#' *SIAM Review*, **42**(4), 599–653.
+#' \doi{10.1137/S0036144500371907}
+#'
+#' Anderson, R. M. & May, R. M. (1991).
+#' *Infectious Diseases of Humans: Dynamics and Control*.
+#' Oxford University Press.
+#' \doi{10.1093/oso/9780198540403.001.0001}
+#'
+#' Keeling, M. J. & Rohani, P. (2008).
+#' *Modeling Infectious Diseases in Humans and Animals*.
+#' Princeton University Press.
+#' \doi{10.1515/9781400841035}
+#'
 #' @seealso
 #' \code{\link{simulate_epi}},
 #' \code{\link{epi_model}}
@@ -137,7 +164,7 @@ SEIRS_MODEL <- epi_model(
   lower = c(beta = 1e-8, sigma = 1e-8, gamma = 1e-8, omega = 1e-8),
   upper = c(beta = 5,    sigma = 2,    gamma = 2,    omega = 1),
   defaults = c(beta = 0.3, sigma = 0.2, gamma = 0.14, omega = 0.01),
-  init = c("S" = 1e6, "I" = 10, "R" = 0, "E" = 0),
+  init = c("S" = 1e6, "E" = 0, "I" = 10, "R" = 0),
   states = c("S", "E", "I", "R"),
   derived = c("incidence")
 )

@@ -54,8 +54,10 @@ seir_rhs <- function(time, state, parms) {
 #'   \item{\code{"I"}}{Infectious population size.}
 #'   \item{\code{"R"}}{Recovered (immune) population size.}
 #'   \item{\code{"incidence"}}{Rate of progression from \code{E} to \code{I},
-#'     \eqn{\sigma E(t)}, representing the instantaneous incidence of new
-#'     infectious cases returned by the model's right-hand side.}
+#'     \eqn{\sigma E(t)}, representing the instantaneous rate at which
+#'     individuals become infectious. Note: this differs from the force of
+#'     infection \eqn{\lambda(t) = \beta S(t) I(t)/N} (rate of new exposures).
+#'     Both are epidemiologically meaningful but measure different transitions.}
 #' }
 #'
 #' All declared variables may be used as observables in generic utilities
@@ -64,18 +66,27 @@ seir_rhs <- function(time, state, parms) {
 #' ## Parameters
 #' The SEIR model depends on the following parameters:
 #' \describe{
-#'   \item{beta}{Transmission rate (per day).}
+#'   \item{beta}{Transmission rate (contacts per individual per day times
+#'     probability of transmission per contact).}
 #'   \item{sigma}{Rate of progression from exposed to infectious (per day);
-#'     \eqn{1/\sigma} is the mean latent period.}
-#'   \item{gamma}{Recovery/removal rate from infectious to recovered (per day);
+#'     \eqn{1/\sigma} is the mean latent (incubation) period.}
+#'   \item{gamma}{Recovery/removal rate (per day);
 #'     \eqn{1/\gamma} is the mean infectious period.}
 #' }
 #'
+#' ## Basic reproduction number
+#' The basic reproduction number is
+#' \deqn{R_0 = \frac{\beta}{\gamma}.}
+#' Note that \eqn{R_0} is independent of \eqn{\sigma}: the latent period does
+#' not affect the long-run invasion threshold, but it does delay the epidemic
+#' peak compared with the SIR model with the same \eqn{\beta} and \eqn{\gamma}.
+#'
 #' ## Model equations
-#' New infections occur at rate
+#' New exposures occur at force of infection
 #' \deqn{\lambda(t) = \beta \frac{S(t)\, I(t)}{N}.}
 #'
-#' Progression from exposed to infectious occurs at rate
+#' Progression from exposed to infectious (reported as \code{incidence}) occurs
+#' at rate
 #' \deqn{\text{incidence}(t) = \sigma E(t).}
 #'
 #' The system of ordinary differential equations is:
@@ -116,6 +127,27 @@ seir_rhs <- function(time, state, parms) {
 #'
 #' ## Plot incidence
 #' plot(sim, what = "incidence")
+#'
+#' @references
+#' Anderson, R. M. & May, R. M. (1991).
+#' *Infectious Diseases of Humans: Dynamics and Control*.
+#' Oxford University Press.
+#' \doi{10.1093/oso/9780198540403.001.0001}
+#'
+#' Li, M. Y. & Muldowney, J. S. (1995).
+#' Global stability for the SEIR model in epidemiology.
+#' *Mathematical Biosciences*, **125**(2), 155–164.
+#' \doi{10.1016/0025-5564(95)92756-5}
+#'
+#' Hethcote, H. W. (2000).
+#' The mathematics of infectious diseases.
+#' *SIAM Review*, **42**(4), 599–653.
+#' \doi{10.1137/S0036144500371907}
+#'
+#' Keeling, M. J. & Rohani, P. (2008).
+#' *Modeling Infectious Diseases in Humans and Animals*.
+#' Princeton University Press.
+#' \doi{10.1515/9781400841035}
 #'
 #' @seealso
 #' \code{\link{simulate_epi}},

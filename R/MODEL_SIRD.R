@@ -62,14 +62,31 @@ sird_rhs <- function(time, state, parms) {
 #' ## Parameters
 #' The SIRD model depends on the following parameters:
 #' \describe{
-#'   \item{beta}{Transmission rate (per day).}
-#'   \item{gamma}{Recovery/removal rate (per day).}
-#'   \item{mu}{Disease-induced mortality rate among infectious individuals (per day).}
+#'   \item{beta}{Transmission rate (contacts per individual per day times
+#'     probability of transmission per contact).}
+#'   \item{gamma}{Recovery rate from \code{I} to \code{R} (per day);
+#'     \eqn{1/\gamma} is the mean time to recovery among survivors.}
+#'   \item{mu}{Disease-induced mortality rate among infectious individuals
+#'     (per day). The case fatality ratio (CFR) is
+#'     \eqn{\text{CFR} = \mu / (\gamma + \mu)}.}
 #' }
+#'
+#' ## Basic reproduction number
+#' The basic reproduction number is
+#' \deqn{R_0 = \frac{\beta}{\gamma + \mu}.}
+#' Disease-induced mortality increases the effective removal rate
+#' (\eqn{\gamma + \mu}), thereby lowering \eqn{R_0} relative to an
+#' equivalent SIR model with the same \eqn{\beta} and \eqn{\gamma}.
+#'
+#' Note that \eqn{N = S(t) + I(t) + R(t)} decreases over time as
+#' individuals accumulate in \code{D}; the model does not assume a constant
+#' population size.
 #'
 #' ## Model equations
 #' New infections occur at rate
-#' \deqn{\lambda(t) = \beta \frac{S(t)\, I(t)}{N}.}
+#' \deqn{\lambda(t) = \beta \frac{S(t)\, I(t)}{N(t)},}
+#' where \eqn{N(t) = S(t) + I(t) + R(t)} (deceased are excluded from
+#' transmission).
 #'
 #' The system of ordinary differential equations is:
 #' \deqn{
@@ -77,7 +94,7 @@ sird_rhs <- function(time, state, parms) {
 #' \frac{dS}{dt} &= -\lambda(t), \\
 #' \frac{dI}{dt} &= \lambda(t) - \gamma I(t) - \mu I(t), \\
 #' \frac{dR}{dt} &= \gamma I(t), \\
-#' \frac{dD}{dt} &= \mu I(t),
+#' \frac{dD}{dt} &= \mu I(t).
 #' \end{aligned}
 #' }
 #'
@@ -110,6 +127,23 @@ sird_rhs <- function(time, state, parms) {
 #' ## Plot incidence
 #' plot(sim, what = "incidence")
 #'
+#' @references
+#' Kermack, W. O. & McKendrick, A. G. (1927).
+#' A contribution to the mathematical theory of epidemics.
+#' *Proceedings of the Royal Society of London A*, **115**(772), 700–721.
+#' \doi{10.1098/rspa.1927.0118}
+#'
+#' Hethcote, H. W. (2000).
+#' The mathematics of infectious diseases.
+#' *SIAM Review*, **42**(4), 599–653.
+#' \doi{10.1137/S0036144500371907}
+#'
+#' Kröger, M. & Schlickeiser, R. (2020).
+#' Analytical solution of the SIR-model for the temporal evolution of
+#' epidemics. Part A: Time-independent reproduction factor.
+#' *Journal of Physics A: Mathematical and Theoretical*, **53**(50), 505601.
+#' \doi{10.1088/1751-8121/abc65d}
+#'
 #' @seealso
 #' \code{\link{simulate_epi}},
 #' \code{\link{epi_model}}
@@ -121,6 +155,8 @@ SIRD_MODEL <- epi_model(
   states = c("S", "I", "R", "D"),
   derived = c("incidence"),
   par_names = c("beta", "gamma", "mu"),
+  lower = c(beta = 1e-8, gamma = 1e-8, mu = 1e-8),
+  upper = c(beta = 2,    gamma = 1,    mu = 0.5),
   defaults = c(beta = 0.25, gamma = 0.1, mu = 0.01),
   init = c(S = 1e6, I = 10, R = 0, D = 0)
 )
