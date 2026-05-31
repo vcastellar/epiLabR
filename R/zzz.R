@@ -11,4 +11,5 @@
   register_epi_model(SEIRS_MODEL)
   register_epi_model(SIR_V_MODEL)
   register_epi_model(SIRD_MODEL)
+  register_epi_model(SIRV_MODEL)
 }

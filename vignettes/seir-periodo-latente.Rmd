@@ -1,0 +1,169 @@
+---
+title: "El período de latencia: SIR frente a SEIR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{El período de latencia: SIR frente a SEIR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>",
+  fig.width  = 7,
+  fig.height = 4.5
+)
+library(epiLabR)
+```
+
+## Motivación: el período de latencia
+
+Muchas enfermedades infecciosas presentan un **período de latencia**: el tiempo que transcurre entre la exposición al patógeno y el inicio de la infectividad.
+Durante este período el individuo ya está infectado —y por tanto ya no es susceptible— pero todavía no puede transmitir la infección.
+
+Algunos ejemplos representativos:
+
+| Enfermedad    | Período de latencia medio |
+|---------------|--------------------------|
+| COVID-19      | ~5 días                  |
+| Gripe         | ~2 días                  |
+| Sarampión     | ~10 días                 |
+
+El modelo **SIR** ignora esta fase y supone que la exposición y la infectividad son simultáneas.
+El modelo **SEIR** la representa explícitamente mediante un compartimento $E$ (*Exposed*) y el parámetro $\sigma$: la tasa de progresión de $E$ a $I$.
+El período de latencia medio es $1/\sigma$ días.
+
+## El modelo SEIR
+
+El sistema de ecuaciones diferenciales del SEIR es:
+
+$$
+\frac{dS}{dt} = -\lambda(t), \quad
+\frac{dE}{dt} = \lambda(t) - \sigma E, \quad
+\frac{dI}{dt} = \sigma E - \gamma I, \quad
+\frac{dR}{dt} = \gamma I,
+$$
+
+donde $\lambda(t) = \beta \, S(t) \, I(t) / N$ es la fuerza de infección.
+
+## Intuición clave: $R_0$ no depende de $\sigma$
+
+El número básico de reproducción sigue siendo:
+
+$$R_0 = \frac{\beta}{\gamma}$$
+
+El período de latencia **no altera el umbral de invasión**: si $R_0 > 1$ la epidemia despega con independencia de $\sigma$.
+Lo que sí cambia es la *velocidad de crecimiento inicial* y, por tanto, **el pico llega más tarde** en el SEIR que en el SIR con idénticos $\beta$ y $\gamma$.
+
+## Comparación SIR frente a SEIR
+
+Usamos $\beta = 0.3$ y $\gamma = 0.14$, lo que da $R_0 \approx 2.1$ en ambos modelos.
+Para el SEIR añadimos $\sigma = 0.2$ (período de latencia de 5 días).
+
+```{r sir-vs-seir}
+parms_sir  <- c(beta = 0.3, gamma = 0.14)
+parms_seir <- c(beta = 0.3, sigma = 0.2, gamma = 0.14)
+init_sir   <- c(S = 999990, I = 10, R = 0)
+init_seir  <- c(S = 999990, E = 0, I = 10, R = 0)
+tiempos    <- seq(0, 300, by = 0.5)
+
+sim_sir  <- simulate_epi(SIR_MODEL,  times = tiempos, parms = parms_sir,  init = init_sir)
+sim_seir <- simulate_epi(SEIR_MODEL, times = tiempos, parms = parms_seir, init = init_seir)
+
+I_sir  <- sim_sir$states$I
+I_seir <- sim_seir$states$I
+t      <- sim_sir$states$time
+
+ylim_max <- max(I_sir, I_seir) * 1.05
+
+plot(t, I_sir,
+     type = "l", lwd = 2, col = "steelblue",
+     ylim = c(0, ylim_max),
+     xlab = "Tiempo (días)", ylab = "Infectados I(t)",
+     main = "SIR frente a SEIR: mismo R0, distinto momento del pico")
+lines(t, I_seir, lwd = 2, col = "firebrick", lty = 2)
+legend("topright",
+       legend = c("SIR", "SEIR (sigma = 0.2, latencia 5 dias)"),
+       col = c("steelblue", "firebrick"), lty = c(1, 2), lwd = 2, bty = "n")
+```
+
+El pico de infectados es casi idéntico en altura (mismo tamaño final de epidemia), pero el SEIR alcanza ese pico considerablemente más tarde.
+
+## Efecto del período de latencia: variación de $\sigma$
+
+Cuanto más largo es el período de latencia (menor $\sigma$), más se desplaza el pico hacia la derecha y ligeramente se aplana.
+
+```{r sigma-effect}
+sigmas     <- c(0.5, 0.2, 0.05)
+etiquetas  <- c("sigma = 0.5 (2 dias)", "sigma = 0.2 (5 dias)", "sigma = 0.05 (20 dias)")
+colores    <- c("darkorange", "firebrick", "purple")
+ltipos     <- c(1, 2, 3)
+
+# Simular los tres escenarios
+sims_sigma <- lapply(sigmas, function(s) {
+  simulate_epi(SEIR_MODEL,
+               times = tiempos,
+               parms = c(beta = 0.3, sigma = s, gamma = 0.14),
+               init  = init_seir)
+})
+
+I_vals <- lapply(sims_sigma, function(s) s$states$I)
+ylim_s <- max(unlist(I_vals)) * 1.05
+
+plot(tiempos, I_vals[[1]],
+     type = "l", lwd = 2, col = colores[1], lty = ltipos[1],
+     ylim = c(0, ylim_s),
+     xlab = "Tiempo (días)", ylab = "Infectados I(t)",
+     main = "SEIR: efecto del período de latencia (1/sigma)")
+for (k in 2:3) {
+  lines(tiempos, I_vals[[k]], lwd = 2, col = colores[k], lty = ltipos[k])
+}
+legend("topright", legend = etiquetas,
+       col = colores, lty = ltipos, lwd = 2, bty = "n")
+```
+
+Un período de latencia más largo retrasa el pico epidémico y produce una curva ligeramente más aplanada, aunque el número final de afectados apenas varía porque $R_0$ permanece constante.
+
+## Incidencia frente a progresión en el SEIR
+
+En el modelo SEIR conviene distinguir dos flujos:
+
+- **Incidencia** ($\lambda S = \beta S I / N$): nuevas exposiciones, flujo $S \to E$.
+- **Progresión** ($\sigma E$): transición de expuestos a infecciosos, flujo $E \to I$.
+
+Durante la fase de crecimiento epidémico la incidencia supera a la progresión porque los individuos se exponen más rápido de lo que se vuelven infecciosos.
+Ambas curvas se cruzan alrededor del pico y convergen al final.
+
+```{r incidence-vs-progression}
+# Accedemos a las variables derivadas almacenadas en sim$derived
+der <- sim_seir$derived
+
+ylim_d <- max(der$incidence, der$progression) * 1.05
+
+plot(der$time, der$incidence,
+     type = "l", lwd = 2, col = "steelblue",
+     ylim = c(0, ylim_d),
+     xlab = "Tiempo (días)", ylab = "Tasa (individuos / día)",
+     main = "SEIR: incidencia (S->E) frente a progresion (E->I)")
+lines(der$time, der$progression, lwd = 2, col = "firebrick", lty = 2)
+legend("topright",
+       legend = c("Incidencia  (beta*S*I/N)", "Progresion  (sigma*E)"),
+       col = c("steelblue", "firebrick"), lty = c(1, 2), lwd = 2, bty = "n")
+```
+
+El retardo entre ambas curvas refleja exactamente el período de latencia: los nuevos expuestos tardan en promedio $1/\sigma$ días en volverse infecciosos.
+
+## Resumen
+
+| Característica                  | SIR              | SEIR             |
+|---------------------------------|-----------------|-----------------|
+| Compartimentos                  | S, I, R          | S, E, I, R       |
+| Período de latencia             | No               | Sí ($1/\sigma$)  |
+| $R_0 = \beta/\gamma$            | Sí               | Sí (mismo valor) |
+| Umbral de invasión              | $R_0 > 1$        | $R_0 > 1$        |
+| Tamaño final de epidemia        | Igual            | Igual            |
+| Momento del pico                | Antes            | Después          |
+
+Usar el SEIR en lugar del SIR es especialmente relevante cuando el período de latencia es largo en comparación con el período infeccioso, como ocurre con el sarampión o la COVID-19.
+En esos casos el SIR sobreestima la velocidad de crecimiento inicial y predice el pico demasiado pronto.
