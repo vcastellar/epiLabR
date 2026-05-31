@@ -177,6 +177,12 @@ sir_vital_rhs <- function(time, state, parms) {
 #' *SIAM Review*, **42**(4), 599–653.
 #' \doi{10.1137/S0036144500371907}
 #'
+#' Diekmann, O., Heesterbeek, J. A. P. & Metz, J. A. J. (1990).
+#' On the definition and the computation of the basic reproduction ratio
+#' \eqn{R_0} in models for infectious diseases in heterogeneous populations.
+#' *Journal of Mathematical Biology*, **28**(4), 365–382.
+#' \doi{10.1007/BF00178324}
+#'
 #' Dietz, K. & Heesterbeek, J. A. P. (2002).
 #' Daniel Bernoulli's epidemiological model revisited.
 #' *Mathematical Biosciences*, **180**(1–2), 1–21.

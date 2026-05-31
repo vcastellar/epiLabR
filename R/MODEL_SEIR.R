@@ -131,6 +131,11 @@ seir_rhs <- function(time, state, parms) {
 #' plot(sim, what = "incidence")
 #'
 #' @references
+#' Aron, J. L. & Schwartz, I. B. (1984).
+#' Seasonality and period-doubling bifurcations in an epidemic model.
+#' *Journal of Theoretical Biology*, **110**(4), 665–679.
+#' \doi{10.1016/S0022-5193(84)80150-2}
+#'
 #' Anderson, R. M. & May, R. M. (1991).
 #' *Infectious Diseases of Humans: Dynamics and Control*.
 #' Oxford University Press.
@@ -145,6 +150,12 @@ seir_rhs <- function(time, state, parms) {
 #' The mathematics of infectious diseases.
 #' *SIAM Review*, **42**(4), 599–653.
 #' \doi{10.1137/S0036144500371907}
+#'
+#' van den Driessche, P. & Watmough, J. (2002).
+#' Reproduction numbers and sub-threshold endemic equilibria for
+#' compartmental models of disease transmission.
+#' *Mathematical Biosciences*, **180**(1–2), 29–48.
+#' \doi{10.1016/S0025-5564(02)00108-6}
 #'
 #' Keeling, M. J. & Rohani, P. (2008).
 #' *Modeling Infectious Diseases in Humans and Animals*.

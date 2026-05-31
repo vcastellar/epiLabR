@@ -48,6 +48,23 @@
 #' and \code{init}, which are then used by downstream functions such as
 #' \code{simulate_epi()} to validate inputs and run simulations.
 #'
+#' @references
+#' Hethcote, H. W. (2000).
+#' The mathematics of infectious diseases.
+#' *SIAM Review*, **42**(4), 599–653.
+#' \doi{10.1137/S0036144500371907}
+#'
+#' Brauer, F., van den Driessche, P. & Wu, J. (Eds.) (2008).
+#' *Mathematical Epidemiology*.
+#' Lecture Notes in Mathematics, Vol. 1945. Springer.
+#' \doi{10.1007/978-3-540-78911-6}
+#'
+#' van den Driessche, P. & Watmough, J. (2002).
+#' Reproduction numbers and sub-threshold endemic equilibria for
+#' compartmental models of disease transmission.
+#' *Mathematical Biosciences*, **180**(1–2), 29–48.
+#' \doi{10.1016/S0025-5564(02)00108-6}
+#'
 #' @seealso
 #' \code{\link{simulate_epi}}
 #'

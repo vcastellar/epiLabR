@@ -133,6 +133,12 @@
 #'
 #' plot(sim)
 #'
+#' @references
+#' Soetaert, K., Petzoldt, T. & Setzer, R. W. (2010).
+#' Solving differential equations in R: Package deSolve.
+#' *Journal of Statistical Software*, **33**(9), 1–25.
+#' \doi{10.18637/jss.v033.i09}
+#'
 #' @seealso
 #' \code{\link{epi_model}}, \code{\link[deSolve]{ode}},
 #' \code{\link{plot.sim_epi}}, \code{\link{print.sim_epi}}

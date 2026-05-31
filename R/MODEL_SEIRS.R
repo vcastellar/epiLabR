@@ -144,10 +144,21 @@ seirs_rhs <- function(time, state, parms) {
 #' *SIAM Review*, **42**(4), 599–653.
 #' \doi{10.1137/S0036144500371907}
 #'
+#' Liu, W. M., Hethcote, H. W. & Levin, S. A. (1987).
+#' Dynamical behavior of epidemiological models with nonlinear incidence rates.
+#' *Journal of Mathematical Biology*, **25**(4), 359–380.
+#' \doi{10.1007/BF00277162}
+#'
 #' Anderson, R. M. & May, R. M. (1991).
 #' *Infectious Diseases of Humans: Dynamics and Control*.
 #' Oxford University Press.
 #' \doi{10.1093/oso/9780198540403.001.0001}
+#'
+#' van den Driessche, P. & Watmough, J. (2002).
+#' Reproduction numbers and sub-threshold endemic equilibria for
+#' compartmental models of disease transmission.
+#' *Mathematical Biosciences*, **180**(1–2), 29–48.
+#' \doi{10.1016/S0025-5564(02)00108-6}
 #'
 #' Keeling, M. J. & Rohani, P. (2008).
 #' *Modeling Infectious Diseases in Humans and Animals*.
