@@ -4,10 +4,14 @@
 \alias{print.epi_model}
 \title{Print method for epi_model objects}
 \usage{
-\method{print}{epi_model}(x, ...)
+\method{print}{epi_model}(x, show_rhs = TRUE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{"epi_model"}.}
+
+\item{show_rhs}{Logical. If \code{TRUE} (default), the right-hand side
+function body is printed. Set to \code{FALSE} to suppress it for compact
+output.}
 
 \item{...}{Additional arguments passed to or from other methods
 (currently unused).}

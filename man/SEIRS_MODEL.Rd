@@ -53,9 +53,13 @@ The SEIRS model declares the following variables:
 \item{\code{"E"}}{Exposed (latent) population size.}
 \item{\code{"I"}}{Infectious population size.}
 \item{\code{"R"}}{Recovered (temporarily immune) population size.}
-\item{\code{"incidence"}}{Rate of progression from \code{E} to \code{I},
-\eqn{\sigma E(t)}, representing the instantaneous incidence of new
-infectious cases returned by the model's right-hand side.}
+\item{\code{"incidence"}}{Instantaneous rate of new exposures (force of
+infection times susceptibles): \eqn{\lambda(t) = \beta S(t) I(t)/N}.
+This is the S\eqn{\to}E flow and the standard epidemiological definition
+of incidence.}
+\item{\code{"progression"}}{Rate of progression from \code{E} to
+\code{I}: \eqn{\sigma E(t)}. During transients this differs from
+\code{incidence}; at endemic equilibrium the two flows are equal.}
 }
 
 All declared variables may be used as observables in generic utilities
@@ -66,23 +70,34 @@ and summary methods built around \code{epi_model} objects.
 
 The SEIRS model depends on the following parameters:
 \describe{
-\item{beta}{Transmission rate (per day).}
+\item{beta}{Transmission rate (contacts per individual per day times
+probability of transmission per contact).}
 \item{sigma}{Rate of progression from exposed to infectious (per day);
-\eqn{1/\sigma} is the mean latent period.}
-\item{gamma}{Recovery/removal rate from infectious to recovered (per day);
+\eqn{1/\sigma} is the mean latent (incubation) period.}
+\item{gamma}{Recovery/removal rate (per day);
 \eqn{1/\gamma} is the mean infectious period.}
 \item{omega}{Rate of waning immunity from \code{R} back to \code{S} (per day);
-\eqn{1/\omega} is the mean immunity duration.}
+\eqn{1/\omega} is the mean duration of immunity.}
 }
+}
+
+\subsection{Basic reproduction number}{
+
+The basic reproduction number is
+\deqn{R_0 = \frac{\beta}{\gamma}.}
+As in the SIRS model, waning immunity (\eqn{\omega > 0}) allows the disease
+to persist endemically when \eqn{R_0 > 1}. The latent period (\eqn{1/\sigma})
+delays but does not shift the epidemic threshold.
 }
 
 \subsection{Model equations}{
 
-New infections occur at rate
+New exposures occur at force of infection
 \deqn{\lambda(t) = \beta \frac{S(t)\, I(t)}{N}.}
 
-Case incidence (entries into \code{I}) occurs at rate
-\deqn{\text{incidence}(t) = \sigma E(t).}
+Progression from exposed to infectious (reported as \code{progression}) occurs
+at rate
+\deqn{\text{progression}(t) = \sigma E(t).}
 
 The system of ordinary differential equations is:
 \deqn{
@@ -117,6 +132,33 @@ plot(sim)
 plot(sim, what = "incidence")
 
 
+}
+\references{
+Hethcote, H. W. (2000).
+The mathematics of infectious diseases.
+\emph{SIAM Review}, \strong{42}(4), 599–653.
+\doi{10.1137/S0036144500371907}
+
+Liu, W. M., Hethcote, H. W. & Levin, S. A. (1987).
+Dynamical behavior of epidemiological models with nonlinear incidence rates.
+\emph{Journal of Mathematical Biology}, \strong{25}(4), 359–380.
+\doi{10.1007/BF00277162}
+
+Anderson, R. M. & May, R. M. (1991).
+\emph{Infectious Diseases of Humans: Dynamics and Control}.
+Oxford University Press.
+\doi{10.1093/oso/9780198540403.001.0001}
+
+van den Driessche, P. & Watmough, J. (2002).
+Reproduction numbers and sub-threshold endemic equilibria for
+compartmental models of disease transmission.
+\emph{Mathematical Biosciences}, \strong{180}(1–2), 29–48.
+\doi{10.1016/S0025-5564(02)00108-6}
+
+Keeling, M. J. & Rohani, P. (2008).
+\emph{Modeling Infectious Diseases in Humans and Animals}.
+Princeton University Press.
+\doi{10.1515/9781400841035}
 }
 \seealso{
 \code{\link{simulate_epi}},

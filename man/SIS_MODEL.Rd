@@ -57,9 +57,22 @@ and summary methods built around \code{epi_model} objects.
 
 The SIS model depends on two parameters:
 \describe{
-\item{beta}{Transmission rate (per day).}
-\item{gamma}{Recovery rate from \code{I} to \code{S} (per day).}
+\item{beta}{Transmission rate (contacts per individual per day times
+probability of transmission per contact).}
+\item{gamma}{Recovery rate from \code{I} back to \code{S} (per day);
+\eqn{1/\gamma} is the mean infectious period.}
 }
+}
+
+\subsection{Basic reproduction number}{
+
+The basic reproduction number is
+\deqn{R_0 = \frac{\beta}{\gamma}.}
+Unlike the SIR model, the SIS model admits a non-trivial \strong{endemic
+equilibrium} when \eqn{R_0 > 1}:
+\deqn{I^* = N\!\left(1 - \frac{1}{R_0}\right), \quad S^* = \frac{N}{R_0}.}
+When \eqn{R_0 \leq 1} the disease-free equilibrium \eqn{I = 0} is globally
+stable.
 }
 
 \subsection{Model equations}{
@@ -98,6 +111,33 @@ plot(sim)
 plot(sim, what = "incidence")
 
 
+}
+\references{
+Hethcote, H. W. & Yorke, J. A. (1984).
+\emph{Gonorrhea Transmission Dynamics and Control}.
+Lecture Notes in Biomathematics, Vol. 56. Springer.
+\doi{10.1007/978-3-662-07544-9}
+
+Hethcote, H. W. (1976).
+Qualitative analyses of communicable disease models.
+\emph{Mathematical Biosciences}, \strong{28}(3–4), 335–356.
+\doi{10.1016/0025-5564(76)90132-2}
+
+Hethcote, H. W. (2000).
+The mathematics of infectious diseases.
+\emph{SIAM Review}, \strong{42}(4), 599–653.
+\doi{10.1137/S0036144500371907}
+
+van den Driessche, P. & Watmough, J. (2002).
+Reproduction numbers and sub-threshold endemic equilibria for
+compartmental models of disease transmission.
+\emph{Mathematical Biosciences}, \strong{180}(1–2), 29–48.
+\doi{10.1016/S0025-5564(02)00108-6}
+
+Keeling, M. J. & Rohani, P. (2008).
+\emph{Modeling Infectious Diseases in Humans and Animals}.
+Princeton University Press.
+\doi{10.1515/9781400841035}
 }
 \seealso{
 \code{\link{simulate_epi}},

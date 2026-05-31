@@ -47,7 +47,10 @@ The SIR model declares the following variables:
 \item{\code{"I"}}{Infectious population size.}
 \item{\code{"R"}}{Recovered (removed) population size.}
 \item{\code{"incidence"}}{Instantaneous rate of new infections
-\eqn{\lambda(t)} returned by the model's right-hand side.}
+\eqn{\lambda(t) = \beta S(t) I(t) / N} returned by the model's
+right-hand side.}
+\item{\code{"recovery"}}{Instantaneous recovery flow \eqn{\gamma I(t)},
+i.e. the rate at which individuals move from \code{I} to \code{R}.}
 }
 
 All declared variables may be used as observables in generic utilities
@@ -58,9 +61,21 @@ and summary methods built around \code{epi_model} objects.
 
 The SIR model depends on the following parameters:
 \describe{
-\item{beta}{Transmission rate (per day).}
-\item{gamma}{Recovery/removal rate (per day).}
+\item{beta}{Transmission rate (contacts per individual per day times
+probability of transmission per contact).}
+\item{gamma}{Recovery/removal rate (per day); \eqn{1/\gamma} is the mean
+infectious period.}
 }
+}
+
+\subsection{Basic reproduction number}{
+
+The basic reproduction number is
+\deqn{R_0 = \frac{\beta}{\gamma}.}
+The epidemic grows when \eqn{R_0 > 1} and declines when \eqn{R_0 < 1}.
+At the endemic equilibrium of a closed population the epidemic always dies
+out (the SIR model has no endemic steady state for \eqn{N} finite and
+constant).
 }
 
 \subsection{Model equations}{
@@ -73,7 +88,7 @@ The system of ordinary differential equations is:
 \begin{aligned}
 \frac{dS}{dt} &= -\lambda(t), \\
 \frac{dI}{dt} &= \lambda(t) - \gamma I(t), \\
-\frac{dR}{dt} &= \gamma I(t). \\
+\frac{dR}{dt} &= \gamma I(t).
 \end{aligned}
 }
 }
@@ -100,6 +115,42 @@ plot(sim)
 plot(sim, what = "incidence")
 
 
+}
+\references{
+Kermack, W. O. & McKendrick, A. G. (1927).
+A contribution to the mathematical theory of epidemics.
+\emph{Proceedings of the Royal Society of London A}, \strong{115}(772), 700–721.
+\doi{10.1098/rspa.1927.0118}
+
+Anderson, R. M. & May, R. M. (1991).
+\emph{Infectious Diseases of Humans: Dynamics and Control}.
+Oxford University Press.
+\doi{10.1093/oso/9780198540403.001.0001}
+
+Hethcote, H. W. (2000).
+The mathematics of infectious diseases.
+\emph{SIAM Review}, \strong{42}(4), 599–653.
+\doi{10.1137/S0036144500371907}
+
+Brauer, F. & Castillo-Chávez, C. (2012).
+\emph{Mathematical Models in Population Biology and Epidemiology} (2nd ed.).
+Springer. \doi{10.1007/978-1-4614-1686-9}
+
+Keeling, M. J. & Rohani, P. (2008).
+\emph{Modeling Infectious Diseases in Humans and Animals}.
+Princeton University Press.
+\doi{10.1515/9781400841035}
+
+Diekmann, O., Heesterbeek, J. A. P. & Metz, J. A. J. (1990).
+On the definition and the computation of the basic reproduction ratio
+\eqn{R_0} in models for infectious diseases in heterogeneous populations.
+\emph{Journal of Mathematical Biology}, \strong{28}(4), 365–382.
+\doi{10.1007/BF00178324}
+
+Brauer, F., van den Driessche, P. & Wu, J. (Eds.) (2008).
+\emph{Mathematical Epidemiology}.
+Lecture Notes in Mathematics, Vol. 1945. Springer.
+\doi{10.1007/978-3-540-78911-6}
 }
 \seealso{
 \code{\link{simulate_epi}},

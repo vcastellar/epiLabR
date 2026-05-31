@@ -4,15 +4,7 @@
 \alias{simulate_epi}
 \title{Simulate an epidemic model defined by an \code{epi_model} object}
 \usage{
-simulate_epi(
-  model,
-  times,
-  time_unit = "days",
-  parms = NULL,
-  init = NULL,
-  seed = NULL,
-  ...
-)
+simulate_epi(model, times, time_unit = "days", parms = NULL, init = NULL, ...)
 }
 \arguments{
 \item{model}{An object of class \code{"epi_model"} defining the epidemic model
@@ -23,8 +15,9 @@ Must be strictly increasing and of length >= 2. The first value typically
 corresponds to the initial time (e.g. \code{0}).}
 
 \item{time_unit}{Character string specifying the unit of time associated
-with \code{times}. One of \code{"days"}, \code{"weeks"}, \code{"month"},
-or \code{"year"}. This is used only for printing and plotting labels and
+with \code{times}. One of \code{"days"}, \code{"weeks"}, \code{"months"},
+or \code{"years"}. Partial matching is supported (e.g. \code{"day"} is
+accepted). This argument is used only for printing and plotting labels and
 does not affect the numerical simulation.}
 
 \item{parms}{Named numeric vector of model parameters. Names must match
@@ -34,10 +27,6 @@ does not affect the numerical simulation.}
 \item{init}{Named numeric vector giving the initial values of the state
 variables. Names must exactly match \code{model$states}. If not provided,
 \code{model$init} must be defined.}
-
-\item{seed}{Optional integer. If provided, sets the random seed. This argument
-is included for consistency with other functions but does not affect the
-deterministic ODE solution.}
 
 \item{...}{Additional arguments passed directly to
 \code{\link[deSolve]{ode}}, such as \code{method}, \code{rtol}, or \code{atol}.}
@@ -165,6 +154,12 @@ sim <- simulate_epi(
 
 plot(sim)
 
+}
+\references{
+Soetaert, K., Petzoldt, T. & Setzer, R. W. (2010).
+Solving differential equations in R: Package deSolve.
+\emph{Journal of Statistical Software}, \strong{33}(9), 1–25.
+\doi{10.18637/jss.v033.i09}
 }
 \seealso{
 \code{\link{epi_model}}, \code{\link[deSolve]{ode}},

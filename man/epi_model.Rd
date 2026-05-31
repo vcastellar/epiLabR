@@ -32,10 +32,13 @@ variables of the model. Each state name must be unique.}
 variables returned by the right-hand side (RHS) function and extracted by \code{simulate_epi()}.}
 
 \item{lower}{Optional named numeric vector giving lower bounds for model
-parameters. Names must match \code{par_names}.}
+parameters. Names must match \code{par_names}. These bounds are used by
+\code{\link{run_epi_app}} to define the range of interactive parameter
+sliders in the Shiny application; they do not constrain
+\code{\link{simulate_epi}}.}
 
 \item{upper}{Optional named numeric vector giving upper bounds for model
-parameters. Names must match \code{par_names}.}
+parameters. Names must match \code{par_names}. See \code{lower}.}
 
 \item{defaults}{Optional named numeric vector of default parameter values.
 Names must match \code{par_names}.}
@@ -60,6 +63,23 @@ names.
 The resulting object is a \emph{model definition} and does not perform any
 simulation by itself. It is intended to be used by downstream functions such
 as \code{simulate_epi()}.
+}
+\references{
+Hethcote, H. W. (2000).
+The mathematics of infectious diseases.
+\emph{SIAM Review}, \strong{42}(4), 599–653.
+\doi{10.1137/S0036144500371907}
+
+Brauer, F., van den Driessche, P. & Wu, J. (Eds.) (2008).
+\emph{Mathematical Epidemiology}.
+Lecture Notes in Mathematics, Vol. 1945. Springer.
+\doi{10.1007/978-3-540-78911-6}
+
+van den Driessche, P. & Watmough, J. (2002).
+Reproduction numbers and sub-threshold endemic equilibria for
+compartmental models of disease transmission.
+\emph{Mathematical Biosciences}, \strong{180}(1–2), 29–48.
+\doi{10.1016/S0025-5564(02)00108-6}
 }
 \seealso{
 \code{\link{simulate_epi}}

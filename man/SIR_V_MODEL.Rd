@@ -40,27 +40,56 @@ The total population size is conserved:
 \deqn{N = S(t) + I(t) + R(t).}
 }
 
-\subsection{Derived variables}{
+\subsection{Model variables}{
 
-The following derived epidemiological variables are declared:
+The SIR model with vital dynamics declares the following variables:
 \describe{
-\item{births}{Recruitment of new susceptible individuals exactly balancing
+\item{\code{"S"}}{Susceptible population size.}
+\item{\code{"I"}}{Infectious population size.}
+\item{\code{"R"}}{Recovered population size.}
+\item{\code{"births"}}{Recruitment of new susceptible individuals exactly balancing
 natural deaths.}
-\item{infection}{Incidence of new infections.}
-\item{recovery}{Recovery of infectious individuals.}
-\item{death_S}{Natural deaths among susceptibles.}
-\item{death_I}{Natural deaths among infectious.}
-\item{death_R}{Natural deaths among recovered.}
+\item{\code{"infection"}}{Incidence of new infections.}
+\item{\code{"recovery"}}{Recovery of infectious individuals.}
+\item{\code{"death_S"}}{Natural deaths among susceptibles.}
+\item{\code{"death_I"}}{Natural deaths among infectious.}
+\item{\code{"death_R"}}{Natural deaths among recovered.}
 }
+
+All declared variables may be used as observables in generic utilities
+and summary methods built around \code{epi_model} objects.
 }
 
 \subsection{Parameters}{
 
 The model depends on the following parameters:
 \describe{
-\item{beta}{Transmission rate.}
-\item{gamma}{Recovery rate.}
-\item{mu}{Natural mortality rate (per capita).}
+\item{beta}{Transmission rate (contacts per individual per day times
+probability of transmission per contact).}
+\item{gamma}{Recovery/removal rate (per day); \eqn{1/\gamma} is the mean
+infectious period.}
+\item{mu}{Per-capita natural mortality rate (in the same unit as
+\code{times}), which also equals the per-capita birth rate so that total
+population size \eqn{N} remains constant. \eqn{1/\mu} is the mean life
+expectancy expressed in the chosen time unit. For a 70-year life
+expectancy with daily time steps use \eqn{\mu = 1/(70 \times 365)
+    \approx 3.9 \times 10^{-5}}; the default value is set accordingly.
+The Shiny slider upper bound of 0.1 is intentionally wide to allow
+exploration of fast-turnover scenarios.}
+}
+}
+
+\subsection{Basic reproduction number}{
+
+The basic reproduction number with vital dynamics is
+\deqn{R_0 = \frac{\beta}{\gamma + \mu}.}
+Natural mortality increases the effective removal rate from \code{I},
+reducing \eqn{R_0} relative to the closed SIR model. When \eqn{R_0 > 1}
+the model converges to a \strong{endemic equilibrium}
+\deqn{
+S^* = \frac{N}{R_0}, \quad
+I^* = \frac{N \mu (R_0 - 1)}{\beta}, \quad
+R^* = N - S^* - I^*.
 }
 }
 
@@ -69,34 +98,68 @@ The model depends on the following parameters:
 New infections occur at rate
 \deqn{\lambda(t) = \beta \frac{S(t)\, I(t)}{N}.}
 
+Births enter \code{S} at rate \eqn{\mu N}, balancing deaths in all
+compartments (\eqn{\mu S}, \eqn{\mu I}, \eqn{\mu R}) so that \eqn{N}
+remains constant.
+
 The system of ordinary differential equations is:
 \deqn{
 \begin{aligned}
-\frac{dS}{dt} &= \mu N - \lambda(t) - \mu S, \\
-\frac{dI}{dt} &= \lambda(t) - \gamma I - \mu I, \\
-\frac{dR}{dt} &= \gamma I - \mu R.
+\frac{dS}{dt} &= \mu N - \lambda(t) - \mu S(t), \\
+\frac{dI}{dt} &= \lambda(t) - \gamma I(t) - \mu I(t), \\
+\frac{dR}{dt} &= \gamma I(t) - \mu R(t).
 \end{aligned}
 }
 }
+
+\subsection{Usage}{
+
+This predefined model object is intended to be used with generic utilities
+such as \code{\link{simulate_epi}}, \code{\link{plot.sim_epi}}, and
+\code{\link{summary.sim_epi}} that operate on \code{epi_model} objects.
+}
 }
 \examples{
-## Simulate a SIR epidemic with constant population size
+## Simulate a SIR epidemic with vital dynamics and constant population size
 sim <- simulate_epi(
   model = SIR_V_MODEL,
   times = 0:300,
-  parms = c(
-    beta  = 0.4,
-    gamma = 0.1,
-    mu    = 0.01
-  ),
-  init = c(S = 0.99, I = 0.01, R = 0)
+  parms = c(beta = 0.4, gamma = 0.1, mu = 1 / (70 * 365)),
+  init  = c(S = 999990, I = 10, R = 0)
 )
 
 plot(sim)
 
-## Plot incidence
+## Plot infection incidence over time
 plot(sim, what = "infection")
 
+}
+\references{
+Anderson, R. M. & May, R. M. (1991).
+\emph{Infectious Diseases of Humans: Dynamics and Control}.
+Oxford University Press.
+\doi{10.1093/oso/9780198540403.001.0001}
+
+Hethcote, H. W. (2000).
+The mathematics of infectious diseases.
+\emph{SIAM Review}, \strong{42}(4), 599–653.
+\doi{10.1137/S0036144500371907}
+
+Diekmann, O., Heesterbeek, J. A. P. & Metz, J. A. J. (1990).
+On the definition and the computation of the basic reproduction ratio
+\eqn{R_0} in models for infectious diseases in heterogeneous populations.
+\emph{Journal of Mathematical Biology}, \strong{28}(4), 365–382.
+\doi{10.1007/BF00178324}
+
+Dietz, K. & Heesterbeek, J. A. P. (2002).
+Daniel Bernoulli's epidemiological model revisited.
+\emph{Mathematical Biosciences}, \strong{180}(1–2), 1–21.
+\doi{10.1016/S0025-5564(02)00122-0}
+
+Keeling, M. J. & Rohani, P. (2008).
+\emph{Modeling Infectious Diseases in Humans and Animals}.
+Princeton University Press.
+\doi{10.1515/9781400841035}
 }
 \seealso{
 \code{\link{simulate_epi}},
