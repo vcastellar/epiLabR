@@ -27,10 +27,13 @@
 #'   variables returned by the right-hand side (RHS) function and extracted by \code{simulate_epi()}.
 #'
 #' @param lower Optional named numeric vector giving lower bounds for model
-#'   parameters. Names must match \code{par_names}.
+#'   parameters. Names must match \code{par_names}. These bounds are used by
+#'   \code{\link{run_epi_app}} to define the range of interactive parameter
+#'   sliders in the Shiny application; they do not constrain
+#'   \code{\link{simulate_epi}}.
 #'
 #' @param upper Optional named numeric vector giving upper bounds for model
-#'   parameters. Names must match \code{par_names}.
+#'   parameters. Names must match \code{par_names}. See \code{lower}.
 #'
 #' @param defaults Optional named numeric vector of default parameter values.
 #'   Names must match \code{par_names}.
@@ -142,6 +145,9 @@ epi_model <- function(name,
 #' stated explicitly in the output.
 #'
 #' @param x An object of class `"epi_model"`.
+#' @param show_rhs Logical. If \code{TRUE} (default), the right-hand side
+#'   function body is printed. Set to \code{FALSE} to suppress it for compact
+#'   output.
 #' @param ... Additional arguments passed to or from other methods
 #'   (currently unused).
 #'
@@ -152,7 +158,7 @@ epi_model <- function(name,
 #'
 #' @method print epi_model
 #' @export
-print.epi_model <- function(x, ...) {
+print.epi_model <- function(x, show_rhs = TRUE, ...) {
 
   stopifnot(inherits(x, "epi_model"))
 
@@ -196,7 +202,7 @@ print.epi_model <- function(x, ...) {
   }
 
   ## --- equations -------------------------------------------------------------
-  if (!is.null(x$rhs)) {
+  if (show_rhs && !is.null(x$rhs)) {
     cat("  Equations (rhs):\n")
     rhs_txt <- deparse(x$rhs)
     rhs_txt <- rhs_txt[nzchar(trimws(rhs_txt))]

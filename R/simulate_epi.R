@@ -80,9 +80,6 @@
 #' @param init Named numeric vector giving the initial values of the state
 #'   variables. Names must exactly match \code{model$states}. If not provided,
 #'   \code{model$init} must be defined.
-#' @param seed Optional integer. If provided, sets the random seed. This argument
-#'   is included for consistency with other functions but does not affect the
-#'   deterministic ODE solution.
 #' @param ... Additional arguments passed directly to
 #'   \code{\link[deSolve]{ode}}, such as \code{method}, \code{rtol}, or \code{atol}.
 #'
@@ -146,7 +143,6 @@ simulate_epi <- function(model,
                          time_unit = "days",
                          parms = NULL,
                          init = NULL,
-                         seed = NULL,
                          ...) {
 
   stopifnot(inherits(model, "epi_model"))
@@ -155,8 +151,6 @@ simulate_epi <- function(model,
     time_unit,
     choices = c("days", "weeks", "months", "years")
   )
-
-  if (!is.null(seed)) set.seed(seed)
 
   ## -------------------------------------------------------------------------
   ## 1) Time points

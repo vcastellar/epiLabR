@@ -15,7 +15,7 @@ seir_rhs <- function(time, state, parms) {
     dI <-  sigma * E - gamma * I
     dR <-  gamma * I
 
-    list(c(dS, dE, dI, dR), incidence = sigma * E)
+    list(c(dS, dE, dI, dR), incidence = lambda, progression = sigma * E)
   })
 }
 
@@ -53,11 +53,13 @@ seir_rhs <- function(time, state, parms) {
 #'   \item{\code{"E"}}{Exposed (latent) population size.}
 #'   \item{\code{"I"}}{Infectious population size.}
 #'   \item{\code{"R"}}{Recovered (immune) population size.}
-#'   \item{\code{"incidence"}}{Rate of progression from \code{E} to \code{I},
-#'     \eqn{\sigma E(t)}, representing the instantaneous rate at which
-#'     individuals become infectious. Note: this differs from the force of
-#'     infection \eqn{\lambda(t) = \beta S(t) I(t)/N} (rate of new exposures).
-#'     Both are epidemiologically meaningful but measure different transitions.}
+#'   \item{\code{"incidence"}}{Instantaneous rate of new exposures (force of
+#'     infection times susceptibles): \eqn{\lambda(t) = \beta S(t) I(t)/N}.
+#'     This is the S\eqn{\to}E flow and the standard epidemiological definition
+#'     of incidence.}
+#'   \item{\code{"progression"}}{Rate of progression from \code{E} to
+#'     \code{I}: \eqn{\sigma E(t)}. During transients this differs from
+#'     \code{incidence}; at endemic equilibrium the two flows are equal.}
 #' }
 #'
 #' All declared variables may be used as observables in generic utilities
@@ -85,9 +87,9 @@ seir_rhs <- function(time, state, parms) {
 #' New exposures occur at force of infection
 #' \deqn{\lambda(t) = \beta \frac{S(t)\, I(t)}{N}.}
 #'
-#' Progression from exposed to infectious (reported as \code{incidence}) occurs
+#' Progression from exposed to infectious (reported as \code{progression}) occurs
 #' at rate
-#' \deqn{\text{incidence}(t) = \sigma E(t).}
+#' \deqn{\text{progression}(t) = \sigma E(t).}
 #'
 #' The system of ordinary differential equations is:
 #' \deqn{
@@ -163,5 +165,5 @@ SEIR_MODEL <- epi_model(
   defaults = c(beta = 0.3, sigma = 0.2, gamma = 0.14),
   init = c("S" = 1e6, "E" = 5, "I" = 10, "R" = 0),
   states = c("S", "E", "I", "R"),
-  derived  = c("incidence")
+  derived  = c("incidence", "progression")
 )
