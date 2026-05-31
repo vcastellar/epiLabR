@@ -1,15 +1,3 @@
 #' @importFrom stats setNames
 #' @importFrom graphics plot.new text
 #' @importFrom shiny observeEvent
-
-.onLoad <- function(libname, pkgname) {
-
-  register_epi_model(SIS_MODEL)
-  register_epi_model(SIR_MODEL)
-  register_epi_model(SIRS_MODEL)
-  register_epi_model(SEIR_MODEL)
-  register_epi_model(SEIRS_MODEL)
-  register_epi_model(SIR_V_MODEL)
-  register_epi_model(SIRD_MODEL)
-  register_epi_model(SIRV_MODEL)
-}
