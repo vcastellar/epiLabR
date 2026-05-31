@@ -4,72 +4,60 @@
 \alias{run_epi_app}
 \title{Launch the epidemic model Shiny simulator}
 \usage{
-run_epi_app(models = NULL)
+run_epi_app(models = NULL, only = FALSE)
 }
 \arguments{
-\item{models}{Optional named list of objects of class \code{epi_model}.
-These models are added to the models already present in the internal
-registry and become available in the Shiny interface. If \code{NULL}
-(default), only registered models are used.}
+\item{models}{A list of \code{epi_model} objects to show in the application,
+in addition to the built-in models. Each element must be an object of class
+\code{"epi_model"} created with \code{\link{epi_model}}. List names are used
+as display labels; if names are missing they are taken from each model's
+\code{name} field. Pass an empty list (\code{list()}) together with
+\code{only = TRUE} to show no models (not recommended).}
+
+\item{only}{Logical. If \code{TRUE}, only the models supplied in
+\code{models} are shown, without any built-in models. Default \code{FALSE}.}
 }
 \value{
-A \code{shiny.appobj} representing the constructed Shiny
-application. In typical interactive use the function is called for its side
-effect of launching the app, and the returned object contains the UI and
-server definitions used for that session.
+A \code{shiny.appobj} returned invisibly. In interactive use the
+function is called for its side effect of launching the browser-based app.
 }
 \description{
 Launches the interactive Shiny application for simulating deterministic
 epidemiological models defined as systems of ordinary differential equations
 (ODEs).
 
-By default, the app loads all models currently registered in the internal
-model registry (including built-in models registered at package load time).
-
-Additional user-defined models can either be:
-\itemize{
-\item Registered beforehand using \code{\link{register_epi_model}}, or
-\item Supplied explicitly via the \code{models} argument.
-}
+By default the app loads all built-in models. Custom models can be added
+via the \code{models} argument.
 }
 \details{
-The Shiny application retrieves available models from the internal
-registry using \code{\link{list_models}} and \code{\link{get_model}}.
+The full list of models passed to the app can be constructed manually:
 
-If a user wants a custom model to be permanently discoverable by the
-application during the current session, it must first be registered
-using \code{\link{register_epi_model}}.
-
-Models supplied via the \code{models} argument are included only for the
-current app launch and are not automatically stored in the registry.
-
-User-defined models must be fully specified \code{epi_model} objects,
-including state variables and parameter definitions.
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{run_epi_app(models = list(my_model))
+run_epi_app(models = list(my_model), only = TRUE)
+run_epi_app(models = c(builtin_models(), list(MyModel = my_model)))
+}\if{html}{\out{</div>}}
 }
 \examples{
-## ---------------------------------------------------------
-## Define a custom SEIRD model
-## (SEIRD = Susceptible-Exposed-Infectious-Recovered-Deceased)
-## ---------------------------------------------------------
+## ------------------------------------------------------------------
+## Launch with all built-in models (default)
+## ------------------------------------------------------------------
+if (interactive()) {
+  run_epi_app()
+}
 
+## ------------------------------------------------------------------
+## Add a custom SEIRD model alongside the built-ins
+## ------------------------------------------------------------------
 seird_rhs <- function(time, state, parms) {
   with(as.list(c(state, parms)), {
-
-    N <- S + E + I + R
-
+    N      <- S + E + I + R
     lambda <- beta * S * I / N
-
     dS <- -lambda
     dE <-  lambda - sigma * E
-    dI <-  sigma * E - gamma * I - mu * I
+    dI <-  sigma * E - (gamma + mu) * I
     dR <-  gamma * I
     dD <-  mu * I
-
-    list(
-      c(dS, dE, dI, dR, dD),
-      incidence = lambda,
-      deaths    = mu * I
-    )
+    list(c(dS, dE, dI, dR, dD), incidence = lambda)
   })
 }
 
@@ -77,37 +65,27 @@ seird_model <- epi_model(
   name      = "SEIRD",
   rhs       = seird_rhs,
   states    = c("S", "E", "I", "R", "D"),
-  derived   = c("incidence", "deaths"),
+  derived   = c("incidence"),
   par_names = c("beta", "sigma", "gamma", "mu"),
-  defaults  = c(beta = 0.4, sigma = 0.2, gamma = 0.1, mu = 0.02)
+  lower     = c(beta = 1e-8, sigma = 1e-8, gamma = 1e-8, mu = 1e-8),
+  upper     = c(beta = 5,    sigma = 2,    gamma = 2,    mu = 0.5),
+  defaults  = c(beta = 0.4, sigma = 0.2, gamma = 0.1, mu = 0.02),
+  init      = c(S = 1e6, E = 5, I = 10, R = 0, D = 0)
 )
 
-## ---------------------------------------------------------
-## Option 1: Register the model (recommended)
-## ---------------------------------------------------------
 if (interactive()) {
-if (!"SEIRD" \%in\% list_models()) {
-   register_epi_model(seird_model)
-}
-  run_epi_app()
+  run_epi_app(models = list(seird_model))
 }
 
-## ---------------------------------------------------------
-## Option 2: Provide model only for this session
-## ---------------------------------------------------------
+## ------------------------------------------------------------------
+## Use only custom models (no built-ins)
+## ------------------------------------------------------------------
 if (interactive()) {
-if ("SEIRD" \%in\% list_models()) {
-   unregister_epi_model("SEIRD")
-}
-  run_epi_app(
-    models = list(SEIRD = seird_model)
-  )
+  run_epi_app(models = list(seird_model), only = TRUE)
 }
 
 }
 \seealso{
-\code{\link{epi_model}},
-\code{\link{simulate_epi}},
-\code{\link{register_epi_model}},
-\code{\link{list_models}}
+\code{\link{epi_model}}, \code{\link{simulate_epi}},
+\code{\link{builtin_models}}
 }

@@ -55,8 +55,7 @@ sim <- simulate_epi(
   times = 0:200,
   time_unit = "days",
   parms = c(beta = 0.30, gamma = 0.10),
-  init  = c(S = 999990, I = 10, R = 0, C = 10),
-  seed  = 1
+  init  = c(S = 999990, I = 10, R = 0)
 )
 
 sim

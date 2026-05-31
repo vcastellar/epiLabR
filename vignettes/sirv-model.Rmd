@@ -142,18 +142,21 @@ In general, higher `nu` values tend to reduce epidemic peak prevalence and
 shrink the outbreak burden by moving a larger fraction of the population into
 `V` over time.
 
-## 6. Register the model for app usage
+## 6. Usar el modelo en la aplicación Shiny
 
-If you want to use this model in the package registry, you can register it
-explicitly.
+Para explorar el modelo de forma interactiva pásalo directamente a
+`run_epi_app()`. Los modelos integrados siguen disponibles junto con el tuyo.
 
-```{r}
-register_epi_model(SIRV_MODEL)
-list_models()
+```{r, eval=FALSE}
+run_epi_app(models = list(SIRV_MODEL))
 ```
 
-> Note: if a model with the same name already exists, you may need to remove
-> it first with `unregister_model("SIRV")`.
+Si prefieres usar únicamente tu modelo:
 
+```{r, eval=FALSE}
+run_epi_app(models = list(SIRV_MODEL), only = TRUE)
+```
 
-Use `run_epi_app()` for interactive scenario exploration.
+> El modelo SIRV está además incluido como modelo integrado del paquete bajo
+> el nombre `SIRV_MODEL`, por lo que también aparece por defecto al llamar
+> a `run_epi_app()` sin argumentos.
