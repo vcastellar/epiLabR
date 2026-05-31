@@ -138,6 +138,17 @@ sird_rhs <- function(time, state, parms) {
 #' *SIAM Review*, **42**(4), 599–653.
 #' \doi{10.1137/S0036144500371907}
 #'
+#' van den Driessche, P. & Watmough, J. (2002).
+#' Reproduction numbers and sub-threshold endemic equilibria for
+#' compartmental models of disease transmission.
+#' *Mathematical Biosciences*, **180**(1–2), 29–48.
+#' \doi{10.1016/S0025-5564(02)00108-6}
+#'
+#' Anastassopoulou, C., Russo, L., Tsakris, A. & Siettos, C. (2020).
+#' Data-based analysis, modelling and forecasting of the COVID-19 outbreak.
+#' *PLOS ONE*, **15**(3), e0230405.
+#' \doi{10.1371/journal.pone.0230405}
+#'
 #' Kröger, M. & Schlickeiser, R. (2020).
 #' Analytical solution of the SIR-model for the temporal evolution of
 #' epidemics. Part A: Time-independent reproduction factor.

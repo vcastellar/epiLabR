@@ -146,6 +146,22 @@ sir_rhs <- function(time, state, parms) {
 #' *Mathematical Models in Population Biology and Epidemiology* (2nd ed.).
 #' Springer. \doi{10.1007/978-1-4614-1686-9}
 #'
+#' Keeling, M. J. & Rohani, P. (2008).
+#' *Modeling Infectious Diseases in Humans and Animals*.
+#' Princeton University Press.
+#' \doi{10.1515/9781400841035}
+#'
+#' Diekmann, O., Heesterbeek, J. A. P. & Metz, J. A. J. (1990).
+#' On the definition and the computation of the basic reproduction ratio
+#' \eqn{R_0} in models for infectious diseases in heterogeneous populations.
+#' *Journal of Mathematical Biology*, **28**(4), 365–382.
+#' \doi{10.1007/BF00178324}
+#'
+#' Brauer, F., van den Driessche, P. & Wu, J. (Eds.) (2008).
+#' *Mathematical Epidemiology*.
+#' Lecture Notes in Mathematics, Vol. 1945. Springer.
+#' \doi{10.1007/978-3-540-78911-6}
+#'
 #' @seealso
 #' \code{\link{simulate_epi}},
 #' \code{\link{epi_model}}

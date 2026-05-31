@@ -80,9 +80,6 @@
 #' @param init Named numeric vector giving the initial values of the state
 #'   variables. Names must exactly match \code{model$states}. If not provided,
 #'   \code{model$init} must be defined.
-#' @param seed Optional integer. If provided, sets the random seed. This argument
-#'   is included for consistency with other functions but does not affect the
-#'   deterministic ODE solution.
 #' @param ... Additional arguments passed directly to
 #'   \code{\link[deSolve]{ode}}, such as \code{method}, \code{rtol}, or \code{atol}.
 #'
@@ -136,6 +133,12 @@
 #'
 #' plot(sim)
 #'
+#' @references
+#' Soetaert, K., Petzoldt, T. & Setzer, R. W. (2010).
+#' Solving differential equations in R: Package deSolve.
+#' *Journal of Statistical Software*, **33**(9), 1–25.
+#' \doi{10.18637/jss.v033.i09}
+#'
 #' @seealso
 #' \code{\link{epi_model}}, \code{\link[deSolve]{ode}},
 #' \code{\link{plot.sim_epi}}, \code{\link{print.sim_epi}}
@@ -146,7 +149,6 @@ simulate_epi <- function(model,
                          time_unit = "days",
                          parms = NULL,
                          init = NULL,
-                         seed = NULL,
                          ...) {
 
   stopifnot(inherits(model, "epi_model"))
@@ -155,8 +157,6 @@ simulate_epi <- function(model,
     time_unit,
     choices = c("days", "weeks", "months", "years")
   )
-
-  if (!is.null(seed)) set.seed(seed)
 
   ## -------------------------------------------------------------------------
   ## 1) Time points

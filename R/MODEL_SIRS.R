@@ -120,6 +120,11 @@ sirs_rhs <- function(time, state, parms) {
 #'
 #'
 #' @references
+#' Hethcote, H. W. (1976).
+#' Qualitative analyses of communicable disease models.
+#' *Mathematical Biosciences*, **28**(3–4), 335–356.
+#' \doi{10.1016/0025-5564(76)90132-2}
+#'
 #' Hethcote, H. W. (2000).
 #' The mathematics of infectious diseases.
 #' *SIAM Review*, **42**(4), 599–653.
@@ -129,6 +134,12 @@ sirs_rhs <- function(time, state, parms) {
 #' Dynamical behavior of epidemiological models with nonlinear incidence rates.
 #' *Journal of Mathematical Biology*, **25**(4), 359–380.
 #' \doi{10.1007/BF00277162}
+#'
+#' van den Driessche, P. & Watmough, J. (2002).
+#' Reproduction numbers and sub-threshold endemic equilibria for
+#' compartmental models of disease transmission.
+#' *Mathematical Biosciences*, **180**(1–2), 29–48.
+#' \doi{10.1016/S0025-5564(02)00108-6}
 #'
 #' Keeling, M. J. & Rohani, P. (2008).
 #' *Modeling Infectious Diseases in Humans and Animals*.
