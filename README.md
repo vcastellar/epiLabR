@@ -18,13 +18,14 @@ included for interactive exploration.
 - Several classical models included:
   - SIS (Susceptible-Infectious-Susceptible)
   - SIR (Susceptible-Infectious-Recovered)
-  - SIR-V (Susceptible-Infectious-Recovered with vital dynamics)
   - SIRS (Susceptible-Infectious-Recovered-Susceptible)
   - SEIR (Susceptible-Exposed-Infectious-Recovered)
   - SEIRS (Susceptible-Exposed-Infectious-Recovered-Susceptible)
+  - SIRV (Susceptible-Infectious-Recovered-Vaccinated)
+  - SIR-V (Susceptible-Infectious-Recovered with vital dynamics)
+  - SIRD (Susceptible-Infectious-Recovered-Deceased)
 - Numerical integration based on `deSolve`
-- Built-in post-simulation metrics (e.g., peak incidence, attack rate, growth rates)
-- In-session model registry (`register_epi_model()`, `list_models()`, `get_model()`)
+- Built-in post-simulation metrics (e.g., peak incidence, attack rate)
 - Interactive Shiny app for visual exploration of model dynamics
 
 > ⚠️ This package does **not** perform parameter estimation or statistical
@@ -96,21 +97,21 @@ my_sir <- epi_model(
 This model can then be simulated using simulate_epi() like any built-in
 model.
 
-## Working with the model registry
+## Using a custom model in the Shiny app
 
-Custom models can be registered in the package's in-memory registry so they
-can be discovered and reused during the current R session.
+Pass any custom model directly to `run_epi_app()`. Built-in models are
+always included by default.
 
 ```r
-register_epi_model(my_sir)
-list_models()
-model <- get_model("MySIR")
+run_epi_app(models = list(my_sir))          # built-ins + my_sir
+run_epi_app(models = list(my_sir), only = TRUE)  # only my_sir
 ```
 
-To remove a model from the active session:
+To inspect or compose the built-in model list programmatically:
 
 ```r
-unregister_epi_model("MySIR")
+builtin_models()           # named list of all 8 built-in epi_model objects
+names(builtin_models())    # "SIS" "SIR" "SIRS" "SEIR" "SEIRS" "SIRV" "SIR-V" "SIRD"
 ```
 
 ## Working with simulation outputs
