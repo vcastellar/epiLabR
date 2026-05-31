@@ -1,0 +1,250 @@
+---
+title: "El número básico de reproducción: umbral e intuición"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{El número básico de reproducción: umbral e intuición}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>"
+)
+library(epiLabR)
+```
+
+## ¿Qué es R₀?
+
+El **número básico de reproducción**, denotado $R_0$, es quizás el concepto más
+importante de la epidemiología matemática. Su definición es sencilla:
+
+> $R_0$ es el número promedio de casos secundarios que genera un individuo
+> infeccioso durante todo su período infeccioso, en una población **completamente
+> susceptible**.
+
+En el modelo SIR clásico, cada individuo infeccioso:
+
+- Transmite el patógeno a una tasa $\beta$ (contactos por unidad de tiempo
+  multiplicados por la probabilidad de transmisión por contacto).
+- Permanece infeccioso durante un tiempo medio de $1/\gamma$ días.
+
+Por tanto, el número esperado de nuevas infecciones que produce es:
+
+$$R_0 = \frac{\beta}{\gamma}$$
+
+**Ejemplo intuitivo.** Si $\beta = 0{,}3$ día$^{-1}$ y $\gamma = 0{,}1$
+día$^{-1}$, el período infeccioso medio es 10 días y cada infectado genera en
+promedio $0{,}3 \times 10 = 3$ casos secundarios. La epidemia crece
+rápidamente.
+
+---
+
+## El teorema umbral
+
+El resultado fundamental de Kermack y McKendrick (1927) establece:
+
+$$\text{Epidemia} \iff R_0 > 1$$
+
+- Si $R_0 \leq 1$: cada infeccioso genera como máximo un caso nuevo. El brote
+  se extingue sin producir una epidemia apreciable.
+- Si $R_0 > 1$: cada infeccioso genera más de un caso nuevo. La infección se
+  propaga de forma exponencial al principio y culmina en una epidemia.
+
+La lógica es directa: cuando $R_0 > 1$ la tasa de nuevas infecciones supera la
+tasa de recuperaciones, de modo que $I(t)$ aumenta. Cuando $R_0 < 1$ ocurre
+lo contrario y $I(t)$ decrece desde el primer momento.
+
+---
+
+## Simulación: tres escenarios
+
+Vamos a ver el teorema umbral en acción simulando el modelo SIR con tres valores
+de $R_0$.
+
+```{r parametros}
+N     <- 1e6   # tamaño de la población
+I0    <- 10    # infectados iniciales
+gamma <- 0.1   # tasa de recuperación (período infeccioso medio = 10 días)
+times <- 0:300 # horizonte temporal (días)
+
+escenarios <- list(
+  list(R0 = 0.8, beta = 0.08),
+  list(R0 = 1.5, beta = 0.15),
+  list(R0 = 3.0, beta = 0.30)
+)
+```
+
+```{r simulaciones, echo=TRUE}
+sims <- lapply(escenarios, function(e) {
+  simulate_epi(
+    model = SIR_MODEL,
+    times = times,
+    parms = c(beta = e$beta, gamma = gamma),
+    init  = c(S = N - I0, I = I0, R = 0)
+  )
+})
+```
+
+```{r grafico-I, fig.width=7, fig.height=4.5, fig.cap="Curvas epidémicas I(t) para tres valores de R₀. Cuando R₀ < 1 el brote se extingue; cuando R₀ > 1 se produce una epidemia de tamaño creciente con R₀."}
+colores   <- c("steelblue", "darkorange", "firebrick")
+etiquetas <- c(expression(R[0] == 0.8),
+               expression(R[0] == 1.5),
+               expression(R[0] == 3.0))
+
+ylim_max <- max(sapply(sims, function(s) max(s$states$I)))
+
+plot(
+  times, sims[[1]]$states$I,
+  type = "l", lwd = 2, col = colores[1],
+  ylim = c(0, ylim_max * 1.05),
+  xlab = "Tiempo (días)",
+  ylab = "Individuos infecciosos I(t)",
+  main = expression("Curvas epidémicas para distintos " * R[0])
+)
+lines(times, sims[[2]]$states$I, lwd = 2, col = colores[2])
+lines(times, sims[[3]]$states$I, lwd = 2, col = colores[3])
+abline(h = 0, lty = 3, col = "gray50")
+legend(
+  "topright",
+  legend  = etiquetas,
+  col     = colores,
+  lwd     = 2,
+  bty     = "n"
+)
+```
+
+Observamos que:
+
+- **$R_0 = 0{,}8$** (azul): los infecciosos disminuyen monotónamente desde el
+  primer día. No hay epidemia.
+- **$R_0 = 1{,}5$** (naranja): se produce un brote moderado con un pico
+  claramente visible.
+- **$R_0 = 3{,}0$** (rojo): la epidemia es mucho más intensa y alcanza su pico
+  antes.
+
+---
+
+## Tamaño final de la epidemia
+
+Cuando la epidemia termina, ¿qué fracción de la población habrá sido
+infectada? La **relación del tamaño final** establece que la fracción $z$
+de infectados al final satisface la ecuación trascendente:
+
+$$z = 1 - e^{-R_0 \, z}$$
+
+No tiene solución analítica cerrada, pero podemos calcularla numéricamente a
+partir de las simulaciones como $z = 1 - S(\infty)/N$.
+
+```{r tamano-final, echo=TRUE}
+tamano_final <- sapply(sims, function(s) {
+  S_final <- tail(s$states$S, 1)
+  1 - S_final / N
+})
+
+resultado <- data.frame(
+  R0            = sapply(escenarios, function(e) e$R0),
+  beta          = sapply(escenarios, function(e) e$beta),
+  gamma         = gamma,
+  tamano_final  = round(tamano_final, 4)
+)
+
+print(resultado)
+```
+
+```{r grafico-tamano, fig.width=5, fig.height=4, fig.cap="Fracción final de la población infectada según R₀."}
+barplot(
+  resultado$tamano_final,
+  names.arg = paste0("R0 = ", resultado$R0),
+  col       = colores,
+  ylab      = "Fracción infectada",
+  main      = "Tamaño final de la epidemia",
+  ylim      = c(0, 1),
+  border    = NA
+)
+abline(h = 0, col = "gray50")
+```
+
+Como cabría esperar, cuanto mayor es $R_0$, mayor es la fracción de la
+población que se infecta. Con $R_0 = 0{,}8$ prácticamente nadie más resulta
+infectado; con $R_0 = 3{,}0$ la gran mayoría de la población pasa por el
+compartimento infeccioso.
+
+---
+
+## El número de reproducción efectivo $R_t$
+
+A medida que avanza la epidemia, la fracción de susceptibles $S(t)/N$
+disminuye porque los infectados se recuperan y adquieren inmunidad. Esto hace
+que el patógeno encuentre cada vez menos «blancos» disponibles. El **número de
+reproducción efectivo** captura esta dinámica:
+
+$$R_t = R_0 \cdot \frac{S(t)}{N}$$
+
+Cuando $R_t$ cruza el valor 1 hacia abajo, la epidemia alcanza su **pico**:
+a partir de ese momento hay más recuperaciones que infecciones nuevas y $I(t)$
+empieza a descender.
+
+```{r Rt-pico, fig.width=7, fig.height=4.5, fig.cap="Rt = R₀ · S(t)/N para el escenario R₀ = 3. La línea punteada marca Rt = 1; el cruce coincide con el pico de I(t)."}
+# Usamos el escenario R0 = 3.0 (tercer elemento)
+s3   <- sims[[3]]
+R0_3 <- escenarios[[3]]$R0
+
+Rt <- R0_3 * s3$states$S / N
+
+# Momento del pico de I(t)
+t_pico <- times[which.max(s3$states$I)]
+
+par(mar = c(4, 4, 3, 4))
+plot(
+  times, Rt,
+  type = "l", lwd = 2, col = "firebrick",
+  xlab = "Tiempo (días)",
+  ylab = expression(R[t]),
+  main = expression(R[t] * " y pico epidémico  (" * R[0] == 3.0 * ")")
+)
+abline(h = 1,       lty = 2, col = "gray40")
+abline(v = t_pico,  lty = 3, col = "gray40")
+text(t_pico + 5, max(Rt) * 0.9,
+     paste0("pico: día ", t_pico),
+     adj = 0, cex = 0.85)
+legend("topright",
+       legend = c(expression(R[t]), expression(R[t] == 1), "pico I(t)"),
+       col    = c("firebrick", "gray40", "gray40"),
+       lty    = c(1, 2, 3),
+       lwd    = c(2, 1, 1),
+       bty    = "n")
+```
+
+**Conclusión:** el criterio $R_t = 1$ es dinámico. Aunque al inicio de la
+epidemia $R_t \approx R_0 > 1$, conforme la población susceptible se agota
+$R_t$ desciende. La epidemia se controla ---de forma natural, sin
+intervención--- cuando $R_t$ cae por debajo de 1. Las intervenciones de salud
+pública (vacunación, aislamiento, distanciamiento) buscan reducir $R_t$ por
+debajo de ese umbral lo antes posible.
+
+---
+
+## Resumen
+
+| Concepto | Fórmula | Interpretación |
+|---|---|---|
+| Número básico de reproducción | $R_0 = \beta/\gamma$ | Casos secundarios en población totalmente susceptible |
+| Umbral epidémico | $R_0 > 1$ | Condición necesaria y suficiente para una epidemia |
+| Tamaño final | $z = 1 - S(\infty)/N$ | Fracción de la población infectada al finalizar el brote |
+| Reproducción efectiva | $R_t = R_0 \cdot S(t)/N$ | Transmisibilidad real en cada momento; pico cuando $R_t = 1$ |
+
+---
+
+## Referencias
+
+Kermack, W. O. & McKendrick, A. G. (1927). A contribution to the mathematical
+theory of epidemics. *Proceedings of the Royal Society of London A*,
+**115**(772), 700--721. <https://doi.org/10.1098/rspa.1927.0118>
+
+Anderson, R. M. & May, R. M. (1991). *Infectious Diseases of Humans: Dynamics
+and Control*. Oxford University Press.
+
+Hethcote, H. W. (2000). The mathematics of infectious diseases. *SIAM Review*,
+**42**(4), 599--653. <https://doi.org/10.1137/S0036144500371907>
