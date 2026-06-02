@@ -1,8 +1,8 @@
 ---
-title: "De epidemia a endemia: SIR frente a SIRS"
+title: "From epidemic to endemic: SIR versus SIRS"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{De epidemia a endemia: SIR frente a SIRS}
+  %\VignetteIndexEntry{From epidemic to endemic: SIR versus SIRS}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,31 +12,31 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>",
                       fig.width = 7, fig.height = 4)
 ```
 
-## Introducción
+## Introduction
 
-La diferencia clave entre los modelos **SIR** y **SIRS** es la duración de la
-inmunidad:
+The key difference between the **SIR** and **SIRS** models is the duration of
+immunity:
 
-- **SIR**: inmunidad permanente. El patógeno genera una única ola y desaparece.
-- **SIRS**: inmunidad temporal. Los recuperados vuelven a ser susceptibles a
-  tasa $\omega$, lo que permite la persistencia **endémica** y olas recurrentes.
+- **SIR**: permanent immunity. The pathogen generates a single wave and disappears.
+- **SIRS**: temporary immunity. Recovered individuals become susceptible again at
+  rate $\omega$, which allows **endemic** persistence and recurrent waves.
 
 ```{r cargar}
 library(epiLabR)
 ```
 
-## Parámetros compartidos
+## Shared parameters
 
 ```{r parametros}
-beta  <- 0.3;  gamma <- 0.1   # transmisión y recuperación (día⁻¹)
-R0    <- beta / gamma          # número reproductivo básico = 3
-N     <- 1e6;  I0 <- 20       # población e infectados iniciales
-cat("R0 =", R0, "| período infeccioso medio:", round(1 / gamma), "días\n")
+beta  <- 0.3;  gamma <- 0.1   # transmission and recovery (day⁻¹)
+R0    <- beta / gamma          # basic reproduction number = 3
+N     <- 1e6;  I0 <- 20       # population and initial infectious individuals
+cat("R0 =", R0, "| mean infectious period:", round(1 / gamma), "days\n")
 ```
 
-Con $R_0 = `r R0`$ la epidemia crece mientras haya suficientes susceptibles.
+With $R_0 = `r R0`$ the epidemic grows while there are enough susceptibles.
 
-## 1. Modelo SIR: epidemia única, inmunidad permanente
+## 1. SIR model: single epidemic, permanent immunity
 
 ```{r sim-sir}
 sim_sir <- simulate_epi(
@@ -53,21 +53,21 @@ I_sir <- sim_sir$states$I
 
 plot(t, I_sir,
      type = "l", lwd = 2, col = "steelblue",
-     xlab = "Tiempo (días)", ylab = "Infectados I(t)",
-     main = "SIR: ola única y extinción")
+     xlab = "Time (days)", ylab = "Infected I(t)",
+     main = "SIR: single wave and extinction")
 abline(h = 0, lty = 2, col = "grey60")
 ```
 
-La curva del SIR tiene forma de campana: sube mientras $S > N/R_0$ y cae
-cuando la inmunidad de grupo agota los susceptibles. Al final $I(t) \to 0$.
+The SIR curve has a bell shape: it rises while $S > N/R_0$ and falls
+when herd immunity exhausts the susceptibles. Eventually $I(t) \to 0$.
 
-## 2. Modelo SIRS: endemia y olas recurrentes
+## 2. SIRS model: endemic state and recurrent waves
 
-Añadimos pérdida de inmunidad a tasa $\omega = 0.02$ día⁻¹, lo que equivale a
-una duración media de la inmunidad de $1/\omega = 50$ días.
+We add immunity loss at rate $\omega = 0.02$ day⁻¹, equivalent to a mean
+immunity duration of $1/\omega = 50$ days.
 
 ```{r sim-sirs}
-omega <- 0.02   # pérdida de inmunidad (día⁻¹)
+omega <- 0.02   # immunity loss rate (day⁻¹)
 
 sim_sirs <- simulate_epi(
   model = SIRS_MODEL,
@@ -85,23 +85,23 @@ ylim_max <- max(I_sir, I_sirs) * 1.05
 plot(t, I_sir,
      type = "l", lwd = 2, col = "steelblue",
      ylim = c(0, ylim_max),
-     xlab = "Tiempo (días)", ylab = "Infectados I(t)",
-     main = "SIR frente a SIRS: epidemia vs. endemia")
+     xlab = "Time (days)", ylab = "Infected I(t)",
+     main = "SIR vs SIRS: epidemic vs. endemic")
 lines(t, I_sirs, lwd = 2, col = "firebrick")
 legend("topright",
-       legend = c("SIR (inmunidad permanente)",
+       legend = c("SIR (permanent immunity)",
                   "SIRS (omega = 0.02)"),
        col    = c("steelblue", "firebrick"),
        lwd    = 2, bty = "n")
 ```
 
-El SIRS muestra una primera ola similar a la del SIR, pero la prevalencia
-oscila y converge hacia un nivel endémico positivo en lugar de extinguirse.
+The SIRS shows a first wave similar to the SIR, but the prevalence
+oscillates and converges to a positive endemic level instead of going extinct.
 
-## 3. Equilibrio endémico del SIRS
+## 3. Endemic equilibrium of the SIRS
 
-Para el modelo SIRS sin demografía, cuando $R_0 > 1$ existe un equilibrio
-endémico estable. Igualando las derivadas a cero se obtiene:
+For the SIRS model without demography, when $R_0 > 1$ a stable endemic
+equilibrium exists. Setting the derivatives to zero yields:
 
 $$S^* = \frac{N}{R_0}, \qquad
   I^* = N \cdot \frac{(\beta - \gamma)\,\omega}{\beta\,(\gamma + \omega)}$$
@@ -111,47 +111,47 @@ S_star <- N / R0
 I_star <- N * (beta - gamma) * omega / (beta * (gamma + omega))
 R_star <- N - S_star - I_star
 
-cat("Equilibrio endémico SIRS:\n")
+cat("SIRS endemic equilibrium:\n")
 cat("  S* =", round(S_star), "\n")
 cat("  I* =", round(I_star), "\n")
 cat("  R* =", round(R_star), "\n")
 
-# Valor simulado al final de la simulación
+# Simulated value at the end of the simulation
 I_final <- tail(I_sirs, 1)
-cat("\nI(t=500) simulado:", round(I_final), "\n")
-cat("Error relativo:",
+cat("\nSimulated I(t=500):", round(I_final), "\n")
+cat("Relative error:",
     round(abs(I_final - I_star) / I_star * 100, 2), "%\n")
 ```
 
 ```{r plot-equilibrio}
 plot(t, I_sirs,
      type = "l", lwd = 2, col = "firebrick",
-     xlab = "Tiempo (días)", ylab = "Infectados I(t)",
-     main = "SIRS: convergencia al equilibrio endémico")
+     xlab = "Time (days)", ylab = "Infected I(t)",
+     main = "SIRS: convergence to the endemic equilibrium")
 abline(h = I_star, lty = 2, lwd = 1.5, col = "darkred")
 legend("topright",
-       legend = c("I(t) simulado",
+       legend = c("Simulated I(t)",
                   paste0("I* = ", round(I_star))),
        col    = c("firebrick", "darkred"),
        lwd    = c(2, 1.5), lty = c(1, 2), bty = "n")
 ```
 
-La trayectoria simulada converge al valor teórico $I^*$, confirmando que el
-equilibrio endémico predice el nivel de prevalencia a largo plazo.
+The simulated trajectory converges to the theoretical value $I^*$, confirming
+that the endemic equilibrium predicts the long-run prevalence level.
 
-## 4. Efecto de la tasa de pérdida de inmunidad (omega)
+## 4. Effect of the immunity loss rate (omega)
 
-A mayor $\omega$, más rápido se reponen los susceptibles, mayor es la prevalencia
-endémica y más cortos son los intervalos entre olas.
+The larger $\omega$, the faster susceptibles are replenished, the higher the
+endemic prevalence, and the shorter the intervals between waves.
 
 ```{r omega-comparacion}
-omegas  <- c(omega_lenta = 0.005, omega_media = 0.02, omega_rapida = 0.1)
+omegas  <- c(omega_slow = 0.005, omega_medium = 0.02, omega_fast = 0.1)
 colores <- c("seagreen", "firebrick", "darkorange")
 
-# I* teórico para cada omega
+# Theoretical I* for each omega
 I_star_vec <- N * (beta - gamma) * omegas / (beta * (gamma + omegas))
 
-# Simular los tres escenarios
+# Simulate the three scenarios
 sims_omega <- lapply(omegas, function(om) {
   simulate_epi(
     model = SIRS_MODEL,
@@ -167,8 +167,8 @@ ylim_om <- max(sapply(sims_omega, function(s) max(s$states$I))) * 1.05
 
 plot(NA,
      xlim = c(0, 500), ylim = c(0, ylim_om),
-     xlab = "Tiempo (días)", ylab = "Infectados I(t)",
-     main = "Efecto de omega sobre la dinámica endémica")
+     xlab = "Time (days)", ylab = "Infected I(t)",
+     main = "Effect of omega on endemic dynamics")
 
 for (k in seq_along(sims_omega)) {
   lines(sims_omega[[k]]$states$time,
@@ -183,16 +183,16 @@ legend("topright",
        col = colores, lwd = 2, bty = "n")
 ```
 
-- Con $\omega$ pequeño (inmunidad duradera) el nivel endémico es muy bajo.
-- Con $\omega$ grande (inmunidad breve) los susceptibles se reponen rápido:
-  nivel endémico alto y olas más frecuentes.
-- En el límite $\omega \to 0$ el SIRS se comporta como el SIR: extinción.
+- With small $\omega$ (long-lasting immunity) the endemic level is very low.
+- With large $\omega$ (short-lived immunity) susceptibles are replenished quickly:
+  high endemic level and more frequent waves.
+- In the limit $\omega \to 0$ the SIRS behaves like the SIR: extinction.
 
-## Resumen
+## Summary
 
-| Característica            | SIR                        | SIRS                              |
+| Feature                   | SIR                        | SIRS                              |
 |---------------------------|----------------------------|-----------------------------------|
-| Inmunidad                 | Permanente                 | Temporal (dura $1/\omega$ días)   |
-| Resultado a largo plazo   | Extinción del patógeno     | Endemia o ciclos recurrentes      |
-| Equilibrio endémico       | No existe                  | $I^* > 0$ si $R_0 > 1$           |
-| Ejemplos reales           | Sarampión (pre-vacuna)     | Gripe, resfriado común, COVID-19  |
+| Immunity                  | Permanent                  | Temporary (lasts $1/\omega$ days) |
+| Long-run outcome          | Pathogen extinction        | Endemic state or recurrent cycles |
+| Endemic equilibrium       | Does not exist             | $I^* > 0$ if $R_0 > 1$           |
+| Real-world examples       | Measles (pre-vaccine)      | Flu, common cold, COVID-19        |
